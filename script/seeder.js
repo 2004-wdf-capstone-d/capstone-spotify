@@ -1,10 +1,8 @@
-/* eslint-disable */
+const db = require('../server/db/index')
+const csvtojson = require('csvtojson')
 
-const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost:27017/testDB', {useNewUrlParser: true})
-const db = mongoose.connection
+const {User, TopChart} = require('../server/db/models/index.js')
 
-const {User} = require('../server/db/models/index.js')
 async function seed() {
   db.on('error', console.error.bind(console, 'connection error:'))
   db.once('open', function() {
@@ -13,6 +11,8 @@ async function seed() {
   })
   await db.dropDatabase()
   console.log('All DB dropped')
+  const topCharts = await csvtojson().fromFile('./script/topCharts.csv')
+  console.log('topCharts Array created from csv')
 
   const newUser = await User.create({
     display_name: 'JM Wizzler',
@@ -24,9 +24,12 @@ async function seed() {
     ],
     sessionId: 1
   })
+  ///Top charts bulk create here!
+  await TopChart.insertMany(topCharts)
 
   console.log(`seeded a user`)
   console.log(`seeded successfully`)
+  console.log(newUser)
 }
 
 async function runSeed() {
