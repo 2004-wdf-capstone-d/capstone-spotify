@@ -11,6 +11,8 @@ async function seed() {
     // we're connected!
     console.log('DB open!')
   })
+  await db.dropDatabase()
+  console.log('All DB dropped')
 
   const newUser = await User.create({
     display_name: 'JM Wizzler',
