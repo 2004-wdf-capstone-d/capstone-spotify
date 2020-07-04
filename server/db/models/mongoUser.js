@@ -12,8 +12,8 @@ const User = mongoose.model(
       required: true
     },
     sessionId: {
-      type: Number,
-      required: true
+      type: Number
+      // required: true
     },
     images: [String],
     href: {

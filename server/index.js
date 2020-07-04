@@ -11,6 +11,7 @@ const sessionStore = new MongoStore({mongooseConnection: db})
 const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
+const {User} = require('./db/models')
 module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.
@@ -34,7 +35,7 @@ passport.serializeUser((user, done) => done(null, user.id))
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await db.models.user.findByPk(id)
+    const user = await User.findById(id)
     done(null, user)
   } catch (err) {
     done(err)
