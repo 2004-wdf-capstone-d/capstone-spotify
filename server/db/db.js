@@ -1,7 +1,8 @@
 // const Sequelize = require('sequelize')
-// const pkg = require('../../package.json')
+const mongoose = require('mongoose')
+const pkg = require('../../package.json')
 
-// const databaseName = pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '')
+const databaseName = pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '')
 
 // const db = new Sequelize(
 //   process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`,
@@ -10,15 +11,17 @@
 //   }
 // )
 
-const mongoose = require('mongoose')
+// const MONGO_HOSTNAME = '127.0.0.1'
+// const MONGO_PORT = '27017'
+// const MONGO_DB = 'capstoneSpotify'
 
-const MONGO_HOSTNAME = '127.0.0.1'
-const MONGO_PORT = '27017'
-const MONGO_DB = 'capstoneSpotify'
+// const url = `mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${databaseName}`
 
-const url = `mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}`
+mongoose.connect(
+  process.env.DATABASE_URL || `mongodb://127.0.0.1:27017/${databaseName}`,
+  {useNewUrlParser: true}
+)
 
-mongoose.connect(url, {useNewUrlParser: true})
 const db = mongoose.connection
 
 db.on('error', console.error.bind(console, 'mongodb connection error:'))
