@@ -23,6 +23,14 @@ const User = mongoose.model(
     display_name: {
       type: String,
       required: true
+    },
+    accessToken: {
+      type: String,
+      required: true
+    },
+    refreshToken: {
+      type: String,
+      required: true
     }
   })
 )
