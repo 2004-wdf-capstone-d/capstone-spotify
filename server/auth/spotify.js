@@ -19,7 +19,7 @@ if (!process.env.CLIENT_ID || !process.env.CLIENT_SECRET) {
     profile,
     done
   ) {
-    console.log(profile)
+    console.log({accessToken, refreshToken, expires_in})
 
     const spotifyId = profile.id
     const email = profile.emails[0].value
@@ -36,7 +36,9 @@ if (!process.env.CLIENT_ID || !process.env.CLIENT_SECRET) {
         email,
         images,
         href,
-        display_name
+        display_name,
+        accessToken,
+        refreshToken
       })
     }
   })
@@ -46,7 +48,7 @@ if (!process.env.CLIENT_ID || !process.env.CLIENT_SECRET) {
   router.get(
     '/',
     passport.authenticate('spotify', {
-      scope: ['user-read-email', 'user-read-private'],
+      scope: ['user-read-email', 'user-read-private', 'user-top-read'],
       showDialog: true
     }),
     function(req, res) {}
@@ -55,7 +57,7 @@ if (!process.env.CLIENT_ID || !process.env.CLIENT_SECRET) {
   router.get(
     '/callback',
     passport.authenticate('spotify', {
-      failureRedirect: '/login',
+      failureRedirect: '/',
       successRedirect: '/home'
     })
   )
