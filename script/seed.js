@@ -1,24 +1,38 @@
-'use strict'
+const db = require('../server/db/index')
+const csvtojson = require('csvtojson')
 
-const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, TopChart} = require('../server/db/models/index.js')
 
 async function seed() {
-  await db.sync({force: true})
-  console.log('db synced!')
+  db.on('error', console.error.bind(console, 'connection error:'))
+  db.once('open', function() {
+    // we're connected!
+    console.log('DB open!')
+  })
+  await db.dropDatabase()
+  console.log('All DB dropped')
+  const topCharts = await csvtojson().fromFile('./script/topCharts.csv')
+  console.log('topCharts Array created from csv')
 
-  const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
-  ])
+  const newUser = await User.create({
+    displayName: 'JM Wizzler',
+    email: 'email@example.com',
+    href: 'https://api.spotify.com/v1/users/wizzler',
+    spotifyId: 'wizzler',
+    images: [
+      'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-frc3/t1.0-1/1970403_10152215092574354_1798272330_n.jpg'
+    ],
+    accessToken: 'test',
+    refreshToken: 'test',
+    sessionId: 1
+  })
+  ///Top charts bulk create here!
+  await TopChart.insertMany(topCharts)
 
-  console.log(`seeded ${users.length} users`)
+  console.log(`seeded a user`)
   console.log(`seeded successfully`)
 }
 
-// We've separated the `seed` function from the `runSeed` function.
-// This way we can isolate the error handling and exit trapping.
-// The `seed` function is concerned only with modifying the database.
 async function runSeed() {
   console.log('seeding...')
   try {
@@ -33,12 +47,4 @@ async function runSeed() {
   }
 }
 
-// Execute the `seed` function, IF we ran this module directly (`node seed`).
-// `Async` functions always return a promise, so we can use `catch` to handle
-// any errors that might occur inside of `seed`.
-if (module === require.main) {
-  runSeed()
-}
-
-// we export the seed function for testing purposes (see `./seed.spec.js`)
-module.exports = seed
+runSeed()

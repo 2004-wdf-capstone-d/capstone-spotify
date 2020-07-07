@@ -1,16 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {fetchTopArtist} from '../store/user-topArtist'
 
 /**
  * COMPONENT
  */
 export const UserHome = props => {
-  const {display_name, email} = props
+  const {displayName, email} = props
   return (
     <div>
-      <h3>Welcome, {display_name}</h3>
+      <h3>Welcome, {displayName}</h3>
       <h3>{email}</h3>
       <h3>Images</h3>
       <h3 />
@@ -24,13 +23,9 @@ export const UserHome = props => {
 const mapState = state => {
   return {
     email: state.user.email,
-    display_name: state.user.display_name
+    displayName: state.user.displayName
   }
 }
-
-// const mapDIspatch = dispatch => {
-//   return {fetchTopArtist: () => dispatch(fetchTopArtist())}
-// }
 
 export default connect(mapState)(UserHome)
 
