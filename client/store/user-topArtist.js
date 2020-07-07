@@ -9,7 +9,6 @@ const getTopArtist = artist => ({
 
 export const fetchTopArtist = () => async (dispatch, getState) => {
   const accessToken = getState().user.accessToken
-  console.log(accessToken)
   const {data} = await Axios.get(
     'https://api.spotify.com/v1/me/top/artists?time_range=long_term',
     {
@@ -19,7 +18,6 @@ export const fetchTopArtist = () => async (dispatch, getState) => {
       }
     }
   )
-  console.log(data.items)
   dispatch(getTopArtist(data.items))
 }
 

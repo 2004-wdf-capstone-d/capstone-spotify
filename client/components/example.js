@@ -42,7 +42,7 @@ export class Example extends React.Component {
       <svg
         width={width}
         height={y.range()[1]}
-        fontfamily="sans-serif"
+        fontFamily="sans-serif"
         fontSize="10"
         textAnchor="end"
       >

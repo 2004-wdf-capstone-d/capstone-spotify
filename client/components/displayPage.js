@@ -1,20 +1,26 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
 import {fetchTopArtist} from '../store/user-topArtist'
 import {Example} from './example'
 
-const DisplayPage = props => {
-  useEffect(() => {
-    props.fetchTopArtist()
-    console.log(props.topArtists)
-  }, [])
-  return props.user._id ? (
-    <div>
-      {props.topArtists.map(artist => <li key={artist.id}>{artist.name}</li>)}
-    </div>
-  ) : (
-    <Example />
-  )
+export class DisplayPage extends React.Component {
+  componentDidUpdate(prevProps) {
+    if (this.props.user._id !== prevProps.user._id) {
+      this.props.fetchTopArtist()
+    }
+  }
+
+  render() {
+    return this.props.user._id ? (
+      <div>
+        {this.props.topArtists.map(artist => (
+          <li key={artist.id}>{artist.name}</li>
+        ))}
+      </div>
+    ) : (
+      <Example />
+    )
+  }
 }
 
 const mapState = state => {
