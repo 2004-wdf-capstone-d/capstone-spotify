@@ -20,7 +20,7 @@ const User = mongoose.model(
       type: String,
       required: true
     },
-    display_name: {
+    displayName: {
       type: String,
       required: true
     },

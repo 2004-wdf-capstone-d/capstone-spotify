@@ -3,23 +3,23 @@ const mongoose = require('mongoose')
 const TopChart = mongoose.model(
   'TopChart',
   new mongoose.Schema({
-    Position: {
+    position: {
       type: Number,
       required: true
     },
-    Track_Name: {
+    trackName: {
       type: String,
       required: true
     },
-    Artist: {
+    artist: {
       type: String,
       required: true
     },
-    Streams: {
+    streams: {
       type: Number,
       required: true
     },
-    URL: {
+    url: {
       type: String,
       required: true
     }

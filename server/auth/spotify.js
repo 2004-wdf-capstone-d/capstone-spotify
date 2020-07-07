@@ -15,32 +15,30 @@ if (!process.env.CLIENT_ID || !process.env.CLIENT_SECRET) {
   const strategy = new spotifyStrategy(spotifyConfig, async function(
     accessToken,
     refreshToken,
-    expires_in,
+    expiresIn,
     profile,
     done
   ) {
-    console.log({accessToken, refreshToken, expires_in})
-
     const spotifyId = profile.id
     const email = profile.emails[0].value
     const images = profile.photos
     const href = profile._json.href
-    const display_name = profile.displayName
+    const displayName = profile.displayName
 
-    let user = await User.findOne({spotifyId: profile.id}, function(err, user) {
+    await User.findOne({spotifyId: profile.id}, async function(err, user) {
+      if (!user) {
+        user = await User.create({
+          spotifyId,
+          email,
+          images,
+          href,
+          displayName,
+          accessToken,
+          refreshToken
+        })
+      }
       return done(err, user)
     })
-    if (!user) {
-      user = await User.create({
-        spotifyId,
-        email,
-        images,
-        href,
-        display_name,
-        accessToken,
-        refreshToken
-      })
-    }
   })
 
   passport.use(strategy)
@@ -50,8 +48,7 @@ if (!process.env.CLIENT_ID || !process.env.CLIENT_SECRET) {
     passport.authenticate('spotify', {
       scope: ['user-read-email', 'user-read-private', 'user-top-read'],
       showDialog: true
-    }),
-    function(req, res) {}
+    })
   )
 
   router.get(
