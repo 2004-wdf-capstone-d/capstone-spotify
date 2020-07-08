@@ -1,24 +1,38 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchTopArtist} from '../store/user-topArtist'
+import {fetchTopTen} from '../store/topCharts'
 import {default as Example} from './example'
+import {Route, Switch} from 'react-router-dom'
+import {default as UserTopArtists} from './userTopArtists'
+import {default as Sidebar} from './sidebar'
 
 export class DisplayPage extends React.Component {
+  // state to define what graph we're showing
+  // this.state.graph = graph1
+  // this.state.graph = graph2
+
   componentDidMount() {
+    this.props.fetchTopTen()
     if (this.props.user._id) {
       this.props.fetchTopArtist()
     }
   }
 
   render() {
-    return this.props.user._id ? (
+    return (
       <div>
-        {this.props.topArtists.map(artist => (
-          <li key={artist.id}>{artist.name}</li>
-        ))}
+        <Sidebar />
+        <Switch>
+          {this.props.user._id && (
+            <Switch>
+              <Route path="/top-ten-global" component={Example} />
+              <Route component={UserTopArtists} />
+            </Switch>
+          )}
+          <Route component={Example} />
+        </Switch>
       </div>
-    ) : (
-      <Example />
     )
   }
 }
@@ -26,12 +40,16 @@ export class DisplayPage extends React.Component {
 const mapState = state => {
   return {
     user: state.user,
-    topArtists: state.topArtists
+    topArtists: state.topArtists,
+    topCharts: state.topCharts
   }
 }
 
 const mapDIspatch = dispatch => {
-  return {fetchTopArtist: () => dispatch(fetchTopArtist())}
+  return {
+    fetchTopArtist: () => dispatch(fetchTopArtist()),
+    fetchTopTen: () => dispatch(fetchTopTen())
+  }
 }
 
 export default connect(mapState, mapDIspatch)(DisplayPage)
