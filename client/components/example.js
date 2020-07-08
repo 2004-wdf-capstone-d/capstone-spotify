@@ -1,69 +1,73 @@
 import React from 'react'
 import * as d3 from 'd3'
-
-const data = [
-  {
-    Artist: 'DaBaby',
-    Streams: 5639584
-  },
-  {
-    Artist: 'Jawsh 685',
-    Streams: 4769131
-  },
-  {
-    Artist: 'The Weeknd',
-    Streams: 4663575
-  },
-  {
-    Artist: 'SAINt JHN',
-    Streams: 3969610
-  },
-  {
-    Artist: 'Harry Styles',
-    Streams: 3746953
-  }
-]
-
-const width = 420
-
-const x = d3
-  .scaleLinear()
-  .domain([0, d3.max(data, d => d.Streams)])
-  .range([0, width])
-
-const y = d3
-  .scaleBand()
-  .domain(data.map(d => d.Artist))
-  .range([0, 20 * data.length])
+import {connect} from 'react-redux'
+import {fetchTopTen} from '../store/topCharts'
 
 export class Example extends React.Component {
+  constructor(props) {
+    super(props)
+    this.width = 420
+  }
+  componentDidMount() {
+    this.props.fetchTopTen()
+  }
+
   render() {
-    return (
+    let x
+    let y
+    if (this.props.topCharts.length) {
+      x = d3
+        .scaleLinear()
+        .domain([0, d3.max(this.props.topCharts, d => d.streams)])
+        .range([0, this.width])
+      y = d3
+        .scaleBand()
+        .domain(this.props.topCharts.map(d => d.artist))
+        .range([0, 20 * this.props.topCharts.length])
+    }
+
+    return this.props.topCharts.length ? (
       <svg
-        width={width}
+        width={this.width}
         height={y.range()[1]}
         fontFamily="sans-serif"
         fontSize="10"
         textAnchor="end"
       >
-        {data.map((d, i) => (
-          <g key={i} transform={`translate(0,${y(d.Artist)})`}>
+        {this.props.topCharts.map((d, i) => (
+          <g key={i} transform={`translate(0,${y(d.artist)})`}>
             <rect
               fill="steelblue"
-              width={x(d.Streams)}
+              width={x(d.streams)}
               height={y.bandwidth() - 1}
             />
             <text
               fill="white"
-              x={x(d.Streams)}
+              x={x(d.streams)}
               y={y.bandwidth() / 2}
               dy="0.35em"
             >
-              {d.Artist}
+              {d.artist}
             </text>
           </g>
         ))}
       </svg>
+    ) : (
+      <div>nothing here</div>
     )
   }
 }
+
+const mapState = state => {
+  return {
+    topCharts: state.topCharts
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    fetchTopTen: () => dispatch(fetchTopTen())
+  }
+}
+
+export default connect(mapState, mapDispatch)(Example)

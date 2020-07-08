@@ -24,7 +24,8 @@ async function seed() {
     ],
     accessToken: 'test',
     refreshToken: 'test',
-    sessionId: 1
+    sessionId: 1,
+    expiresIn: 3600
   })
   ///Top charts bulk create here!
   await TopChart.insertMany(topCharts)

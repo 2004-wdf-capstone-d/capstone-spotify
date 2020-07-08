@@ -34,7 +34,8 @@ if (!process.env.CLIENT_ID || !process.env.CLIENT_SECRET) {
           href,
           displayName,
           accessToken,
-          refreshToken
+          refreshToken,
+          expiresIn: new Date().getTime() / 1000 + expiresIn
         })
       }
       return done(err, user)

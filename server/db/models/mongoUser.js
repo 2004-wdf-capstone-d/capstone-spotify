@@ -31,6 +31,10 @@ const User = mongoose.model(
     refreshToken: {
       type: String,
       required: true
+    },
+    expiresIn: {
+      type: Number,
+      required: true
     }
   })
 )

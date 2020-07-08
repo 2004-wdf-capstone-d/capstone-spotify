@@ -4,8 +4,13 @@ import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import topArtists from './user-topArtist'
+import topCharts from './topCharts'
 
-const reducer = combineReducers({user, topArtists})
+const reducer = combineReducers({
+  user,
+  topArtists,
+  topCharts
+})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )

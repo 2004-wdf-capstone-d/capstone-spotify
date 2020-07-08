@@ -1,4 +1,4 @@
-const {default: Axios} = require('axios')
+import Axios from 'axios'
 
 const GET_TOP_ARTIST = 'GET_TOP_ARTIST'
 
@@ -7,17 +7,8 @@ const getTopArtist = artist => ({
   artist
 })
 
-export const fetchTopArtist = () => async (dispatch, getState) => {
-  const accessToken = getState().user.accessToken
-  const {data} = await Axios.get(
-    'https://api.spotify.com/v1/me/top/artists?time_range=long_term',
-    {
-      headers: {
-        Authorization: 'Bearer ' + accessToken,
-        'Content-Type': 'application/json'
-      }
-    }
-  )
+export const fetchTopArtist = () => async dispatch => {
+  const {data} = await Axios.get('/api/spotify/user/topArtists')
   dispatch(getTopArtist(data.items))
 }
 
