@@ -20,11 +20,11 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
-        <Route path="/display" component={DisplayPage} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
+            <Route path="/" component={DisplayPage} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
@@ -45,13 +45,9 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    loadInitialData() {
-      dispatch(me())
-    }
-  }
-}
+const mapDispatch = dispatch => ({
+  loadInitialData: () => dispatch(me())
+})
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
