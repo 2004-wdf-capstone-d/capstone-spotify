@@ -4,7 +4,7 @@ import {fetchTopArtist} from '../store/user-topArtist'
 import {fetchTopTen} from '../store/topCharts'
 import {default as Example} from './example'
 import {Route, Switch} from 'react-router-dom'
-import {default as UserTopArtists} from './UserTopArtists'
+import {default as UserTopArtists} from './userTopArtists'
 import {default as Sidebar} from './sidebar'
 
 export class DisplayPage extends React.Component {
@@ -22,11 +22,12 @@ export class DisplayPage extends React.Component {
   render() {
     return (
       <div>
-        {/* <Sidebar /> */}
+        <Sidebar />
         <Switch>
           {this.props.user._id && (
             <Switch>
-              <UserTopArtists />
+              <Route path="/top-ten-global" component={Example} />
+              <Route component={UserTopArtists} />
             </Switch>
           )}
           <Route component={Example} />
