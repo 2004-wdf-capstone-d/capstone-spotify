@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchTopArtist} from '../store/user-topArtist'
-import {Example} from './example'
+import {default as Example} from './example'
 
 export class DisplayPage extends React.Component {
   componentDidMount() {

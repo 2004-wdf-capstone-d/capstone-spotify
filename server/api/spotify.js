@@ -3,9 +3,7 @@ const Axios = require('axios')
 module.exports = router
 const refreshAccessToken = require('./refreshAccess')
 
-// api requests go here
-
-// a route for user's top artists
+// user's top artists
 router.get('/user/topArtists', refreshAccessToken, async (req, res, next) => {
   try {
     const accessToken = req.user.accessToken
@@ -20,7 +18,6 @@ router.get('/user/topArtists', refreshAccessToken, async (req, res, next) => {
       }
     )
     res.json(data)
-    // dispatch(getTopArtist(data.items))
   } catch (error) {
     next(error)
   }
