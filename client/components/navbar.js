@@ -25,6 +25,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         <div>
           {/* The navbar will show these links before you log in */}
           <a href="/auth/spotify">Log in with Spotify</a>
+          {/* <Link to='/globalTopTen'>top ten</Link> */}
         </div>
       )}
     </nav>
