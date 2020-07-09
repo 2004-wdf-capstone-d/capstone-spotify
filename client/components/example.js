@@ -61,3 +61,9 @@ const mapDispatch = dispatch => {
 }
 
 export default connect(mapState, mapDispatch)(Example)
+
+// sample chart for audio features
+// https://www.d3-graph-gallery.com/spider.html
+
+// usage of transitions
+// https://www.d3-graph-gallery.com/graph/interactivity_transition.html
