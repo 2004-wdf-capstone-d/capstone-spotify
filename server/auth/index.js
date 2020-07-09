@@ -8,7 +8,12 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', (req, res) => {
-  res.json(req.user)
+  const user = {...req.user._doc}
+  //console.log(user);
+  delete user.accessToken
+  delete user.refreshToken
+  //console.log(req.user);
+  res.json(user)
 })
 
 router.use('/spotify', require('./spotify'))
