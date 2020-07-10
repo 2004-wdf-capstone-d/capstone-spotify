@@ -2,20 +2,19 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchTopArtist} from '../store/user-topArtist'
 import {fetchTopTen} from '../store/topCharts'
+import {fetchAudioFeatures} from '../store/audioFeatures'
 import {default as Example} from './example'
 import {Route, Switch} from 'react-router-dom'
 import {default as UserTopArtists} from './userTopArtists'
 import {default as Sidebar} from './sidebar'
 
 export class DisplayPage extends React.Component {
-  // state to define what graph we're showing
-  // this.state.graph = graph1
-  // this.state.graph = graph2
-
-  componentDidMount() {
-    this.props.fetchTopTen()
+  async componentDidMount() {
+    await this.props.fetchTopTen()
+    console.log(await this.props.fetchAudioFeatures())
+    // this.props.fetchAudioFeatures()
     if (this.props.user._id) {
-      this.props.fetchTopArtist()
+      await this.props.fetchTopArtist()
     }
   }
 
@@ -41,14 +40,16 @@ const mapState = state => {
   return {
     user: state.user,
     topArtists: state.topArtists,
-    topCharts: state.topCharts
+    topCharts: state.topCharts,
+    audioFeatures: state.audioFeatures
   }
 }
 
 const mapDIspatch = dispatch => {
   return {
     fetchTopArtist: () => dispatch(fetchTopArtist()),
-    fetchTopTen: () => dispatch(fetchTopTen())
+    fetchTopTen: () => dispatch(fetchTopTen()),
+    fetchAudioFeatures: () => dispatch(fetchAudioFeatures())
   }
 }
 

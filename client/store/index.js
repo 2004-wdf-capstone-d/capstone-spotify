@@ -5,11 +5,13 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import topArtists from './user-topArtist'
 import topCharts from './topCharts'
+import audioFeatures from './audioFeatures'
 
 const reducer = combineReducers({
   user,
   topArtists,
-  topCharts
+  topCharts,
+  audioFeatures
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
