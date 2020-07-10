@@ -1,35 +1,53 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import * as d3 from 'd3'
 import {connect} from 'react-redux'
-import {fetchTopTen} from '../store/topCharts'
-import {fetchAudioFeatures} from '../store/audioFeatures'
 
 export const Example = props => {
   const {audioFeatures} = props
 
   const data = [
-    [
-      {danceability: audioFeatures.danceability},
-      {energy: audioFeatures.energy},
-      {speechiness: audioFeatures.speechiness},
-      {acousticness: audioFeatures.acousticness},
-      {instrumentalness: audioFeatures.instrumentalness},
-      {liveness: audioFeatures.liveness}
-    ]
+    {
+      track: [
+        {
+          name: 'danceability',
+          value: audioFeatures.danceability
+        },
+        {
+          name: 'energy',
+          value: audioFeatures.energy
+        },
+        {
+          name: 'speechiness',
+          value: audioFeatures.speechiness
+        },
+        {
+          name: 'acousticness',
+          value: audioFeatures.acousticness
+        },
+        {
+          name: 'instrumentalness',
+          value: audioFeatures.instrumentalness
+        },
+        {
+          name: 'liveness',
+          value: audioFeatures.liveness
+        }
+      ]
+    }
   ]
 
-  console.log('data', data)
+  console.log('data', data[0])
 
   let width = 420
 
   let x = d3
     .scaleLinear()
-    .domain([0, d3.max(props.topCharts, dataPoint => dataPoint.streams)])
+    .domain([0, d3.max(data[0].track, dataPoint => dataPoint.value)])
     .range([0, width])
   let y = d3
     .scaleBand()
-    .domain(props.topCharts.map(dataPoint => dataPoint.artist))
-    .range([0, 20 * props.topCharts.length])
+    .domain(data[0].track.map(dataPoint => dataPoint.name))
+    .range([0, 20 * data[0].track.length])
 
   return (
     <svg
@@ -39,20 +57,20 @@ export const Example = props => {
       fontSize="10"
       textAnchor="end"
     >
-      {props.topCharts.map((dataPoint, i) => (
-        <g key={i} transform={`translate(0,${y(dataPoint.artist)})`}>
+      {data[0].track.map((dataPoint, i) => (
+        <g key={i} transform={`translate(0,${y(dataPoint.name)})`}>
           <rect
             fill="steelblue"
-            width={x(dataPoint.streams)}
+            width={x(dataPoint.value)}
             height={y.bandwidth() - 1}
           />
           <text
             fill="white"
-            x={x(dataPoint.streams)}
+            x={x(dataPoint.value)}
             y={y.bandwidth() / 2}
             dy="0.35em"
           >
-            {dataPoint.artist}
+            {dataPoint.name}
           </text>
         </g>
       ))}
@@ -66,13 +84,6 @@ const mapState = state => {
     audioFeatures: state.audioFeatures
   }
 }
-
-// const mapDispatch = dispatch => {
-//   return {
-//     fetchTopTen: () => dispatch(fetchTopTen()),
-//     fetchAudioFeatures: () => dispatch(fetchAudioFeatures())
-//   }
-// }
 
 export default connect(mapState)(Example)
 
