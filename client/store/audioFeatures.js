@@ -10,11 +10,13 @@ const getAudioFeatures = audioFeatures => ({
 export const fetchAudioFeatures = () => async (dispatch, getState) => {
   const state = getState()
   if (state.topCharts.length) {
-    let trackId = state.topCharts[0].url.substring(31)
+    const trackIds = state.topCharts.map(track => {
+      return track.url.substring(31)
+    })
 
     const {data} = await Axios.get('/api/spotify-charts/audio-features', {
       params: {
-        trackId: trackId
+        trackIds
       }
     })
 
@@ -22,12 +24,12 @@ export const fetchAudioFeatures = () => async (dispatch, getState) => {
   }
 }
 
-const initialState = {}
+const initialState = []
 
 const audioFeaturesReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_AUDIO_FEATURES:
-      return action.audioFeatures
+      return [...action.audioFeatures]
     default:
       return state
   }

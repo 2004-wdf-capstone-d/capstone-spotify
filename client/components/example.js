@@ -5,77 +5,88 @@ import {connect} from 'react-redux'
 export const Example = props => {
   const {audioFeatures} = props
 
-  const data = [
-    {
-      track: [
-        {
-          name: 'danceability',
-          value: audioFeatures.danceability
-        },
-        {
-          name: 'energy',
-          value: audioFeatures.energy
-        },
-        {
-          name: 'speechiness',
-          value: audioFeatures.speechiness
-        },
-        {
-          name: 'acousticness',
-          value: audioFeatures.acousticness
-        },
-        {
-          name: 'instrumentalness',
-          value: audioFeatures.instrumentalness
-        },
-        {
-          name: 'liveness',
-          value: audioFeatures.liveness
-        }
-      ]
-    }
-  ]
+  const data = audioFeatures.map(track => {
+    const trackArray = [
+      {
+        name: 'danceability',
+        value: track.danceability
+      },
+      {
+        name: 'energy',
+        value: track.energy
+      },
+      {
+        name: 'speechiness',
+        value: track.speechiness
+      },
+      {
+        name: 'acousticness',
+        value: track.acousticness
+      },
+      {
+        name: 'liveness',
+        value: track.liveness
+      }
+    ]
+    return trackArray
+  })
 
-  console.log('data', data[0])
+  let width = window.innerWidth
 
-  let width = 420
+  if (data.length) {
+    return (
+      <div>
+        <h1>Audio Features of the Top Streaming Tracks on Spotify</h1>
+        <h5>based on last data pull: July 3, 2020</h5>
 
-  let x = d3
-    .scaleLinear()
-    .domain([0, d3.max(data[0].track, dataPoint => dataPoint.value)])
-    .range([0, width])
-  let y = d3
-    .scaleBand()
-    .domain(data[0].track.map(dataPoint => dataPoint.name))
-    .range([0, 20 * data[0].track.length])
+        {data.map((track, index) => {
+          let x = d3
+            .scaleLinear()
+            .domain([0, 1])
+            .range([0, width])
+          let y = d3
+            .scaleBand()
+            .domain(track.map(dataPoint => dataPoint.name))
+            .range([0, 20 * data[0].length])
 
-  return (
-    <svg
-      width={width}
-      height={y.range()[1]}
-      fontFamily="sans-serif"
-      fontSize="10"
-      textAnchor="end"
-    >
-      {data[0].track.map((dataPoint, i) => (
-        <g key={i} transform={`translate(0,${y(dataPoint.name)})`}>
-          <rect
-            fill="steelblue"
-            width={x(dataPoint.value)}
-            height={y.bandwidth() - 1}
-          />
-          <text
-            fill="white"
-            x={x(dataPoint.value)}
-            y={y.bandwidth() / 2}
-            dy="0.35em"
-          >
-            {dataPoint.name}
-          </text>
-        </g>
-      ))}
-    </svg>
-  )
+          return (
+            <div key={index}>
+              <h3>#{props.topCharts[index].position}</h3>
+              <h3>Artist: {props.topCharts[index].artist}</h3>
+              <h3>Track: {props.topCharts[index].trackName}</h3>
+              <svg
+                width={width}
+                height={y.range()[1]}
+                fontFamily="sans-serif"
+                fontSize="10"
+                textAnchor="end"
+              >
+                {track.map((dataPoint, i) => (
+                  <g key={i} transform={`translate(0,${y(dataPoint.name)})`}>
+                    <rect
+                      fill="steelblue"
+                      width={x(dataPoint.value)}
+                      height={y.bandwidth() - 1}
+                    />
+                    <text
+                      fill="black"
+                      x={x(dataPoint.value)}
+                      y={y.bandwidth() / 2}
+                      dy="0.35em"
+                    >
+                      {dataPoint.name}
+                    </text>
+                  </g>
+                ))}
+              </svg>
+            </div>
+          )
+        })}
+      </div>
+    )
+  } else {
+    return <h5>Loading...</h5>
+  }
 }
 
 const mapState = state => {

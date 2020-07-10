@@ -11,8 +11,7 @@ import {default as Sidebar} from './sidebar'
 export class DisplayPage extends React.Component {
   async componentDidMount() {
     await this.props.fetchTopTen()
-    console.log(await this.props.fetchAudioFeatures())
-    // this.props.fetchAudioFeatures()
+    await this.props.fetchAudioFeatures()
     if (this.props.user._id) {
       await this.props.fetchTopArtist()
     }

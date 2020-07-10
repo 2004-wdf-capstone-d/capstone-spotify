@@ -1,12 +1,11 @@
 const router = require('express').Router()
 const SpotifyWebApi = require('spotify-web-api-node')
 
-// const Axios = require('axios')
 const {TopChart} = require('../db/models/')
 const fetchGuestToken = require('./guestToken')
 module.exports = router
 
-// get top ten
+// get top ten artists from database
 router.get('/ten', async (req, res, next) => {
   try {
     const artists = await TopChart.find({
@@ -18,7 +17,7 @@ router.get('/ten', async (req, res, next) => {
   }
 })
 
-// get audio features of a specific track
+// get audio features of multiple tracks
 router.get('/audio-features', fetchGuestToken, async (req, res, next) => {
   try {
     const spotifyApi = new SpotifyWebApi({
@@ -29,11 +28,10 @@ router.get('/audio-features', fetchGuestToken, async (req, res, next) => {
 
     await spotifyApi.setAccessToken(req.body.accessToken)
 
-    const trackId = req.query.trackId
+    const trackIds = req.query.trackIds
 
-    const audioFeatures = await spotifyApi.getAudioFeaturesForTrack(trackId)
-
-    res.json(audioFeatures.body)
+    const audioFeatures = await spotifyApi.getAudioFeaturesForTracks(trackIds)
+    res.json(audioFeatures.body.audio_features)
   } catch (error) {
     next(error)
   }
