@@ -3,10 +3,10 @@ import {connect} from 'react-redux'
 import {fetchTopArtist} from '../store/user-topArtist'
 import {fetchTopTen} from '../store/topCharts'
 import {fetchAudioFeatures} from '../store/audioFeatures'
-import {default as Example} from './example'
 import {Route, Switch} from 'react-router-dom'
 import {default as UserTopArtists} from './userTopArtists'
 import {default as Sidebar} from './sidebar'
+import {default as AudioFeatures} from './audioFeatures'
 
 export class DisplayPage extends React.Component {
   async componentDidMount() {
@@ -28,7 +28,7 @@ export class DisplayPage extends React.Component {
               <Route component={UserTopArtists} />
             </Switch>
           )}
-          <Route component={Example} />
+          <Route component={AudioFeatures} />
         </Switch>
       </div>
     )
