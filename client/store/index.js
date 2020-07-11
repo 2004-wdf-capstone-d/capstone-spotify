@@ -6,10 +6,12 @@ import user from './user'
 import topArtists from './user-topArtist'
 import topCharts from './topCharts'
 import audioFeatures from './audioFeatures'
+import userSingleTopArtist from './userSingleTopArtist'
 
 const reducer = combineReducers({
   user,
   topArtists,
+  userSingleTopArtist,
   topCharts,
   audioFeatures
 })
