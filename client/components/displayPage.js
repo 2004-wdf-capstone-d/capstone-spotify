@@ -7,6 +7,7 @@ import {default as Example} from './example'
 import {Route, Switch} from 'react-router-dom'
 import {default as UserTopArtists} from './userTopArtists'
 import {default as Sidebar} from './sidebar'
+import {default as SingleTopArtist} from './singleTopArtist'
 
 export class DisplayPage extends React.Component {
   async componentDidMount() {
@@ -25,6 +26,8 @@ export class DisplayPage extends React.Component {
           {this.props.user._id && (
             <Switch>
               <Route path="/top-ten-global" component={Example} />
+
+              <Route path="/:artist" component={SingleTopArtist} />
               <Route component={UserTopArtists} />
             </Switch>
           )}

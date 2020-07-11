@@ -8,7 +8,9 @@ const UserTopArtists = props => {
       {props.topArtists.map(artist => (
         <li
           key={artist.id}
-          onClick={() => props.fetchSingleArtistTopSongs(artist)}
+          onClick={() => {
+            props.fetchSingleArtistTopSongs(artist)
+          }}
         >
           {artist.name}
         </li>

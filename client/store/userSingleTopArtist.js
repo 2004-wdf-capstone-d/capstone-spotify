@@ -1,5 +1,5 @@
 import Axios from 'axios'
-
+import history from '../history'
 const SET_SINGLE_TOP_ARTIST = 'SET_SINGLE_TOP_ARTIST'
 
 export const setTopArtist = artist => ({
@@ -22,6 +22,7 @@ export const fetchSingleArtistTopSongs = artist => {
       })
       const artistWithTracks = {...artist, topTracks: data}
       dispatch(setTopArtist(artistWithTracks))
+      history.push(`/${artist.id}/top-tracks`)
     } catch (error) {
       console.error(error)
     }
