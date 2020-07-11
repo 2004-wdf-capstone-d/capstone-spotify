@@ -1,18 +1,18 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchTopArtist} from '../store/user-topArtist'
-import {fetchTopTen} from '../store/topCharts'
 import {fetchAudioFeatures} from '../store/audioFeatures'
-import {default as Example} from './example'
+import {defaultAudioFeature} from '../store/currentAudioFeature'
 import {Route, Switch} from 'react-router-dom'
 import {default as UserTopArtists} from './userTopArtists'
 import {default as Sidebar} from './sidebar'
 import {default as SingleTopArtist} from './singleTopArtist'
+import {default as AudioFeatures} from './audioFeatures'
 
 export class DisplayPage extends React.Component {
   async componentDidMount() {
-    await this.props.fetchTopTen()
     await this.props.fetchAudioFeatures()
+    await this.props.defaultAudioFeature()
     if (this.props.user._id) {
       await this.props.fetchTopArtist()
     }
@@ -20,18 +20,17 @@ export class DisplayPage extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="displayPage">
         <Sidebar />
         <Switch>
           {this.props.user._id && (
             <Switch>
-              <Route path="/top-ten-global" component={Example} />
-
+              <Route path="/top-ten-global" component={AudioFeatures} />
               <Route path="/:artist" component={SingleTopArtist} />
               <Route component={UserTopArtists} />
             </Switch>
           )}
-          <Route component={Example} />
+          <Route component={AudioFeatures} />
         </Switch>
       </div>
     )
@@ -41,18 +40,16 @@ export class DisplayPage extends React.Component {
 const mapState = state => {
   return {
     user: state.user,
-    topArtists: state.topArtists,
-    topCharts: state.topCharts,
-    audioFeatures: state.audioFeatures
+    topArtists: state.topArtists
   }
 }
 
-const mapDIspatch = dispatch => {
+const mapDispatch = dispatch => {
   return {
     fetchTopArtist: () => dispatch(fetchTopArtist()),
-    fetchTopTen: () => dispatch(fetchTopTen()),
-    fetchAudioFeatures: () => dispatch(fetchAudioFeatures())
+    fetchAudioFeatures: () => dispatch(fetchAudioFeatures()),
+    defaultAudioFeature: () => dispatch(defaultAudioFeature())
   }
 }
 
-export default connect(mapState, mapDIspatch)(DisplayPage)
+export default connect(mapState, mapDispatch)(DisplayPage)
