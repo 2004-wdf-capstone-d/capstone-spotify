@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 
 const Sidebar = props => (
   <div id="sidebar">
-    <Link to="/top-ten-global">Top Ten Global Artists</Link>
+    <Link to="/top-ten-global">Top Streaming Artists</Link>
     <Link to="/"> user's top artists</Link>
   </div>
 )

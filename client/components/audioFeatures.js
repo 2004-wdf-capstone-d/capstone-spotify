@@ -6,40 +6,40 @@ export const AudioFeatures = props => {
   const {audioFeatures} = props
 
   const data = audioFeatures.reduce(
-    (dataArray, curTrack, index) => {
+    (dataArray, curTrack) => {
       dataArray[0].push({
-        artist: props.topCharts[index].artist,
-        trackName: props.topCharts[index].trackName,
+        artist: curTrack.artist,
+        trackName: curTrack.trackName,
         feature: 'danceability',
         value: curTrack.danceability
       })
       dataArray[1].push({
-        artist: props.topCharts[index].artist,
-        trackName: props.topCharts[index].trackName,
+        artist: curTrack.artist,
+        trackName: curTrack.trackName,
         feature: 'energy',
         value: curTrack.energy
       })
       dataArray[2].push({
-        artist: props.topCharts[index].artist,
-        trackName: props.topCharts[index].trackName,
+        artist: curTrack.artist,
+        trackName: curTrack.trackName,
         feature: 'speechiness',
         value: curTrack.speechiness
       })
       dataArray[3].push({
-        artist: props.topCharts[index].artist,
-        trackName: props.topCharts[index].trackName,
+        artist: curTrack.artist,
+        trackName: curTrack.trackName,
         feature: 'acousticness',
         value: curTrack.acousticness
       })
       dataArray[4].push({
-        artist: props.topCharts[index].artist,
-        trackName: props.topCharts[index].trackName,
+        artist: curTrack.artist,
+        trackName: curTrack.trackName,
         feature: 'liveness',
         value: curTrack.liveness
       })
       dataArray[5].push({
-        artist: props.topCharts[index].artist,
-        trackName: props.topCharts[index].trackName,
+        artist: curTrack.artist,
+        trackName: curTrack.trackName,
         feature: 'valence',
         value: curTrack.valence
       })
@@ -108,7 +108,6 @@ export const AudioFeatures = props => {
 
 const mapState = state => {
   return {
-    topCharts: state.topCharts,
     audioFeatures: state.audioFeatures
   }
 }

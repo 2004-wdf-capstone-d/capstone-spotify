@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchTopArtist} from '../store/user-topArtist'
-import {fetchTopTen} from '../store/topCharts'
 import {fetchAudioFeatures} from '../store/audioFeatures'
 import {Route, Switch} from 'react-router-dom'
 import {default as UserTopArtists} from './userTopArtists'
@@ -10,7 +9,6 @@ import {default as AudioFeatures} from './audioFeatures'
 
 export class DisplayPage extends React.Component {
   async componentDidMount() {
-    await this.props.fetchTopTen()
     await this.props.fetchAudioFeatures()
     if (this.props.user._id) {
       await this.props.fetchTopArtist()
@@ -19,12 +17,12 @@ export class DisplayPage extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="displayPage">
         <Sidebar />
         <Switch>
           {this.props.user._id && (
             <Switch>
-              <Route path="/top-ten-global" component={Example} />
+              <Route path="/top-ten-global" component={AudioFeatures} />
               <Route component={UserTopArtists} />
             </Switch>
           )}
@@ -39,7 +37,6 @@ const mapState = state => {
   return {
     user: state.user,
     topArtists: state.topArtists,
-    topCharts: state.topCharts,
     audioFeatures: state.audioFeatures
   }
 }
@@ -47,7 +44,6 @@ const mapState = state => {
 const mapDIspatch = dispatch => {
   return {
     fetchTopArtist: () => dispatch(fetchTopArtist()),
-    fetchTopTen: () => dispatch(fetchTopTen()),
     fetchAudioFeatures: () => dispatch(fetchAudioFeatures())
   }
 }
