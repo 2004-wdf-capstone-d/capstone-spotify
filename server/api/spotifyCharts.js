@@ -5,11 +5,11 @@ const {TopChart} = require('../db/models/')
 const fetchGuestToken = require('./guestToken')
 module.exports = router
 
-// get top ten artists from database
-router.get('/ten', async (req, res, next) => {
+// get artists from database
+router.get('/', async (req, res, next) => {
   try {
     const artists = await TopChart.find({
-      position: {$lte: 10}
+      position: {$lte: 100}
     })
     res.json(artists)
   } catch (error) {

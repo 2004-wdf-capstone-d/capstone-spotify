@@ -3,17 +3,15 @@ import * as d3 from 'd3'
 import {connect} from 'react-redux'
 import {
   changeAudioFeature,
-  sortAudioFeature
+  sortAudioFeature,
+  pageAudioFeature
 } from '../store/currentAudioFeature'
 
 export const AudioFeatures = props => {
   const {currentAudioFeature} = props
 
-  const handleChange = event => {
-    props.changeAudioFeature(event.target.value)
-  }
-  const handleSort = event => {
-    props.sortAudioFeature(event.target.value)
+  const handleEvent = event => {
+    props[`${event.target.name}AudioFeature`](event.target.value)
   }
 
   let width = window.innerWidth
@@ -33,33 +31,60 @@ export const AudioFeatures = props => {
       <h5>based on global weekly charts from July 9, 2020</h5>
       <div id="audio-feature-graph">
         <h3>Audio Feature: {currentAudioFeature[0].feature}</h3>
-        <label htmlFor="change-feature">Change Feature:</label>
-        <select
-          name="change-feature"
-          id="change-audio-feature"
-          onChange={event => {
-            handleChange(event)
-          }}
-        >
-          <option value="danceability">Danceability</option>
-          <option value="energy">Energy</option>
-          <option value="speechiness">Speechiness</option>
-          <option value="acousticness">Acousticness</option>
-          <option value="liveness">Liveness</option>
-          <option value="valence">Valence</option>
-        </select>
-        <label htmlFor="af-value-sorter">Sort by:</label>
-        <select
-          name="sorters"
-          id="af-value-sorter"
-          onChange={event => {
-            handleSort(event)
-          }}
-        >
-          <option value="position">Chart Ranking</option>
-          <option value="descending">High to Low</option>
-          <option value="ascending">Low to High</option>
-        </select>
+        <div>
+          <div>
+            <label htmlFor="change-feature">Change Feature:</label>
+            <select
+              name="change"
+              id="change-audio-feature"
+              onChange={event => {
+                handleEvent(event)
+              }}
+            >
+              <option value="danceability">Danceability</option>
+              <option value="energy">Energy</option>
+              <option value="speechiness">Speechiness</option>
+              <option value="acousticness">Acousticness</option>
+              <option value="liveness">Liveness</option>
+              <option value="valence">Valence</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="af-value-sorter">Sort by:</label>
+            <select
+              name="sort"
+              id="af-value-sorter"
+              onChange={event => {
+                handleEvent(event)
+              }}
+            >
+              <option value="position">Chart Ranking</option>
+              <option value="descending">High to Low</option>
+              <option value="ascending">Low to High</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="pager">Page:</label>
+            <select
+              name="page"
+              id="af-pager"
+              onChange={event => {
+                handleEvent(event)
+              }}
+            >
+              <option value="0">1 - 10</option>
+              <option value="10">11 - 20</option>
+              <option value="20">21 - 30</option>
+              <option value="30">31 - 40</option>
+              <option value="40">41 - 50</option>
+              <option value="50">51 - 60</option>
+              <option value="60">61 - 70</option>
+              <option value="70">71 - 80</option>
+              <option value="80">81 - 90</option>
+              <option value="90">91 - 100</option>
+            </select>
+          </div>
+        </div>
         <svg
           width={width}
           height={y.range()[1]}
@@ -74,7 +99,9 @@ export const AudioFeatures = props => {
                 height={y.bandwidth() - 1}
               />
               <text fill="black" x={x(0)} y={y.bandwidth() / 2} dy="0.35em">
-                {dataPoint.artist} : {dataPoint.trackName}
+                #{dataPoint.position} : {dataPoint.artist} - "{
+                  dataPoint.trackName
+                }"
               </text>
             </g>
           ))}
@@ -95,7 +122,8 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     changeAudioFeature: value => dispatch(changeAudioFeature(value)),
-    sortAudioFeature: value => dispatch(sortAudioFeature(value))
+    sortAudioFeature: value => dispatch(sortAudioFeature(value)),
+    pageAudioFeature: startIdx => dispatch(pageAudioFeature(startIdx))
   }
 }
 

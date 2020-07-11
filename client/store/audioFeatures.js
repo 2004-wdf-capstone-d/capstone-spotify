@@ -9,7 +9,7 @@ const getAudioFeatures = audioFeatures => ({
 
 export const fetchAudioFeatures = () => async dispatch => {
   // retrieve the db data first
-  let {data} = await Axios.get('/api/spotify-charts/ten')
+  let {data} = await Axios.get('/api/spotify-charts/')
 
   const charts = data
 

@@ -7,8 +7,13 @@ const setAudioFeature = audioFeature => ({
 
 export const defaultAudioFeature = () => (dispatch, getState) => {
   const {audioFeatures} = getState()
+  const pageFeatures = []
 
-  const dataSet = audioFeatures.reduce((data, curTrack) => {
+  for (let i = 0; i < 10; i++) {
+    pageFeatures.push(audioFeatures[i])
+  }
+
+  const dataSet = pageFeatures.reduce((data, curTrack) => {
     data.push({
       artist: curTrack.artist,
       trackName: curTrack.trackName,
@@ -22,9 +27,16 @@ export const defaultAudioFeature = () => (dispatch, getState) => {
 }
 
 export const changeAudioFeature = value => (dispatch, getState) => {
-  const {audioFeatures} = getState()
+  const {audioFeatures, currentAudioFeature} = getState()
+  let startIdx = Math.floor(currentAudioFeature[0].position / 10) * 10
+  const pageFeatures = []
+  startIdx = parseInt(startIdx)
 
-  const dataSet = audioFeatures.reduce((data, curTrack) => {
+  for (let i = startIdx; i < startIdx + 10; i++) {
+    pageFeatures.push(audioFeatures[i])
+  }
+
+  const dataSet = pageFeatures.reduce((data, curTrack) => {
     data.push({
       artist: curTrack.artist,
       trackName: curTrack.trackName,
@@ -55,6 +67,30 @@ export const sortAudioFeature = value => (dispatch, getState) => {
   }
 
   dispatch(setAudioFeature(currentAudioFeature))
+}
+
+export const pageAudioFeature = startIdx => (dispatch, getState) => {
+  const {audioFeatures, currentAudioFeature} = getState()
+  const pageFeatures = []
+  startIdx = parseInt(startIdx)
+
+  for (let i = startIdx; i < startIdx + 10; i++) {
+    pageFeatures.push(audioFeatures[i])
+  }
+
+  const value = currentAudioFeature[0].feature
+
+  const dataSet = pageFeatures.reduce((data, curTrack) => {
+    data.push({
+      artist: curTrack.artist,
+      trackName: curTrack.trackName,
+      position: curTrack.position,
+      feature: value,
+      value: curTrack[value]
+    })
+    return data
+  }, [])
+  dispatch(setAudioFeature(dataSet))
 }
 
 const initialState = []
