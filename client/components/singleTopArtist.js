@@ -19,9 +19,11 @@ class SingleTopArtist extends React.Component {
   componentDidMount() {}
 
   async handleClick(event) {
-    console.log(event)
+    //console.log(event)
     if (event.target.innerText === 'Top Songs') {
-      await this.props.fetchSingleArtistTopSongs()
+      if (!this.props.singleTopArtist.topTracks) {
+        await this.props.fetchSingleArtistTopSongs()
+      }
       history.push(`${this.props.match.url}/top-songs`)
     }
   }

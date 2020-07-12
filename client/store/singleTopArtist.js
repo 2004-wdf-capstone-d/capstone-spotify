@@ -18,6 +18,8 @@ export const addTrackToArtist = tracks => ({
   tracks
 })
 
+//add album
+
 export const fetchSingleArtistTopSongs = () => {
   return async (dispatch, getState) => {
     try {
