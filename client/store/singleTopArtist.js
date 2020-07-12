@@ -1,6 +1,7 @@
 import Axios from 'axios'
 import history from '../history'
 const SET_SINGLE_TOP_ARTIST = 'SET_SINGLE_TOP_ARTIST'
+const ADD_TOP_TRACKS_TO_ARTIST = 'ADD_TOP_TRACKS_TO_ARTIST'
 
 export const setTopArtist = artist => ({
   type: SET_SINGLE_TOP_ARTIST,
@@ -12,17 +13,21 @@ export const setTopArtist = artist => ({
 //   dispatch(setTopArtist(data.items))
 // }
 
-export const fetchSingleArtistTopSongs = artist => {
-  return async dispatch => {
+export const addTrackToArtist = tracks => ({
+  type: ADD_TOP_TRACKS_TO_ARTIST,
+  tracks
+})
+
+export const fetchSingleArtistTopSongs = () => {
+  return async (dispatch, getState) => {
     try {
+      const artist = getState().singleTopArtist
       const {data} = await Axios.get('/api/spotify/topArtist/top-tracks', {
         params: {
           artistId: artist.id
         }
       })
-      const artistWithTracks = {...artist, topTracks: data}
-      dispatch(setTopArtist(artistWithTracks))
-      history.push(`/${artist.id}/top-tracks`)
+      dispatch(addTrackToArtist(data))
     } catch (error) {
       console.error(error)
     }
@@ -31,13 +36,15 @@ export const fetchSingleArtistTopSongs = artist => {
 
 const initialState = {}
 
-const userSingleTopArtistReducer = (state = initialState, action) => {
+const singleTopArtistReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_SINGLE_TOP_ARTIST:
       return action.artist
+    case ADD_TOP_TRACKS_TO_ARTIST:
+      return {...state, topTracks: action.tracks}
     default:
       return state
   }
 }
 
-export default userSingleTopArtistReducer
+export default singleTopArtistReducer

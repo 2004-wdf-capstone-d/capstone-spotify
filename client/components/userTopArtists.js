@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchSingleArtistTopSongs} from '../store/userSingleTopArtist'
+import {setTopArtist} from '../store/singleTopArtist'
+import history from '../history'
 
 const UserTopArtists = props => {
   return (
@@ -9,7 +10,7 @@ const UserTopArtists = props => {
         <li
           key={artist.id}
           onClick={() => {
-            props.fetchSingleArtistTopSongs(artist)
+            props.setTopArtist(artist)
           }}
         >
           {artist.name}
@@ -22,13 +23,15 @@ const UserTopArtists = props => {
 const mapState = state => {
   return {
     topArtists: state.topArtists,
-    userSingleTopArtist: state.userSingleTopArtist
+    singleTopArtist: state.singleTopArtist
   }
 }
 
 const mapDispatch = dispatch => ({
-  fetchSingleArtistTopSongs: artist =>
-    dispatch(fetchSingleArtistTopSongs(artist))
+  setTopArtist: artist => {
+    dispatch(setTopArtist(artist))
+    history.push(`/${artist.id}`)
+  }
 })
 
 export default connect(mapState, mapDispatch)(UserTopArtists)
