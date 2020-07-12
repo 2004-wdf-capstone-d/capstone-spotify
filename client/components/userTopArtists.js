@@ -8,6 +8,8 @@ import {fetchSingleArtistAlbum} from '../store/singleTopArtistAlbum'
 //   console.log(event.target)
 //   fetchTopArtistAlbum()
 // }
+import {setTopArtist} from '../store/singleTopArtist'
+import history from '../history'
 
 const UserTopArtists = props => {
   return (
@@ -15,7 +17,10 @@ const UserTopArtists = props => {
       {props.topArtists.map(artist => (
         <li
           key={artist.id}
-          onClick={() => props.fetchSingleArtistAlbum(artist)}
+          // onClick={() => props.fetchSingleArtistAlbum(artist)}
+          onClick={() => {
+            props.setTopArtist(artist)
+          }}
         >
           {artist.name}
         </li>
@@ -24,14 +29,18 @@ const UserTopArtists = props => {
   )
 }
 
-const mapState = state => ({
-  topArtists: state.topArtists,
-  artistAlbum: state.singleTopArtistAlbum
-})
+const mapState = state => {
+  return {
+    topArtists: state.topArtists,
+    singleTopArtist: state.singleTopArtist
+  }
+}
 
 const mapDispatch = dispatch => ({
-  fetchTopArtistAlbum: artistId => dispatch(fetchTopArtistAlbum(artistId)),
-  fetchSingleArtistAlbum: artistId => dispatch(fetchSingleArtistAlbum(artistId))
+  setTopArtist: artist => {
+    dispatch(setTopArtist(artist))
+    history.push(`/${artist.id}`)
+  }
 })
 
 export default connect(mapState, mapDispatch)(UserTopArtists)
