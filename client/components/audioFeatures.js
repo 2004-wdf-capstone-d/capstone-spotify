@@ -1,17 +1,19 @@
 import React from 'react'
 import * as d3 from 'd3'
 import {connect} from 'react-redux'
+import {setAudioFeature} from '../store/currentAudioFeature'
 import {
-  changeAudioFeature,
-  sortAudioFeature,
-  pageAudioFeature
-} from '../store/currentAudioFeature'
+  setAudioFeatureName,
+  setAudioFeatureSort,
+  setAudioFeaturePage
+} from '../store/audioFeatureSettings'
 
 export const AudioFeatures = props => {
   const {currentAudioFeature} = props
 
-  const handleEvent = event => {
-    props[`${event.target.name}AudioFeature`](event.target.value)
+  const handleChangeSettings = event => {
+    props[`setAudioFeature${event.target.name}`](event.target.value)
+    props.setAudioFeature()
   }
 
   let width = window.innerWidth
@@ -35,10 +37,10 @@ export const AudioFeatures = props => {
           <div>
             <label htmlFor="change-feature">Change Feature:</label>
             <select
-              name="change"
+              name="Name"
               id="change-audio-feature"
               onChange={event => {
-                handleEvent(event)
+                handleChangeSettings(event)
               }}
             >
               <option value="danceability">Danceability</option>
@@ -52,10 +54,10 @@ export const AudioFeatures = props => {
           <div>
             <label htmlFor="af-value-sorter">Sort by:</label>
             <select
-              name="sort"
+              name="Sort"
               id="af-value-sorter"
               onChange={event => {
-                handleEvent(event)
+                handleChangeSettings(event)
               }}
             >
               <option value="position">Chart Ranking</option>
@@ -66,10 +68,10 @@ export const AudioFeatures = props => {
           <div>
             <label htmlFor="pager">Page:</label>
             <select
-              name="page"
+              name="Page"
               id="af-pager"
               onChange={event => {
-                handleEvent(event)
+                handleChangeSettings(event)
               }}
             >
               <option value="0">1 - 10</option>
@@ -121,9 +123,10 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    changeAudioFeature: value => dispatch(changeAudioFeature(value)),
-    sortAudioFeature: value => dispatch(sortAudioFeature(value)),
-    pageAudioFeature: startIdx => dispatch(pageAudioFeature(startIdx))
+    setAudioFeature: () => dispatch(setAudioFeature()),
+    setAudioFeatureName: value => dispatch(setAudioFeatureName(value)),
+    setAudioFeatureSort: value => dispatch(setAudioFeatureSort(value)),
+    setAudioFeaturePage: value => dispatch(setAudioFeaturePage(value))
   }
 }
 
