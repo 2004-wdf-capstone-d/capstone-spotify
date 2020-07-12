@@ -16,13 +16,13 @@ export const AudioFeatures = props => {
     props.setAudioFeature()
   }
 
-  let width = window.innerWidth
+  const width = window.innerWidth
 
-  let x = d3
+  const x = d3
     .scaleLinear()
     .domain([0, 1])
     .range([0, width])
-  let y = d3
+  const y = d3
     .scaleBand()
     .domain(currentAudioFeature.map(dataPoint => dataPoint.trackName))
     .range([0, 50 * currentAudioFeature.length])
@@ -33,7 +33,7 @@ export const AudioFeatures = props => {
       <h5>based on global weekly charts from July 9, 2020</h5>
       <div id="audio-feature-graph">
         <h3>Audio Feature: {currentAudioFeature[0].feature}</h3>
-        <div>
+        <div id="audio-feature-settings">
           <div>
             <label htmlFor="change-feature">Change Feature:</label>
             <select
@@ -92,9 +92,14 @@ export const AudioFeatures = props => {
           height={y.range()[1]}
           fontFamily="sans-serif"
           fontSize="18"
+          className="audio-feature-graph"
         >
           {currentAudioFeature.map((dataPoint, index) => (
-            <g key={index} transform={`translate(0,${y(dataPoint.trackName)})`}>
+            <g
+              key={index}
+              className="audio-feature-bar"
+              transform={`translate(0,${y(dataPoint.trackName)})`}
+            >
               <rect
                 fill="limegreen"
                 width={x(dataPoint.value)}

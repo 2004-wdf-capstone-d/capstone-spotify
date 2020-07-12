@@ -4,14 +4,14 @@ import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import topArtists from './user-topArtist'
-import audioFeatureTracks from './audioFeatures'
+import audioFeatureData from './audioFeatures'
 import currentAudioFeature from './currentAudioFeature'
 import audioFeatureSettings from './audioFeatureSettings'
 
 const reducer = combineReducers({
   user,
   topArtists,
-  audioFeatureTracks,
+  audioFeatureData,
   currentAudioFeature,
   audioFeatureSettings
 })

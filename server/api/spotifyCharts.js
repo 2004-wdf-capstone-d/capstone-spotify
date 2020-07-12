@@ -6,32 +6,47 @@ const fetchGuestToken = require('./guestToken')
 module.exports = router
 
 // get artists from database
-router.get('/', async (req, res, next) => {
+router.get('/', fetchGuestToken, async (req, res, next) => {
   try {
-    const artists = await TopChart.find({
+    // get charts from database
+    const charts = await TopChart.find({
       position: {$lte: 100}
     })
-    res.json(artists)
-  } catch (error) {
-    next(error)
-  }
-})
 
-// get audio features of multiple tracks
-router.get('/audio-features', fetchGuestToken, async (req, res, next) => {
-  try {
+    // extract trackIds from charts
+    const trackIds = charts.map(track => {
+      return track.url.substring(31)
+    })
+
+    // spotify API call to retrieve audio features
     const spotifyApi = new SpotifyWebApi({
       clientId: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
       redirectUri: process.env.SPOTIFY_CALLBACK
     })
-
     await spotifyApi.setAccessToken(req.body.accessToken)
+    const response = await spotifyApi.getAudioFeaturesForTracks(trackIds)
+    const audioFeatures = response.body.audio_features
 
-    const trackIds = req.query.trackIds
+    // data cleaning
+    const dataset = charts.map((track, index) => {
+      return {
+        artist: track.artist,
+        position: track.position,
+        streams: track.streams,
+        trackName: track.trackName,
+        url: track.url,
+        trackId: trackIds[index],
+        danceability: audioFeatures[index].danceability,
+        energy: audioFeatures[index].energy,
+        speechiness: audioFeatures[index].speechiness,
+        acousticness: audioFeatures[index].acousticness,
+        liveness: audioFeatures[index].liveness,
+        valence: audioFeatures[index].valence
+      }
+    })
 
-    const audioFeatures = await spotifyApi.getAudioFeaturesForTracks(trackIds)
-    res.json(audioFeatures.body.audio_features)
+    res.json(dataset)
   } catch (error) {
     next(error)
   }
