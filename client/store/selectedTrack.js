@@ -5,44 +5,45 @@ const setTrack = track => ({
   track
 })
 
-export const selectTrack = dataPoint => (dispatch, getState) => {
+export const selectTrack = trackId => (dispatch, getState) => {
   const {audioFeatureData, audioFeatureSettings} = getState()
   const {page} = audioFeatureSettings
 
   const selectedTrack = {
-    artist: dataPoint.artist,
-    trackName: dataPoint.trackName,
-    trackId: dataPoint.trackId,
-    url: dataPoint.url,
-    streams: dataPoint.streams,
-    position: dataPoint.position
+    trackId
   }
   for (let i = page; i < page + 10; i++) {
+    const track = audioFeatureData[i]
     if (selectedTrack.trackId === audioFeatureData[i].trackId) {
+      selectedTrack.artist = track.artist
+      selectedTrack.trackName = track.trackName
+      selectedTrack.url = track.url
+      selectedTrack.streams = track.streams
+      selectedTrack.position = track.position
       selectedTrack.features = [
         {
           name: 'danceability',
-          value: audioFeatureData[i].danceability
+          value: track.danceability
         },
         {
           name: 'energy',
-          value: audioFeatureData[i].energy
+          value: track.energy
         },
         {
           name: 'speechiness',
-          value: audioFeatureData[i].speechiness
+          value: track.speechiness
         },
         {
           name: 'acousticness',
-          value: audioFeatureData[i].acousticness
+          value: track.acousticness
         },
         {
           name: 'liveness',
-          value: audioFeatureData[i].liveness
+          value: track.liveness
         },
         {
           name: 'valence',
-          value: audioFeatureData[i].valence
+          value: track.valence
         }
       ]
       break

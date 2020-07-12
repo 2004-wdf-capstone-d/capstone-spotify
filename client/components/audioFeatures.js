@@ -8,16 +8,17 @@ import {
   setAudioFeaturePage
 } from '../store/audioFeatureSettings'
 import {selectTrack} from '../store/selectedTrack'
+import SelectedTrack from './selectedTrack'
 
 export const AudioFeatures = props => {
-  const {currentAudioFeature} = props
+  const {currentAudioFeature, selectedTrack} = props
 
   const handleChangeSettings = event => {
     props[`setAudioFeature${event.target.name}`](event.target.value)
     props.setAudioFeature()
   }
-  const handleSelectedTrack = dataPoint => {
-    props.selectTrack(dataPoint)
+  const handleSelectedTrack = event => {
+    props.selectTrack(event.target.value)
   }
 
   const width = window.innerWidth
@@ -32,7 +33,7 @@ export const AudioFeatures = props => {
     .range([0, 50 * currentAudioFeature.length])
 
   return currentAudioFeature.length ? (
-    <div>
+    <div id="audio-feature-page">
       <h1>Audio Features of the Top Streaming Tracks on Spotify</h1>
       <h5>based on global weekly charts from July 9, 2020</h5>
       <div id="audio-feature-graph">
@@ -117,6 +118,25 @@ export const AudioFeatures = props => {
             </g>
           ))}
         </svg>
+        <div id="track-details">
+          <label htmlFor="selectTrack">View Track Details:</label>
+          <select
+            name="select-track"
+            id="af-select-track"
+            onChange={event => {
+              handleSelectedTrack(event)
+            }}
+          >
+            {currentAudioFeature.map(track => {
+              return (
+                <option key={track.trackId} value={track.trackId}>
+                  {track.artist} - "{track.trackName}"
+                </option>
+              )
+            })}
+          </select>
+          {selectedTrack.trackId ? <SelectedTrack width={width} /> : null}
+        </div>
       </div>
     </div>
   ) : (
@@ -126,7 +146,8 @@ export const AudioFeatures = props => {
 
 const mapState = state => {
   return {
-    currentAudioFeature: state.currentAudioFeature
+    currentAudioFeature: state.currentAudioFeature,
+    selectedTrack: state.selectedTrack
   }
 }
 
