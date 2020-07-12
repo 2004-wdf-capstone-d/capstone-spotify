@@ -7,13 +7,15 @@ import topArtists from './user-topArtist'
 import audioFeatureData from './audioFeatures'
 import currentAudioFeature from './currentAudioFeature'
 import audioFeatureSettings from './audioFeatureSettings'
+import selectedTrack from './selectedTrack'
 
 const reducer = combineReducers({
   user,
   topArtists,
   audioFeatureData,
   currentAudioFeature,
-  audioFeatureSettings
+  audioFeatureSettings,
+  selectedTrack
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))

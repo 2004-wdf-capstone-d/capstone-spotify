@@ -16,13 +16,16 @@ export const setAudioFeature = () => (dispatch, getState) => {
   }
 
   // handle name settings
-  const dataSet = pageFeatures.reduce((data, curTrack) => {
+  const dataSet = pageFeatures.reduce((data, track) => {
     data.push({
-      artist: curTrack.artist,
-      trackName: curTrack.trackName,
-      position: curTrack.position,
+      artist: track.artist,
+      trackName: track.trackName,
+      trackId: track.trackId,
+      url: track.url,
+      streams: track.streams,
+      position: track.position,
       feature,
-      value: curTrack[feature]
+      value: track[feature]
     })
     return data
   }, [])
@@ -50,7 +53,7 @@ const initialState = []
 const currentAudioFeatureReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_AUDIO_FEATURE:
-      return [...action.audioFeature]
+      return action.audioFeature
     default:
       return state
   }

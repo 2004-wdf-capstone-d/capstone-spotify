@@ -7,6 +7,7 @@ import {
   setAudioFeatureSort,
   setAudioFeaturePage
 } from '../store/audioFeatureSettings'
+import {selectTrack} from '../store/selectedTrack'
 
 export const AudioFeatures = props => {
   const {currentAudioFeature} = props
@@ -14,6 +15,9 @@ export const AudioFeatures = props => {
   const handleChangeSettings = event => {
     props[`setAudioFeature${event.target.name}`](event.target.value)
     props.setAudioFeature()
+  }
+  const handleSelectedTrack = dataPoint => {
+    props.selectTrack(dataPoint)
   }
 
   const width = window.innerWidth
@@ -131,7 +135,8 @@ const mapDispatch = dispatch => {
     setAudioFeature: () => dispatch(setAudioFeature()),
     setAudioFeatureName: value => dispatch(setAudioFeatureName(value)),
     setAudioFeatureSort: value => dispatch(setAudioFeatureSort(value)),
-    setAudioFeaturePage: value => dispatch(setAudioFeaturePage(value))
+    setAudioFeaturePage: value => dispatch(setAudioFeaturePage(value)),
+    selectTrack: dataPoint => dispatch(selectTrack(dataPoint))
   }
 }
 
