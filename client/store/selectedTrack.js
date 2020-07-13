@@ -18,6 +18,7 @@ export const selectTrack = trackId => (dispatch, getState) => {
       selectedTrack.artist = track.artist
       selectedTrack.trackName = track.trackName
       selectedTrack.url = track.url
+      selectedTrack.uri = track.uri
       selectedTrack.streams = track.streams
       selectedTrack.position = track.position
       selectedTrack.features = [

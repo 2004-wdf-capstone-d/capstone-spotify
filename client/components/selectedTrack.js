@@ -16,9 +16,32 @@ export const SelectedTrack = props => {
 
   return (
     <div>
-      <h3>#{selectedTrack.position}</h3>
-      <h3>Artist: {selectedTrack.artist}</h3>
-      <h3>Track: {selectedTrack.trackName}</h3>
+      <h3>
+        #{selectedTrack.position} : {selectedTrack.artist} - "{
+          selectedTrack.trackName
+        }"
+      </h3>
+      <h3>Streams: {selectedTrack.streams}</h3>
+      <h3>Audio Features:</h3>
+      <ul>
+        {selectedTrack.features.map((feature, index) => {
+          return (
+            <li key={index}>
+              {feature.name} : {feature.value}
+            </li>
+          )
+        })}
+      </ul>
+      <iframe
+        src={`https://open.spotify.com/embed/track/${selectedTrack.uri.substring(
+          14
+        )}`}
+        width="300"
+        height="80"
+        allowTransparency="true"
+        allow="encrypted-media"
+      />
+
       <svg
         width={width}
         height={y.range()[1]}

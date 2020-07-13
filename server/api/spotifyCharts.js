@@ -37,6 +37,7 @@ router.get('/', fetchGuestToken, async (req, res, next) => {
         trackName: track.trackName,
         url: track.url,
         trackId: trackIds[index],
+        uri: audioFeatures[index].uri,
         danceability: audioFeatures[index].danceability,
         energy: audioFeatures[index].energy,
         speechiness: audioFeatures[index].speechiness,

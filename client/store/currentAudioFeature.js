@@ -22,6 +22,7 @@ export const setAudioFeature = () => (dispatch, getState) => {
       trackName: track.trackName,
       trackId: track.trackId,
       url: track.url,
+      uri: track.uri,
       streams: track.streams,
       position: track.position,
       feature,

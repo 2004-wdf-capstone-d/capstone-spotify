@@ -11,7 +11,7 @@ import {selectTrack} from '../store/selectedTrack'
 import SelectedTrack from './selectedTrack'
 
 export const AudioFeatures = props => {
-  const {currentAudioFeature, selectedTrack} = props
+  const {currentAudioFeature, audioFeatureSettings, selectedTrack} = props
 
   const handleChangeSettings = event => {
     props[`setAudioFeature${event.target.name}`](event.target.value)
@@ -37,7 +37,7 @@ export const AudioFeatures = props => {
       <h1>Audio Features of the Top Streaming Tracks on Spotify</h1>
       <h5>based on global weekly charts from July 9, 2020</h5>
       <div id="audio-feature-graph">
-        <h3>Audio Feature: {currentAudioFeature[0].feature}</h3>
+        <h3>Audio Feature: {audioFeatureSettings.feature}</h3>
         <div id="audio-feature-settings">
           <div>
             <label htmlFor="change-feature">Change Feature:</label>
@@ -147,6 +147,7 @@ export const AudioFeatures = props => {
 const mapState = state => {
   return {
     currentAudioFeature: state.currentAudioFeature,
+    audioFeatureSettings: state.audioFeatureSettings,
     selectedTrack: state.selectedTrack
   }
 }
