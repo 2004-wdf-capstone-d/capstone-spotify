@@ -12,55 +12,55 @@ export const SelectedTrack = props => {
   const y = d3
     .scaleBand()
     .domain(selectedTrack.features.map(dataPoint => dataPoint.name))
-    .range([0, 50 * selectedTrack.features.length])
+    .range([0, 40 * selectedTrack.features.length])
 
   return (
-    <div>
-      <h3>
-        #{selectedTrack.position} : {selectedTrack.artist} - "{
-          selectedTrack.trackName
-        }"
-      </h3>
-      <h3>Streams: {selectedTrack.streams}</h3>
-      <h3>Audio Features:</h3>
-      <ul>
-        {selectedTrack.features.map((feature, index) => {
-          return (
-            <li key={index}>
-              {feature.name} : {feature.value}
-            </li>
-          )
-        })}
-      </ul>
-      <iframe
-        src={`https://open.spotify.com/embed/track/${selectedTrack.uri.substring(
-          14
-        )}`}
-        width="300"
-        height="80"
-        allowTransparency="true"
-        allow="encrypted-media"
-      />
-
-      <svg
-        width={width}
-        height={y.range()[1]}
-        fontFamily="sans-serif"
-        fontSize="18"
-      >
-        {selectedTrack.features.map((dataPoint, i) => (
-          <g key={i} transform={`translate(0,${y(dataPoint.name)})`}>
-            <rect
-              fill="gray"
-              width={x(dataPoint.value)}
-              height={y.bandwidth() - 1}
-            />
-            <text fill="limegreen" x={x(0)} y={y.bandwidth() / 2} dy="0.35em">
-              {dataPoint.name}
-            </text>
-          </g>
-        ))}
-      </svg>
+    <div id="selected-track-main">
+      <div id="selected-track-info">
+        <iframe
+          src={`https://open.spotify.com/embed/track/${selectedTrack.uri.substring(
+            14
+          )}`}
+          width="300"
+          height="80"
+          allowTransparency="true"
+          allow="encrypted-media"
+        />
+        <div>
+          <h3>
+            #{selectedTrack.position}: {selectedTrack.artist} - "{
+              selectedTrack.trackName
+            }"
+          </h3>
+          <h3>Streams: {selectedTrack.streams}</h3>
+        </div>
+      </div>
+      <div id="selected-track-features">
+        <svg
+          width={width}
+          height={y.range()[1]}
+          fontFamily="sans-serif"
+          fontSize="18"
+        >
+          {selectedTrack.features.map((dataPoint, i) => (
+            <g key={i} transform={`translate(0,${y(dataPoint.name)})`}>
+              <rect
+                fill="darkslategray"
+                width={x(dataPoint.value)}
+                height={y.bandwidth() - 1}
+              />
+              <text
+                fill="darkseagreen"
+                x={x(0)}
+                y={y.bandwidth() / 2}
+                dy="0.35em"
+              >
+                {dataPoint.name}: {dataPoint.value}
+              </text>
+            </g>
+          ))}
+        </svg>
+      </div>
     </div>
   )
 }
