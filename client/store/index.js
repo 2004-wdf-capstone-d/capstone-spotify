@@ -4,14 +4,16 @@ import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import topArtists from './user-topArtist'
-import audioFeatures from './audioFeatures'
+import audioFeatureData from './audioFeatures'
 import currentAudioFeature from './currentAudioFeature'
+import selectedTrack from './selectedTrack'
 
 const reducer = combineReducers({
   user,
   topArtists,
-  audioFeatures,
-  currentAudioFeature
+  audioFeatureData,
+  currentAudioFeature,
+  selectedTrack
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
