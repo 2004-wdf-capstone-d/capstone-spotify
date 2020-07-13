@@ -1,12 +1,12 @@
 const router = require('express').Router()
 const SpotifyWebApi = require('spotify-web-api-node')
 
-const {TopChart} = require('../db/models/')
+const {TopChart, AudioFeatureTrack} = require('../db/models')
 const fetchGuestToken = require('./guestToken')
 module.exports = router
 
-// get artists from database
-router.get('/', fetchGuestToken, async (req, res, next) => {
+// create default audio feature tracks
+router.post('/', fetchGuestToken, async (req, res, next) => {
   try {
     // get charts from database
     const charts = await TopChart.find({
@@ -47,7 +47,22 @@ router.get('/', fetchGuestToken, async (req, res, next) => {
       }
     })
 
-    res.json(dataset)
+    const defaultTracks = await AudioFeatureTrack.insertMany(dataset)
+
+    res.json(defaultTracks)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// get audio feature tracks from database
+router.get('/', async (req, res, next) => {
+  try {
+    const defaultTracks = await AudioFeatureTrack.find({
+      position: {$lte: 100}
+    })
+
+    res.json(defaultTracks)
   } catch (error) {
     next(error)
   }

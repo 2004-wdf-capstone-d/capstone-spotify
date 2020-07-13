@@ -1,4 +1,4 @@
-import Axios from 'axios'
+import axios from 'axios'
 
 const GET_AUDIO_FEATURES = 'GET_AUDIO_FEATURES'
 
@@ -8,8 +8,14 @@ const getAudioFeatures = audioFeatures => ({
 })
 
 export const fetchAudioFeatures = () => async dispatch => {
-  const {data} = await Axios.get('/api/spotify-charts/')
-  dispatch(getAudioFeatures(data))
+  const {data} = await axios.get('/api/audio-features/')
+
+  if (!data.length) {
+    const response = await axios.post('/api/audio-features')
+    dispatch(getAudioFeatures(response.data))
+  } else {
+    dispatch(getAudioFeatures(data))
+  }
 }
 
 const initialState = []
