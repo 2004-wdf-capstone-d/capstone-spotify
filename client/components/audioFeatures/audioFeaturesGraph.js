@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import * as d3 from 'd3'
 import {connect} from 'react-redux'
 
@@ -7,10 +7,11 @@ import {default as SettingsBar} from './settingsBar'
 import {selectTrack} from '../../store/selectedTrack'
 
 const AudioFeaturesGraph = props => {
-  const {dataSet, settings, selectedTrack} = props
+  const {dataSet, currentSet, selectedTrack} = props
+  const [page, setPage] = useState(0)
 
   const handleSelectedTrack = event => {
-    props.selectTrack(event.target.value)
+    props.selectTrack(dataSet, event.target.value, page)
   }
 
   const width = window.innerWidth
@@ -21,36 +22,13 @@ const AudioFeaturesGraph = props => {
     .range([0, width])
   const y = d3
     .scaleBand()
-    .domain(dataSet.map(dataPoint => dataPoint.trackName))
-    .range([0, 40 * dataSet.length])
+    .domain(currentSet.map(dataPoint => dataPoint.trackName))
+    .range([0, 40 * currentSet.length])
 
   return (
     <div>
       <div className="audio-feature-graph">
-        <h3>Audio Feature: {settings.feature}</h3>
-        <div>
-          <div>
-            <SettingsBar data={dataSet} settings={settings} />
-          </div>
-          <div>
-            <label htmlFor="selectTrack">View Track Details:</label>
-            <select
-              name="select-track"
-              className="af-select-track"
-              onChange={event => {
-                handleSelectedTrack(event)
-              }}
-            >
-              {dataSet.map(track => {
-                return (
-                  <option key={track.trackId} value={track.trackId}>
-                    {track.artist} - "{track.trackName}"
-                  </option>
-                )
-              })}
-            </select>
-          </div>
-        </div>
+        <SettingsBar data={dataSet} page={page} setPage={setPage} />
         <svg
           width={width}
           height={y.range()[1]}
@@ -58,7 +36,7 @@ const AudioFeaturesGraph = props => {
           fontSize="18"
           className="audio-feature-graph"
         >
-          {dataSet.map((dataPoint, index) => (
+          {currentSet.map((dataPoint, index) => (
             <g
               key={index}
               className="audio-feature-bar"
@@ -84,6 +62,24 @@ const AudioFeaturesGraph = props => {
         </svg>
       </div>
       <div className="audio-feature-track-details">
+        <div>
+          <label htmlFor="selectTrack">View Track Details:</label>
+          <select
+            name="select-track"
+            className="af-select-track"
+            onChange={event => {
+              handleSelectedTrack(event)
+            }}
+          >
+            {currentSet.map(track => {
+              return (
+                <option key={track.trackId} value={track.trackId}>
+                  {track.artist} - "{track.trackName}"
+                </option>
+              )
+            })}
+          </select>
+        </div>
         {selectedTrack.trackId ? <SelectedTrack width={width} /> : null}
       </div>
     </div>
@@ -98,8 +94,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    // setAudioFeature: () => dispatch(setAudioFeature()),
-    selectTrack: dataPoint => dispatch(selectTrack(dataPoint))
+    selectTrack: (data, trackId, page) =>
+      dispatch(selectTrack(data, trackId, page))
   }
 }
 

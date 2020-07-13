@@ -6,7 +6,6 @@ import user from './user'
 import topArtists from './user-topArtist'
 import audioFeatureData from './audioFeatures'
 import currentAudioFeature from './currentAudioFeature'
-import audioFeatureSettings from './audioFeatureSettings'
 import selectedTrack from './selectedTrack'
 
 const reducer = combineReducers({
@@ -14,7 +13,6 @@ const reducer = combineReducers({
   topArtists,
   audioFeatureData,
   currentAudioFeature,
-  audioFeatureSettings,
   selectedTrack
 })
 const middleware = composeWithDevTools(

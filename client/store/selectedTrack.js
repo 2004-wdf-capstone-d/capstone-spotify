@@ -5,16 +5,16 @@ const setTrack = track => ({
   track
 })
 
-export const selectTrack = trackId => (dispatch, getState) => {
-  const {audioFeatureData, audioFeatureSettings} = getState()
-  const {page} = audioFeatureSettings
+export const selectTrack = (data, trackId, page) => dispatch => {
+  // const {audioFeatureData, audioFeatureSettings} = getState()
+  // const {page} = audioFeatureSettings
 
   const selectedTrack = {
     trackId
   }
   for (let i = page; i < page + 10; i++) {
-    const track = audioFeatureData[i]
-    if (selectedTrack.trackId === audioFeatureData[i].trackId) {
+    const track = data[i]
+    if (selectedTrack.trackId === data[i].trackId) {
       selectedTrack.artist = track.artist
       selectedTrack.trackName = track.trackName
       selectedTrack.url = track.url

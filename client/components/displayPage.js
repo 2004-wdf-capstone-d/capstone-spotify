@@ -6,15 +6,16 @@ import {setAudioFeature} from '../store/currentAudioFeature'
 import {Route, Switch} from 'react-router-dom'
 import {default as UserTopArtists} from './userTopArtists'
 import {default as Sidebar} from './sidebar'
-import {default as AudioFeatures} from './audioFeatures'
+import {default as DefaultAudioFeatures} from './audioFeatures'
 
 export class DisplayPage extends React.Component {
   async componentDidMount() {
     await this.props.fetchAudioFeatures()
-    await this.props.setAudioFeature(
-      this.props.audioFeatureData,
-      this.props.audioFeatureSettings
-    )
+    await this.props.setAudioFeature(this.props.audioFeatureData, {
+      feature: 'danceability',
+      sort: 'position',
+      page: 0
+    })
     if (this.props.user._id) {
       await this.props.fetchTopArtist()
     }
@@ -27,11 +28,11 @@ export class DisplayPage extends React.Component {
         <Switch>
           {this.props.user._id && (
             <Switch>
-              <Route path="/top-ten-global" component={AudioFeatures} />
+              <Route path="/top-ten-global" component={DefaultAudioFeatures} />
               <Route component={UserTopArtists} />
             </Switch>
           )}
-          <Route component={AudioFeatures} />
+          <Route component={DefaultAudioFeatures} />
         </Switch>
       </div>
     )
@@ -42,8 +43,7 @@ const mapState = state => {
   return {
     user: state.user,
     topArtists: state.topArtists,
-    audioFeatureData: state.audioFeatureData,
-    audioFeatureSettings: state.audioFeatureSettings
+    audioFeatureData: state.audioFeatureData
   }
 }
 

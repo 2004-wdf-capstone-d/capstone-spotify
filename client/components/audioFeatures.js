@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 
 import {default as AudioFeaturesGraph} from './audioFeatures/audioFeaturesGraph'
 
-export const AudioFeatures = props => {
-  const {currentAudioFeature, audioFeatureSettings} = props
+export const DefaultAudioFeatures = props => {
+  const {audioFeatureData, currentAudioFeature, audioFeatureSettings} = props
 
   return currentAudioFeature.length ? (
     <div id="audio-feature-main">
@@ -13,7 +13,8 @@ export const AudioFeatures = props => {
         <h5>based on global weekly charts from July 9, 2020</h5>
       </div>
       <AudioFeaturesGraph
-        dataSet={currentAudioFeature}
+        dataSet={audioFeatureData}
+        currentSet={currentAudioFeature}
         settings={audioFeatureSettings}
       />
     </div>
@@ -24,10 +25,10 @@ export const AudioFeatures = props => {
 
 const mapState = state => {
   return {
+    audioFeatureData: state.audioFeatureData,
     currentAudioFeature: state.currentAudioFeature,
     audioFeatureSettings: state.audioFeatureSettings
-    // selectedTrack: state.selectedTrack
   }
 }
 
-export default connect(mapState)(AudioFeatures)
+export default connect(mapState)(DefaultAudioFeatures)
