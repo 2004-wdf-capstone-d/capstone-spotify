@@ -2,7 +2,7 @@ import React from 'react'
 import * as d3 from 'd3'
 import {connect} from 'react-redux'
 
-export const SelectedTrack = props => {
+const SelectedTrack = props => {
   const {selectedTrack, width} = props
 
   const x = d3
