@@ -3,6 +3,7 @@ const SpotifyWebApi = require('spotify-web-api-node')
 
 const {TopChart, AudioFeatureTrack} = require('../db/models')
 const fetchGuestToken = require('./guestToken')
+const refreshAccessToken = require('./refreshAccess')
 module.exports = router
 
 // create default audio feature tracks
@@ -63,6 +64,22 @@ router.get('/', async (req, res, next) => {
     })
 
     res.json(defaultTracks)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// get user's top tracks with audio features
+router.get('/user', refreshAccessToken, async (req, res, next) => {
+  try {
+    const spotifyApi = new SpotifyWebApi({
+      clientId: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      redirectUri: process.env.SPOTIFY_CALLBACK
+    })
+    await spotifyApi.setAccessToken(req.user.accessToken)
+    const userTopTracks = await spotifyApi.getMyTopTracks()
+    console.log('userTopTracks: ', userTopTracks)
   } catch (error) {
     next(error)
   }
