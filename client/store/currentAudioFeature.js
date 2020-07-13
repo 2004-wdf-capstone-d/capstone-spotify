@@ -5,18 +5,17 @@ const setFeature = audioFeature => ({
   audioFeature
 })
 
-export const setAudioFeature = () => (dispatch, getState) => {
-  const {audioFeatureData, audioFeatureSettings} = getState()
-  const {feature, sort, page} = audioFeatureSettings
+export const setAudioFeature = (data, settings) => dispatch => {
+  const {feature, sort, page} = settings
 
   // handle page settings
   const pageFeatures = []
   for (let i = page; i < page + 10; i++) {
-    pageFeatures.push(audioFeatureData[i])
+    pageFeatures.push(data[i])
   }
 
   // handle name settings
-  const dataSet = pageFeatures.reduce((data, track) => {
+  const dataGroup = pageFeatures.reduce((data, track) => {
     data.push({
       artist: track.artist,
       trackName: track.trackName,
@@ -33,20 +32,20 @@ export const setAudioFeature = () => (dispatch, getState) => {
 
   // handle sort settings
   if (sort === 'position') {
-    dataSet.sort((a, b) => {
+    dataGroup.sort((a, b) => {
       return a.position - b.position
     })
   } else if (sort === 'descending') {
-    dataSet.sort((a, b) => {
+    dataGroup.sort((a, b) => {
       return b.value - a.value
     })
   } else if (sort === 'ascending') {
-    dataSet.sort((a, b) => {
+    dataGroup.sort((a, b) => {
       return a.value - b.value
     })
   }
 
-  dispatch(setFeature(dataSet))
+  dispatch(setFeature(dataGroup))
 }
 
 const initialState = []

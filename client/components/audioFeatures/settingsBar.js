@@ -8,18 +8,19 @@ import {
 } from '../../store/audioFeatureSettings'
 
 const SettingsBar = props => {
+  const {data, settings} = props
   const handleChangeSettings = event => {
     props[`setAudioFeature${event.target.name}`](event.target.value)
-    props.setAudioFeature()
+    props.setAudioFeature(data, settings)
   }
 
   return (
-    <div id="audio-feature-settings">
+    <div className="audio-feature-settings">
       <div>
         <label htmlFor="change-feature">Change Feature:</label>
         <select
           name="Name"
-          id="change-audio-feature"
+          className="change-audio-feature"
           onChange={event => {
             handleChangeSettings(event)
           }}
@@ -36,7 +37,7 @@ const SettingsBar = props => {
         <label htmlFor="af-value-sorter">Sort by:</label>
         <select
           name="Sort"
-          id="af-value-sorter"
+          className="af-value-sorter"
           onChange={event => {
             handleChangeSettings(event)
           }}
@@ -50,7 +51,7 @@ const SettingsBar = props => {
         <label htmlFor="pager">Page:</label>
         <select
           name="Page"
-          id="af-pager"
+          className="af-pager"
           onChange={event => {
             handleChangeSettings(event)
           }}

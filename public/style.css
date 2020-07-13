@@ -38,52 +38,56 @@ form div {
   margin: 0;
 }
 
-#audio-feature-graph {
+.audio-feature-graph {
   display: flex;
   flex-direction: column;
   flex: auto;
   margin: 0.5em;
 }
 
-#audio-feature-graph h3 {
+.audio-feature-graph h3 {
   margin: 0;
 }
 
-#audio-feature-track-details {
+.audio-feature-graph svg {
+  margin: 0.5em 0 0 0;
+}
+
+.audio-feature-track-details {
   display: flex;
   flex: auto;
   flex-direction: column;
   margin: 0.5em;
 }
 
-#audio-feature-settings {
+.audio-feature-settings {
   display: flex;
   flex-direction: row;
 }
 
-#audio-feature-settings div {
+.audio-feature-settings div {
   display: flex;
   flex-direction: column;
   margin: 0.5em 0.5em 0.5em 0;
 }
 
-#selected-track-main {
+.selected-track-main {
   display: flex;
   flex-direction: column;
 }
 
-#selected-track-info {
+.selected-track-info {
   display: flex;
   flex-direction: row;
-  margin: 0.5em 0;
+  margin: 0 0 0.5em 0;
 }
 
-#selected-track-info div {
+.selected-track-info div {
   display: flex;
   flex-direction: column;
   align-self: center;
 }
 
-#selected-track-info div h3 {
+.selected-track-info div h3 {
   margin: 0;
 }

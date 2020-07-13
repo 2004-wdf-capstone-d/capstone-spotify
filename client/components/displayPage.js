@@ -11,7 +11,10 @@ import {default as AudioFeatures} from './audioFeatures'
 export class DisplayPage extends React.Component {
   async componentDidMount() {
     await this.props.fetchAudioFeatures()
-    await this.props.setAudioFeature()
+    await this.props.setAudioFeature(
+      this.props.audioFeatureData,
+      this.props.audioFeatureSettings
+    )
     if (this.props.user._id) {
       await this.props.fetchTopArtist()
     }
@@ -38,7 +41,9 @@ export class DisplayPage extends React.Component {
 const mapState = state => {
   return {
     user: state.user,
-    topArtists: state.topArtists
+    topArtists: state.topArtists,
+    audioFeatureData: state.audioFeatureData,
+    audioFeatureSettings: state.audioFeatureSettings
   }
 }
 
@@ -46,7 +51,8 @@ const mapDispatch = dispatch => {
   return {
     fetchTopArtist: () => dispatch(fetchTopArtist()),
     fetchAudioFeatures: () => dispatch(fetchAudioFeatures()),
-    setAudioFeature: () => dispatch(setAudioFeature())
+    setAudioFeature: (data, settings) =>
+      dispatch(setAudioFeature(data, settings))
   }
 }
 

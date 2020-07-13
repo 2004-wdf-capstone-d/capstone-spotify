@@ -15,15 +15,14 @@ const SelectedTrack = props => {
     .range([0, 40 * selectedTrack.features.length])
 
   return (
-    <div id="selected-track-main">
-      <div id="selected-track-info">
+    <div className="selected-track-main">
+      <div className="selected-track-info">
         <iframe
           src={`https://open.spotify.com/embed/track/${selectedTrack.uri.substring(
             14
           )}`}
           width="300"
           height="80"
-          allowTransparency="true"
           allow="encrypted-media"
         />
         <div>
@@ -35,7 +34,7 @@ const SelectedTrack = props => {
           <h3>Streams: {selectedTrack.streams}</h3>
         </div>
       </div>
-      <div id="selected-track-features">
+      <div className="selected-track-features">
         <svg
           width={width}
           height={y.range()[1]}
