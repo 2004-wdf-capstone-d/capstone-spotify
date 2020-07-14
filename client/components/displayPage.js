@@ -8,6 +8,7 @@ import {default as UserTopArtists} from './userTopArtists'
 import {default as Sidebar} from './sidebar'
 import {default as SingleTopArtist} from './singleTopArtist'
 import {default as DefaultAudioFeatures} from './audioFeatures'
+import {fetchUserAudioFeatures} from '../store/userAudioFeatureData'
 
 export class DisplayPage extends React.Component {
   async componentDidMount() {
@@ -19,6 +20,7 @@ export class DisplayPage extends React.Component {
     })
     if (this.props.user._id) {
       await this.props.fetchTopArtist()
+      await this.props.fetchUserAudioFeatures()
     }
   }
 
@@ -54,7 +56,8 @@ const mapDispatch = dispatch => {
     fetchTopArtist: () => dispatch(fetchTopArtist()),
     fetchAudioFeatures: () => dispatch(fetchAudioFeatures()),
     setAudioFeature: (data, settings) =>
-      dispatch(setAudioFeature(data, settings))
+      dispatch(setAudioFeature(data, settings)),
+    fetchUserAudioFeatures: () => dispatch(fetchUserAudioFeatures())
   }
 }
 

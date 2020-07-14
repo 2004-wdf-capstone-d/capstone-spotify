@@ -4,8 +4,7 @@ const AudioFeatureTrack = mongoose.model(
   'AudioFeatureTrack',
   new mongoose.Schema({
     position: {
-      type: Number,
-      required: true
+      type: Number
     },
     trackName: {
       type: String,
@@ -16,12 +15,10 @@ const AudioFeatureTrack = mongoose.model(
       required: true
     },
     streams: {
-      type: Number,
-      required: true
+      type: Number
     },
     url: {
-      type: String,
-      required: true
+      type: String
     },
     trackId: {
       type: String,

@@ -23,7 +23,7 @@ const initialState = []
 const audioFeaturesReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_AUDIO_FEATURES:
-      return [...action.audioFeatures]
+      return action.audioFeatures
     default:
       return state
   }
