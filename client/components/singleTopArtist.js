@@ -52,7 +52,6 @@ const mapState = state => {
   return {
     user: state.user,
     topArtists: state.topArtists,
-    topCharts: state.topCharts,
     audioFeatures: state.audioFeatures,
     singleTopArtist: state.singleTopArtist
   }
@@ -61,7 +60,6 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     fetchTopArtist: () => dispatch(fetchTopArtist()),
-    fetchTopTen: () => dispatch(fetchTopTen()),
     fetchAudioFeatures: () => dispatch(fetchAudioFeatures()),
     fetchSingleArtistTopSongs: () => dispatch(fetchSingleArtistTopSongs())
   }
