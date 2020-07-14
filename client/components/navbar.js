@@ -40,12 +40,10 @@ const Navbar = ({handleClick, isLoggedIn, selectedTrack}) => (
         {selectedTrack.trackId ? (
           <div>
             <hr />
+            <h3>Now playing:</h3>
             <div id="now-playing-text">
-              <h3>Now playing:</h3>
               <h5>
-                #{selectedTrack.position}: {selectedTrack.artist} - "{
-                  selectedTrack.trackName
-                }"
+                {selectedTrack.artist} - "{selectedTrack.trackName}"
               </h5>
               {selectedTrack.streams ? (
                 <h5>Streams: {selectedTrack.streams}</h5>

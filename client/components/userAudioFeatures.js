@@ -1,10 +1,19 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
 
 import {default as AudioFeaturesGraph} from './audioFeatures/audioFeaturesGraph'
+import {setAudioFeature} from '../store/currentAudioFeature'
 
 export const UserAudioFeatures = props => {
-  const {userAudioFeatureData, currentAudioFeature} = props
+  const {userAudioFeatureData, currentAudioFeature, setAudioFeature} = props
+
+  useEffect(() => {
+    setAudioFeature(userAudioFeatureData, {
+      feature: 'danceability',
+      sort: 'position',
+      page: 0
+    })
+  }, [])
 
   return currentAudioFeature.length ? (
     <div id="user-audio-feature-main">
@@ -28,4 +37,11 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(UserAudioFeatures)
+const mapDispatch = dispatch => {
+  return {
+    setAudioFeature: (data, settings) =>
+      dispatch(setAudioFeature(data, settings))
+  }
+}
+
+export default connect(mapState, mapDispatch)(UserAudioFeatures)

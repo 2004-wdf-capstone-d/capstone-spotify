@@ -80,7 +80,14 @@ const AudioFeaturesGraph = props => {
             })}
           </select>
         </div>
-        {selectedTrack.trackId ? <SelectedTrack width={width} /> : null}
+        {selectedTrack.features ? (
+          <div>
+            <h5>
+              Current Track: {selectedTrack.artist} - "{selectedTrack.trackName}"
+            </h5>
+            <SelectedTrack width={width} />
+          </div>
+        ) : null}
       </div>
     </div>
   )

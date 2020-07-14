@@ -26,10 +26,6 @@ export class DisplayPage extends React.Component {
     if (this.props.user._id) {
       await this.props.fetchTopArtist()
       await this.props.fetchUserAudioFeatures()
-      await this.props.setAudioFeature(
-        this.props.userAudioFeatureData,
-        defaultSettings
-      )
     }
   }
 
