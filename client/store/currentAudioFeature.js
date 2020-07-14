@@ -1,60 +1,51 @@
 const SET_AUDIO_FEATURE = 'SET_AUDIO_FEATURE'
 
-const setAudioFeature = audioFeature => ({
+const setFeature = audioFeature => ({
   type: SET_AUDIO_FEATURE,
   audioFeature
 })
 
-export const defaultAudioFeature = () => (dispatch, getState) => {
-  const {audioFeatures} = getState()
+export const setAudioFeature = (data, settings) => dispatch => {
+  const {feature, sort, page} = settings
 
-  const dataSet = audioFeatures.reduce((data, curTrack) => {
+  // handle page settings
+  const pageFeatures = []
+  for (let i = page; i < page + 10; i++) {
+    pageFeatures.push(data[i])
+  }
+
+  // handle name settings
+  const dataGroup = pageFeatures.reduce((data, track) => {
     data.push({
-      artist: curTrack.artist,
-      trackName: curTrack.trackName,
-      position: curTrack.position,
-      feature: 'danceability',
-      value: curTrack.danceability
+      artist: track.artist,
+      trackName: track.trackName,
+      trackId: track.trackId,
+      url: track.url,
+      uri: track.uri,
+      streams: track.streams,
+      position: track.position,
+      feature,
+      value: track[feature]
     })
     return data
   }, [])
-  dispatch(setAudioFeature(dataSet))
-}
 
-export const changeAudioFeature = value => (dispatch, getState) => {
-  const {audioFeatures} = getState()
-
-  const dataSet = audioFeatures.reduce((data, curTrack) => {
-    data.push({
-      artist: curTrack.artist,
-      trackName: curTrack.trackName,
-      position: curTrack.position,
-      feature: value,
-      value: curTrack[value]
-    })
-    return data
-  }, [])
-  dispatch(setAudioFeature(dataSet))
-}
-
-export const sortAudioFeature = value => (dispatch, getState) => {
-  const {currentAudioFeature} = getState()
-
-  if (value === 'position') {
-    currentAudioFeature.sort((a, b) => {
+  // handle sort settings
+  if (sort === 'position') {
+    dataGroup.sort((a, b) => {
       return a.position - b.position
     })
-  } else if (value === 'descending') {
-    currentAudioFeature.sort((a, b) => {
+  } else if (sort === 'descending') {
+    dataGroup.sort((a, b) => {
       return b.value - a.value
     })
-  } else if (value === 'ascending') {
-    currentAudioFeature.sort((a, b) => {
+  } else if (sort === 'ascending') {
+    dataGroup.sort((a, b) => {
       return a.value - b.value
     })
   }
 
-  dispatch(setAudioFeature(currentAudioFeature))
+  dispatch(setFeature(dataGroup))
 }
 
 const initialState = []
@@ -62,7 +53,7 @@ const initialState = []
 const currentAudioFeatureReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_AUDIO_FEATURE:
-      return [...action.audioFeature]
+      return action.audioFeature
     default:
       return state
   }
