@@ -16,26 +16,7 @@ const SelectedTrack = props => {
 
   return (
     <div className="selected-track-main">
-      <div className="selected-track-info">
-        <iframe
-          src={`https://open.spotify.com/embed/track/${selectedTrack.uri.substring(
-            14
-          )}`}
-          width="300"
-          height="80"
-          allow="encrypted-media"
-        />
-        <div>
-          <h3>
-            #{selectedTrack.position}: {selectedTrack.artist} - "{
-              selectedTrack.trackName
-            }"
-          </h3>
-          {selectedTrack.streams ? (
-            <h3>Streams: {selectedTrack.streams}</h3>
-          ) : null}
-        </div>
-      </div>
+      <div className="selected-track-info" />
       <div className="selected-track-features">
         <svg
           width={width}

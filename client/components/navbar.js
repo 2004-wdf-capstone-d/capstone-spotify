@@ -4,31 +4,65 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>ekoPique</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div>
+const Navbar = ({handleClick, isLoggedIn, selectedTrack}) => (
+  <div id="side-bar">
+    <div>
+      <h1>ekoPique</h1>
+      <nav>
+        {isLoggedIn ? (
           <div>
-            {/* The navbar will show these links after you log in */}
-            <Link to="/home">User Profile</Link>
-            <Link to="/">Your Data</Link>
+            <div>
+              <Link to="/home">Your Profile</Link>
+            </div>
+            <div>
+              <a href="#" onClick={handleClick}>
+                Logout
+              </a>
+            </div>
           </div>
+        ) : (
           <div>
-            <a href="#" onClick={handleClick}>
-              Not you? Logout
-            </a>
+            <a href="/auth/spotify">Log in with Spotify</a>
           </div>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <a href="/auth/spotify">Log in with Spotify</a>
-          {/* <Link to='/globalTopTen'>top ten</Link> */}
-        </div>
-      )}
-    </nav>
+        )}
+      </nav>
+      <nav>
+        {isLoggedIn ? (
+          <div>
+            <hr />
+            <Link to="/top-global">Global Top Tracks' Audio Features</Link>
+            <Link to="/my-audio-features">Your Top Tracks' Audio Features</Link>
+            <Link to="/">Your Top Artists</Link>
+          </div>
+        ) : null}
+      </nav>
+      <div id="now-playing">
+        {selectedTrack.trackId ? (
+          <div>
+            <hr />
+            <div id="now-playing-text">
+              <h3>Now playing:</h3>
+              <h5>
+                #{selectedTrack.position}: {selectedTrack.artist} - "{
+                  selectedTrack.trackName
+                }"
+              </h5>
+              {selectedTrack.streams ? (
+                <h5>Streams: {selectedTrack.streams}</h5>
+              ) : null}
+            </div>
+            <iframe
+              src={`https://open.spotify.com/embed/track/${selectedTrack.uri.substring(
+                14
+              )}`}
+              width="80"
+              height="80"
+              allow="encrypted-media"
+            />
+          </div>
+        ) : null}
+      </div>
+    </div>
     <hr />
   </div>
 )
@@ -38,7 +72,8 @@ const Navbar = ({handleClick, isLoggedIn}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user._id
+    isLoggedIn: !!state.user._id,
+    selectedTrack: state.selectedTrack
   }
 }
 
