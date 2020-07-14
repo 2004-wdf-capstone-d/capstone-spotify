@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {default as AudioFeaturesGraph} from './audioFeatures/audioFeaturesGraph'
 
 export const DefaultAudioFeatures = props => {
-  const {audioFeatureData, currentAudioFeature, audioFeatureSettings} = props
+  const {audioFeatureData, currentAudioFeature} = props
 
   return currentAudioFeature.length ? (
     <div id="audio-feature-main">
@@ -15,7 +15,6 @@ export const DefaultAudioFeatures = props => {
       <AudioFeaturesGraph
         dataSet={audioFeatureData}
         currentSet={currentAudioFeature}
-        settings={audioFeatureSettings}
       />
     </div>
   ) : (
@@ -26,8 +25,7 @@ export const DefaultAudioFeatures = props => {
 const mapState = state => {
   return {
     audioFeatureData: state.audioFeatureData,
-    currentAudioFeature: state.currentAudioFeature,
-    audioFeatureSettings: state.audioFeatureSettings
+    currentAudioFeature: state.currentAudioFeature
   }
 }
 

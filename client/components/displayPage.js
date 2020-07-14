@@ -8,17 +8,29 @@ import {default as UserTopArtists} from './userTopArtists'
 import {default as Sidebar} from './sidebar'
 import {default as SingleTopArtist} from './singleTopArtist'
 import {default as DefaultAudioFeatures} from './audioFeatures'
+import {fetchUserAudioFeatures} from '../store/userAudioFeatureData'
+import {default as UserAudioFeatures} from './userAudioFeatures'
+
+const defaultSettings = {
+  feature: 'danceability',
+  sort: 'position',
+  page: 0
+}
 
 export class DisplayPage extends React.Component {
   async componentDidMount() {
     await this.props.fetchAudioFeatures()
-    await this.props.setAudioFeature(this.props.audioFeatureData, {
-      feature: 'danceability',
-      sort: 'position',
-      page: 0
-    })
+    await this.props.setAudioFeature(
+      this.props.audioFeatureData,
+      defaultSettings
+    )
     if (this.props.user._id) {
       await this.props.fetchTopArtist()
+      await this.props.fetchUserAudioFeatures()
+      await this.props.setAudioFeature(
+        this.props.userAudioFeatureData,
+        defaultSettings
+      )
     }
   }
 
@@ -29,7 +41,16 @@ export class DisplayPage extends React.Component {
         <Switch>
           {this.props.user._id && (
             <Switch>
-              <Route path="/top-ten-global" component={DefaultAudioFeatures} />
+              <Route
+                exact
+                path="/top-global"
+                component={DefaultAudioFeatures}
+              />
+              <Route
+                exact
+                path="/my-audio-features"
+                component={UserAudioFeatures}
+              />
               <Route path="/:artist" component={SingleTopArtist} />
               <Route component={UserTopArtists} />
             </Switch>
@@ -45,7 +66,8 @@ const mapState = state => {
   return {
     user: state.user,
     topArtists: state.topArtists,
-    audioFeatureData: state.audioFeatureData
+    audioFeatureData: state.audioFeatureData,
+    userAudioFeatureData: state.userAudioFeatureData
   }
 }
 
@@ -54,7 +76,8 @@ const mapDispatch = dispatch => {
     fetchTopArtist: () => dispatch(fetchTopArtist()),
     fetchAudioFeatures: () => dispatch(fetchAudioFeatures()),
     setAudioFeature: (data, settings) =>
-      dispatch(setAudioFeature(data, settings))
+      dispatch(setAudioFeature(data, settings)),
+    fetchUserAudioFeatures: () => dispatch(fetchUserAudioFeatures())
   }
 }
 

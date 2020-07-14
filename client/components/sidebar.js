@@ -7,7 +7,8 @@ const Sidebar = props => {
   const {isLoggedIn} = props
   return isLoggedIn ? (
     <div id="sidebar">
-      <Link to="/top-ten-global">Top Streaming Artists</Link>
+      <Link to="/top-global">Top Streaming Artists</Link>
+      <Link to="/my-audio-features">My Audio Features</Link>
       <Link to="/"> user's top artists</Link>
     </div>
   ) : (
