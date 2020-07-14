@@ -7,7 +7,6 @@ const SettingsBar = props => {
 
   const [feature, setFeature] = useState('danceability')
   const [sort, setSort] = useState('position')
-  // const [page, setPage] = useState(0)
   const [settings, setSettings] = useState({
     feature,
     sort,
@@ -87,16 +86,17 @@ const SettingsBar = props => {
               setPage(parseInt(event.target.value))
             }}
           >
-            <option value="0">1 - 10</option>
-            <option value="10">11 - 20</option>
-            <option value="20">21 - 30</option>
-            <option value="30">31 - 40</option>
-            <option value="40">41 - 50</option>
-            <option value="50">51 - 60</option>
-            <option value="60">61 - 70</option>
-            <option value="70">71 - 80</option>
-            <option value="80">81 - 90</option>
-            <option value="90">91 - 100</option>
+            {data
+              .filter((track, index) => {
+                return index % 10 === 0
+              })
+              .map((track, index) => {
+                return (
+                  <option key={index} value={index * 10}>
+                    {index * 10 + 1} - {index * 10 + 10}
+                  </option>
+                )
+              })}
           </select>
         </div>
       </div>

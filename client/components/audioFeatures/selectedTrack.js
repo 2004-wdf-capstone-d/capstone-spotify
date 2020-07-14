@@ -31,7 +31,9 @@ const SelectedTrack = props => {
               selectedTrack.trackName
             }"
           </h3>
-          <h3>Streams: {selectedTrack.streams}</h3>
+          {selectedTrack.streams ? (
+            <h3>Streams: {selectedTrack.streams}</h3>
+          ) : null}
         </div>
       </div>
       <div className="selected-track-features">
