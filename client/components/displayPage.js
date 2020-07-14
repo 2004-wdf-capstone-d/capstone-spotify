@@ -20,6 +20,7 @@ export class DisplayPage extends React.Component {
     if (this.props.user._id) {
       await this.props.fetchTopArtist()
     }
+    console.log(this.props.location.pathname.slice())
   }
 
   render() {

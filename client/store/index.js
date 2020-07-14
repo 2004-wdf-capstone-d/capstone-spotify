@@ -9,6 +9,17 @@ import audioFeatureData from './audioFeatures'
 import currentAudioFeature from './currentAudioFeature'
 import selectedTrack from './selectedTrack'
 
+function saveToLocalStorage(state) {
+  const storedState = JSON.stringify(state)
+  localStorage.setItem('store', storedState)
+}
+
+function loadFromLocalStorage() {
+  const storedState = localStorage.getItem('store')
+  if (storedState === null) return undefined
+  return JSON.parse(storedState)
+}
+const persistedStore = loadFromLocalStorage()
 const reducer = combineReducers({
   user,
   topArtists,
@@ -20,7 +31,9 @@ const reducer = combineReducers({
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
-const store = createStore(reducer, middleware)
+const store = createStore(reducer, persistedStore, middleware)
+
+store.subscribe(() => saveToLocalStorage(store.getState()))
 
 export default store
 export * from './user'

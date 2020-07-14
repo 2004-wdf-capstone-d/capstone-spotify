@@ -22,6 +22,7 @@ const artistTopSongs = props => {
 
   const root = partition1(artist)
   const svgDataArr = root.descendants()
+  console.log({svgDataArr})
   return (
     <div>
       <svg viewBox={`0,0,${width},${height}`}>
