@@ -76,7 +76,7 @@ router.get('/user', refreshAccessToken, async (req, res, next) => {
     const accessToken = req.user.accessToken
 
     const response = await axios.get(
-      'https://api.spotify.com/v1/me/top/tracks?time_range=long_term',
+      'https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=50',
       {
         headers: {
           Authorization: 'Bearer ' + accessToken,
