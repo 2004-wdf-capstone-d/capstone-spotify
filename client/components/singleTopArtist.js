@@ -1,12 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchTopArtist} from '../store/user-topArtist'
-//import {fetchTopTen} from '../store/topCharts'
 import {fetchAudioFeatures} from '../store/audioFeatures'
-//import {fetchSingleArtistTopSongs} from '../store/userSingleTopArtist'
 import {Route, Switch, Link} from 'react-router-dom'
 import {default as UserTopArtists} from './userTopArtists'
-// import {default as Sidebar} from './sidebar'
 import {default as artistTopSongs} from './artistTopSongs'
 import history from '../history'
 import {fetchSingleArtistTopSongs} from '../store/singleTopArtist'
@@ -19,7 +16,6 @@ class SingleTopArtist extends React.Component {
   componentDidMount() {}
 
   async handleClick(event) {
-    //console.log(event)
     if (event.target.innerText === 'Top Songs') {
       if (!this.props.singleTopArtist.topTracks) {
         await this.props.fetchSingleArtistTopSongs()
@@ -52,7 +48,6 @@ const mapState = state => {
   return {
     user: state.user,
     topArtists: state.topArtists,
-    topCharts: state.topCharts,
     audioFeatures: state.audioFeatures,
     singleTopArtist: state.singleTopArtist
   }
@@ -61,7 +56,6 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     fetchTopArtist: () => dispatch(fetchTopArtist()),
-    fetchTopTen: () => dispatch(fetchTopTen()),
     fetchAudioFeatures: () => dispatch(fetchAudioFeatures()),
     fetchSingleArtistTopSongs: () => dispatch(fetchSingleArtistTopSongs())
   }
