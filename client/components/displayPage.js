@@ -5,7 +5,6 @@ import {fetchAudioFeatures} from '../store/audioFeatures'
 import {setAudioFeature} from '../store/currentAudioFeature'
 import {Route, Switch} from 'react-router-dom'
 import {default as UserTopArtists} from './userTopArtists'
-import {default as Sidebar} from './sidebar'
 import {default as SingleTopArtist} from './singleTopArtist'
 import {default as DefaultAudioFeatures} from './audioFeatures'
 import {fetchUserAudioFeatures} from '../store/userAudioFeatureData'
@@ -37,7 +36,6 @@ export class DisplayPage extends React.Component {
   render() {
     return (
       <div id="displayPage">
-        <Sidebar />
         <Switch>
           {this.props.user._id && (
             <Switch>
