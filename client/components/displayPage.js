@@ -27,7 +27,6 @@ export class DisplayPage extends React.Component {
       await this.props.fetchTopArtist()
       await this.props.fetchUserAudioFeatures()
     }
-    console.log(this.props.location.pathname.slice())
   }
 
   render() {
