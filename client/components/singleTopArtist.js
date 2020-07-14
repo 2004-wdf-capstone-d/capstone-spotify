@@ -1,15 +1,15 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchTopArtist} from '../store/user-topArtist'
-//import {fetchTopTen} from '../store/topCharts'
 import {fetchAudioFeatures} from '../store/audioFeatures'
-//import {fetchSingleArtistTopSongs} from '../store/userSingleTopArtist'
-import {Route, Switch, Link} from 'react-router-dom'
-import {default as UserTopArtists} from './userTopArtists'
-import {default as Sidebar} from './sidebar'
+import {Route, Switch} from 'react-router-dom'
 import {default as artistTopSongs} from './artistTopSongs'
+import {default as artistAlbums} from './artistAlbums'
 import history from '../history'
-import {fetchSingleArtistTopSongs} from '../store/singleTopArtist'
+import {
+  fetchSingleArtistTopSongs,
+  fetchArtistAlbums
+} from '../store/singleTopArtist'
 
 class SingleTopArtist extends React.Component {
   constructor(props) {
@@ -19,12 +19,18 @@ class SingleTopArtist extends React.Component {
   componentDidMount() {}
 
   async handleClick(event) {
-    //console.log(event)
-    if (event.target.innerText === 'Top Songs') {
-      if (!this.props.singleTopArtist.topTracks) {
-        await this.props.fetchSingleArtistTopSongs()
+    if (event.target.type === 'button') {
+      if (event.target.innerHTML === 'Top Songs') {
+        if (!this.props.singleTopArtist.topTracks) {
+          await this.props.fetchSingleArtistTopSongs()
+        }
+        history.push(`${this.props.match.url}/top-songs`)
+      } else if (event.target.innerHTML === 'Albums') {
+        if (!this.props.singleTopArtist.albums) {
+          await this.props.fetchArtistAlbums()
+        }
+        history.push(`${this.props.match.url}/artist-albums`)
       }
-      history.push(`${this.props.match.url}/top-songs`)
     }
   }
 
@@ -33,14 +39,20 @@ class SingleTopArtist extends React.Component {
     return (
       <div>
         <h2>{artist.name}</h2>
-        <button type="button" onClick={this.handleClick}>
-          Top Songs
-        </button>
+        <div onClick={this.handleClick}>
+          <button type="button">Top Songs</button>
+          <button type="button">Albums</button>
+        </div>
         <Switch>
           <Route
             exact
             path={`${this.props.match.url}/top-songs`}
             component={artistTopSongs}
+          />
+          <Route
+            exact
+            path={`${this.props.match.url}/artist-albums`}
+            component={artistAlbums}
           />
         </Switch>
       </div>
@@ -61,9 +73,9 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     fetchTopArtist: () => dispatch(fetchTopArtist()),
-    fetchTopTen: () => dispatch(fetchTopTen()),
     fetchAudioFeatures: () => dispatch(fetchAudioFeatures()),
-    fetchSingleArtistTopSongs: () => dispatch(fetchSingleArtistTopSongs())
+    fetchSingleArtistTopSongs: () => dispatch(fetchSingleArtistTopSongs()),
+    fetchArtistAlbums: () => dispatch(fetchArtistAlbums())
   }
 }
 

@@ -27,24 +27,29 @@ router.get('/user/topArtists', refreshAccessToken, async (req, res, next) => {
 
 //users's album
 router.get(
-  '/user/artist-album/',
+  '/topArtist/artist-albums/',
   refreshAccessToken,
   async (req, res, next) => {
     try {
-      const accessToken = req.user.accessToken
+      const spotifyApi = new SpotifyWebApi({
+        clientId: process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
+        redirectUri: process.env.SPOTIFY_CALLBACK
+      })
+
+      await spotifyApi.setAccessToken(
+        req.user.accessToken || req.body.accessToken
+      )
 
       const artistId = req.query.artistId
 
-      const artistAlbum = await axios.get(
-        `https://api.spotify.com/v1/artists/${artistId}/albums`,
-        {
-          headers: {
-            Authorization: 'Bearer ' + accessToken,
-            'Content-Type': 'application/json'
-          }
-        }
-      )
-      res.json(artistAlbum.data)
+      const artistAlbum = await spotifyApi.getArtistAlbums(artistId)
+
+      const albumwithID = artistAlbum.body.items.map(album => album.id)
+
+      const albumsWithTracks = await spotifyApi.getAlbums(albumwithID)
+
+      res.json(albumsWithTracks.body.albums)
     } catch (error) {
       next(error)
     }
