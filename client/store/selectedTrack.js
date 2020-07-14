@@ -6,9 +6,6 @@ const setTrack = track => ({
 })
 
 export const selectTrack = (data, trackId, page) => dispatch => {
-  // const {audioFeatureData, audioFeatureSettings} = getState()
-  // const {page} = audioFeatureSettings
-
   const selectedTrack = {
     trackId
   }
@@ -51,6 +48,16 @@ export const selectTrack = (data, trackId, page) => dispatch => {
     }
   }
 
+  dispatch(setTrack(selectedTrack))
+}
+
+export const setSingleTrack = track => dispatch => {
+  const selectedTrack = {
+    trackId: track.trackId,
+    artist: track.artist,
+    trackName: track.trackName,
+    uri: track.uri
+  }
   dispatch(setTrack(selectedTrack))
 }
 

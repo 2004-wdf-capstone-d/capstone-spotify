@@ -20,21 +20,42 @@ form div {
   display: inline-block;
 }
 
-#audio-feature-main {
+#top-level-page {
+  display: flex;
+  flex-direction: row;
+}
+
+#side-bar {
+  display: flex;
+  /* flex: 1; */
+}
+
+#side-bar div {
   display: flex;
   flex-direction: column;
 }
 
-#audio-feature-header {
+#routes {
+  display: flex;
+  /* flex: 7; */
+}
+
+.audio-feature-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.audio-feature-header {
   display: flex;
   flex-direction: column;
   margin: 0.5em;
 }
 
-#audio-feature-header h1 {
+.audio-feature-header h1 {
   margin: 0;
 }
-#audio-feature-header h5 {
+
+.audio-feature-header h5 {
   margin: 0;
 }
 
