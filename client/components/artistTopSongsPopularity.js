@@ -1,0 +1,71 @@
+import React from 'react'
+import * as d3 from 'd3'
+import {connect} from 'react-redux'
+
+const width = 1200
+const height = 1600
+
+const partition1 = data => {
+  const root = d3
+    .hierarchy(data, d => d.topTracks)
+    .sum(d => d.pop)
+    .sort((a, b) => b.duration_ms - a.duration_ms || b.value - a.value)
+  return d3.partition().size([height, (root.height + 1) * width / 2])(root)
+}
+
+const artistTopSongs = props => {
+  const artist = props.singleTopArtist
+
+  const color = d3.scaleOrdinal(
+    d3.quantize(d3.interpolateRainbow, artist.topTracks.length + 1) //use css to chnage the color
+  )
+  const root = partition1(artist)
+  const svgDataArr = root.descendants()
+
+  return (
+    <svg
+      viewBox={`0,0,${width},${height}`}
+      preserveAspectRatio="none"
+      width="60vw" //Change the view scaling here!
+      height="100%"
+    >
+      {svgDataArr.map((d, index, arr) => (
+        <g key={d.data.name} transform={`translate(${d.y0},${d.x0})`}>
+          <rect
+            className={d.data.name
+              .toLowerCase()
+              .split(' ')
+              .join('-')}
+            width={d.y1 - d.y0}
+            height={index === 0 ? d.x1 - d.x0 : arr[1].x1 - arr[1].x0}
+            fillOpacity={0.3}
+            fill={!d.depth ? '#ccc' : color(d.data.name)}
+          />
+          <foreignObject
+            width={`${d.y1 - d.y0}px`}
+            height={`${d.x1 - d.x0}px`}
+            x="0"
+            y="0"
+          >
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p>{d.data.name}</p>
+            </div>
+          </foreignObject>
+          {/* <text x={4} y={13}>
+              <title>{`${d.data.name}\n ${d.data.popularity}`} </title>
+              <p>{console.log(d.data)}</p>
+              <tspan>They try to kill us</tspan>
+              <tspan fillOpacity={0.7} />
+
+            </text> */}
+        </g>
+      ))}
+    </svg>
+  )
+}
+
+const mapState = state => ({
+  singleTopArtist: state.singleTopArtist
+})
+
+export default connect(mapState, null)(artistTopSongs)

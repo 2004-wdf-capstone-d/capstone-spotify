@@ -2,12 +2,11 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchTopArtist} from '../store/user-topArtist'
 import {fetchAudioFeatures} from '../store/audioFeatures'
-//import {fetchSingleArtistTopSongs} from '../store/userSingleTopArtist'
 import {Route, Switch, Link} from 'react-router-dom'
 import {default as UserTopArtists} from './userTopArtists'
-// import {default as Sidebar} from './sidebar'
-import {default as artistTopSongs} from './artistTopSongs'
+
 import {default as artistAlbums} from './artistAlbums'
+import {default as artistTopSongsPopularity} from './artistTopSongsPopularity'
 import history from '../history'
 import {
   fetchSingleArtistTopSongs,
@@ -50,7 +49,7 @@ class SingleTopArtist extends React.Component {
           <Route
             exact
             path={`${this.props.match.url}/top-songs`}
-            component={artistTopSongs}
+            component={artistTopSongsPopularity}
           />
           <Route
             exact
@@ -67,7 +66,6 @@ const mapState = state => {
   return {
     user: state.user,
     topArtists: state.topArtists,
-    topCharts: state.topCharts,
     audioFeatures: state.audioFeatures,
     singleTopArtist: state.singleTopArtist
   }
