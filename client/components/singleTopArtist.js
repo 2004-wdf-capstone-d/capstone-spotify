@@ -4,7 +4,7 @@ import {fetchTopArtist} from '../store/user-topArtist'
 import {fetchAudioFeatures} from '../store/audioFeatures'
 import {Route, Switch, Link} from 'react-router-dom'
 import {default as UserTopArtists} from './userTopArtists'
-import {default as artistTopSongs} from './artistTopSongsPopularity'
+import {default as artistTopSongsPopularity} from './artistTopSongsPopularity'
 import history from '../history'
 import {fetchSingleArtistTopSongs} from '../store/singleTopArtist'
 
@@ -36,7 +36,7 @@ class SingleTopArtist extends React.Component {
           <Route
             exact
             path={`${this.props.match.url}/top-songs`}
-            component={artistTopSongs}
+            component={artistTopSongsPopularity}
           />
         </Switch>
       </div>
