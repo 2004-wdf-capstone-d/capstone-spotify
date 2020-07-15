@@ -7,16 +7,22 @@ export const DefaultAudioFeatures = props => {
   const {audioFeatureData, currentAudioFeature} = props
 
   return currentAudioFeature.length ? (
-    <div id="audio-feature-main">
-      <div id="audio-feature-header">
-        <h1>Audio Features of the Top Streaming Tracks on Spotify</h1>
-        <h5>based on global weekly charts from July 9, 2020</h5>
+    <section className="section">
+      <div className="hero is-primary is-bold">
+        <div className="hero-body">
+          <h1 className="title">
+            Audio Features of the Top Streaming Tracks on Spotify
+          </h1>
+          <h5 className="subtitle">
+            based on global weekly charts from July 9, 2020
+          </h5>
+        </div>
       </div>
       <AudioFeaturesGraph
         dataSet={audioFeatureData}
         currentSet={currentAudioFeature}
       />
-    </div>
+    </section>
   ) : (
     <h5>Loading...</h5>
   )

@@ -26,66 +26,62 @@ const AudioFeaturesGraph = props => {
     .range([0, 40 * currentSet.length])
 
   return (
-    <div>
-      <div className="audio-feature-graph">
-        <SettingsBar data={dataSet} page={page} setPage={setPage} />
-        <svg
-          width={width}
-          height={y.range()[1]}
-          // fontFamily="sans-serif"
-          fontSize="18"
-          className="audio-feature-graph"
-          padding="0.5em"
-        >
-          {currentSet.map((dataPoint, index) => (
-            <g
-              key={index}
-              className="audio-feature-bar"
-              transform={`translate(0,${y(dataPoint.trackName)})`}
-            >
-              <rect
-                fill={d3.interpolateWarm(dataPoint.value)}
-                width={x(dataPoint.value)}
-                height={y.bandwidth() - 1}
-              />
-              <text fill="black" x={x(0)} y={y.bandwidth() / 2} dy="0.35em">
-                #{dataPoint.position}: {dataPoint.artist} - "{
-                  dataPoint.trackName
-                }"
-              </text>
-            </g>
-          ))}
-        </svg>
-      </div>
-      <div className="audio-feature-track-details">
-        <div>
-          <label htmlFor="selectTrack">View Track Details:</label>
-          <select
-            name="select-track"
-            className="af-select-track"
-            onChange={event => {
-              handleSelectedTrack(event)
-            }}
+    // <div>
+    <section className="section">
+      <SettingsBar data={dataSet} page={page} setPage={setPage} />
+      <svg
+        width={width}
+        height={y.range()[1]}
+        className="audio-feature-graph"
+        padding="0.5em"
+      >
+        {currentSet.map((dataPoint, index) => (
+          <g
+            key={index}
+            className="audio-feature-bar"
+            transform={`translate(0,${y(dataPoint.trackName)})`}
           >
-            {currentSet.map(track => {
-              return (
-                <option key={track.trackId} value={track.trackId}>
-                  {track.artist} - "{track.trackName}"
-                </option>
-              )
-            })}
-          </select>
-        </div>
-        {selectedTrack.features ? (
-          <div>
-            <h5>
-              Current Track: {selectedTrack.artist} - "{selectedTrack.trackName}"
-            </h5>
-            <SelectedTrack width={width} />
-          </div>
-        ) : null}
+            <rect
+              fill={d3.interpolateWarm(dataPoint.value)}
+              width={x(dataPoint.value)}
+              height={y.bandwidth() - 1}
+            />
+            <text
+              fill="black"
+              x={x(0.01)}
+              y={y.bandwidth() / 2}
+              dy="0.35em"
+              className="is-size-6"
+            >
+              #{dataPoint.position}: {dataPoint.artist} - "{dataPoint.trackName}"
+            </text>
+          </g>
+        ))}
+      </svg>
+      <div className="select my-4">
+        <select
+          name="select-track"
+          className="af-select-track"
+          onChange={event => {
+            handleSelectedTrack(event)
+          }}
+        >
+          <option>View Track Details</option>
+          {currentSet.map(track => {
+            return (
+              <option key={track.trackId} value={track.trackId}>
+                {track.artist} - "{track.trackName}"
+              </option>
+            )
+          })}
+        </select>
       </div>
-    </div>
+      {selectedTrack.features ? (
+        <div>
+          <SelectedTrack width={width} />
+        </div>
+      ) : null}
+    </section>
   )
 }
 

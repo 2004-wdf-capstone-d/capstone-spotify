@@ -15,34 +15,34 @@ const SelectedTrack = props => {
     .range([0, 40 * selectedTrack.features.length])
 
   return (
-    <div className="selected-track-main">
-      <div className="selected-track-info" />
-      <div className="selected-track-features">
-        <svg
-          width={width}
-          height={y.range()[1]}
-          fontFamily="sans-serif"
-          fontSize="18"
-        >
-          {selectedTrack.features.map((dataPoint, i) => (
-            <g key={i} transform={`translate(0,${y(dataPoint.name)})`}>
-              <rect
-                fill={d3.interpolateGreens(dataPoint.value)}
-                width={x(dataPoint.value)}
-                height={y.bandwidth() - 1}
-              />
-              <text
-                fill="darkslategray"
-                x={x(0)}
-                y={y.bandwidth() / 2}
-                dy="0.35em"
-              >
-                {dataPoint.name}: {dataPoint.value}
-              </text>
-            </g>
-          ))}
-        </svg>
-      </div>
+    <div className="selected-track-features">
+      <h5>
+        Current Track: {selectedTrack.artist} - "{selectedTrack.trackName}"
+      </h5>
+      <svg
+        width={width}
+        height={y.range()[1]}
+        fontFamily="sans-serif"
+        fontSize="18"
+      >
+        {selectedTrack.features.map((dataPoint, i) => (
+          <g key={i} transform={`translate(0,${y(dataPoint.name)})`}>
+            <rect
+              fill={d3.interpolateGreens(dataPoint.value)}
+              width={x(dataPoint.value)}
+              height={y.bandwidth() - 1}
+            />
+            <text
+              fill="darkslategray"
+              x={x(0.01)}
+              y={y.bandwidth() / 2}
+              dy="0.35em"
+            >
+              {dataPoint.name}: {dataPoint.value}
+            </text>
+          </g>
+        ))}
+      </svg>
     </div>
   )
 }
