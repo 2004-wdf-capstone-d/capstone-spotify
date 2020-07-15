@@ -4,7 +4,7 @@ import {fetchTopArtist} from '../store/user-topArtist'
 import {fetchAudioFeatures} from '../store/audioFeatures'
 import {Route, Switch, Link} from 'react-router-dom'
 import {default as UserTopArtists} from './userTopArtists'
-import {default as artistTopSongs} from './artistTopSongs'
+import {default as artistTopSongs} from './artistTopSongsPopularity'
 import history from '../history'
 import {fetchSingleArtistTopSongs} from '../store/singleTopArtist'
 

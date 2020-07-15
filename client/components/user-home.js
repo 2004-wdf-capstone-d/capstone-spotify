@@ -8,23 +8,12 @@ import {setAudioFeature} from '../store/currentAudioFeature'
  * COMPONENT
  */
 export const UserHome = props => {
-  const {
-    user,
-    topArtists,
-    fetchTopArtist,
-    audioFeatureData,
-    setAudioFeature
-  } = props
+  const {user, topArtists, fetchTopArtist} = props
   const {displayName, email, images} = user
 
   useEffect(() => {
     async function fetch() {
       await fetchTopArtist()
-      // await setAudioFeature(audioFeatureData, {
-      //   feature: 'danceability',
-      //   sort: 'position',
-      //   data: 0
-      // })
     }
     fetch()
   }, [])
@@ -40,12 +29,13 @@ export const UserHome = props => {
             })}
           </div>
         ) : null}
-
         {topArtists ? (
           <div>
             <h3>Your Top Artists</h3>
             {topArtists.map((artist, index) => {
-              return <img key={index} src={artist.images[2].url} />
+              return artist.images ? (
+                <img key={index} src={artist.images[2].url} />
+              ) : null
             })}
           </div>
         ) : null}
