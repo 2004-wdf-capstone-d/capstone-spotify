@@ -8,7 +8,7 @@ export const DefaultAudioFeatures = props => {
 
   return currentAudioFeature.length ? (
     <section className="section">
-      <div className="hero is-bold">
+      <div className="hero is-dark is-bold">
         <div className="hero-body">
           <h1 className="title">
             Audio Features of the Top Streaming Tracks on Spotify

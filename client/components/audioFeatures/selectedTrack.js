@@ -16,9 +16,7 @@ const SelectedTrack = props => {
 
   return (
     <div className="selected-track-features">
-      <h5>
-        Current Track: {selectedTrack.artist} - "{selectedTrack.trackName}"
-      </h5>
+      <h5 className="my-2">Audio Features:</h5>
       <svg
         width={width}
         height={y.range()[1]}

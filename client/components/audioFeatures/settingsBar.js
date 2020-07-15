@@ -44,12 +44,15 @@ const SettingsBar = props => {
   return (
     <section>
       <h3 className="is-size-4 mb-2">Audio Feature: {feature}</h3>
-      <div className="level my-4">
-        <div className="level-left control">
-          <div className="level-item select is-small">
-            <label className="label mr-2">Change Feature</label>
+      <div className="level my-2">
+        <div className="level-left">
+          <div className="level-item mr-2">
+            <label className="is-size-6 has-text-left mr-2">
+              Change Feature
+            </label>
             <select
               name="Feature"
+              className="select"
               onChange={event => {
                 setFeature(event.target.value)
               }}
@@ -62,10 +65,11 @@ const SettingsBar = props => {
               <option value="valence">Valence</option>
             </select>
           </div>
-          <div className="level-item select is-small">
-            <label className="label ml-4 mr-2">Sort By</label>
+          <div className="level-item mx-2">
+            <label className="is-size-6 has-text-left ml-4 mr-2">Sort By</label>
             <select
               name="Sort"
+              className="select"
               onChange={event => {
                 setSort(event.target.value)
               }}
@@ -75,10 +79,11 @@ const SettingsBar = props => {
               <option value="ascending">Low to High</option>
             </select>
           </div>
-          <div className="level-item select is-small">
-            <label className="label ml-4 mr-2">Page By</label>
+          <div className="level-item mx-2">
+            <label className="is-size-6 ml-4 mr-2">Page</label>
             <select
               name="Page"
+              className="select"
               onChange={event => {
                 setPage(parseInt(event.target.value))
               }}

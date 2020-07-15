@@ -14,7 +14,7 @@ const AudioFeaturesGraph = props => {
     props.selectTrack(dataSet, event.target.value, page)
   }
 
-  const width = window.innerWidth
+  const width = window.innerWidth * 0.8
 
   const x = d3
     .scaleLinear()
@@ -23,11 +23,35 @@ const AudioFeaturesGraph = props => {
   const y = d3
     .scaleBand()
     .domain(currentSet.map(dataPoint => dataPoint.trackName))
-    .range([0, 40 * currentSet.length])
+    .range([0, 45 * currentSet.length])
 
   return (
     <section>
       <SettingsBar data={dataSet} page={page} setPage={setPage} />
+      <div className="level mt-4 mb-2">
+        <div className="level-left">
+          <div className="level-item mr-2">
+            <label className="is-size-6 has-text-left mr-2">
+              Select a Track
+            </label>
+            <select
+              name="select-track"
+              className="select"
+              onChange={event => {
+                handleSelectedTrack(event)
+              }}
+            >
+              {currentSet.map(track => {
+                return (
+                  <option key={track.trackId} value={track.trackId}>
+                    {track.artist} - "{track.trackName}"
+                  </option>
+                )
+              })}
+            </select>
+          </div>
+        </div>
+      </div>
       <svg
         width={width}
         height={y.range()[1]}
@@ -46,7 +70,7 @@ const AudioFeaturesGraph = props => {
               height={y.bandwidth() - 1}
             />
             <text
-              fill="black"
+              fill="white"
               x={x(0.01)}
               y={y.bandwidth() / 2}
               dy="0.35em"
@@ -57,29 +81,6 @@ const AudioFeaturesGraph = props => {
           </g>
         ))}
       </svg>
-      <div className="select my-4">
-        <select
-          name="select-track"
-          className="af-select-track"
-          onChange={event => {
-            handleSelectedTrack(event)
-          }}
-        >
-          <option>View Track Details</option>
-          {currentSet.map(track => {
-            return (
-              <option key={track.trackId} value={track.trackId}>
-                {track.artist} - "{track.trackName}"
-              </option>
-            )
-          })}
-        </select>
-      </div>
-      {selectedTrack.features ? (
-        <div>
-          <SelectedTrack width={width} />
-        </div>
-      ) : null}
     </section>
   )
 }

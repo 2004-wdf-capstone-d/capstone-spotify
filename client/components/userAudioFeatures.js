@@ -17,7 +17,7 @@ export const UserAudioFeatures = props => {
 
   return currentAudioFeature.length ? (
     <section className="section">
-      <div className="hero is-bold">
+      <div className="hero is-dark is-bold">
         <div className="hero-body">
           <h1 className="title">Audio Features of your Top 20 tracks</h1>
           <AudioFeaturesGraph
