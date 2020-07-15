@@ -32,9 +32,10 @@ const AudioFeaturesGraph = props => {
         <svg
           width={width}
           height={y.range()[1]}
-          fontFamily="sans-serif"
+          // fontFamily="sans-serif"
           fontSize="18"
           className="audio-feature-graph"
+          padding="0.5em"
         >
           {currentSet.map((dataPoint, index) => (
             <g
@@ -43,16 +44,11 @@ const AudioFeaturesGraph = props => {
               transform={`translate(0,${y(dataPoint.trackName)})`}
             >
               <rect
-                fill="darkseagreen"
+                fill={d3.interpolateWarm(dataPoint.value)}
                 width={x(dataPoint.value)}
                 height={y.bandwidth() - 1}
               />
-              <text
-                fill="darkslategray"
-                x={x(0)}
-                y={y.bandwidth() / 2}
-                dy="0.35em"
-              >
+              <text fill="black" x={x(0)} y={y.bandwidth() / 2} dy="0.35em">
                 #{dataPoint.position}: {dataPoint.artist} - "{
                   dataPoint.trackName
                 }"

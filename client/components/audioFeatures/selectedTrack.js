@@ -27,12 +27,12 @@ const SelectedTrack = props => {
           {selectedTrack.features.map((dataPoint, i) => (
             <g key={i} transform={`translate(0,${y(dataPoint.name)})`}>
               <rect
-                fill="darkslategray"
+                fill={d3.interpolateGreens(dataPoint.value)}
                 width={x(dataPoint.value)}
                 height={y.bandwidth() - 1}
               />
               <text
-                fill="darkseagreen"
+                fill="darkslategray"
                 x={x(0)}
                 y={y.bandwidth() / 2}
                 dy="0.35em"
