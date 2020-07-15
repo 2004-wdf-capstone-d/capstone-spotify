@@ -4,9 +4,14 @@ import {fetchTopArtist} from '../store/user-topArtist'
 import {fetchAudioFeatures} from '../store/audioFeatures'
 import {Route, Switch, Link} from 'react-router-dom'
 import {default as UserTopArtists} from './userTopArtists'
+
+import {default as artistAlbums} from './artistAlbums'
 import {default as artistTopSongsPopularity} from './artistTopSongsPopularity'
 import history from '../history'
-import {fetchSingleArtistTopSongs} from '../store/singleTopArtist'
+import {
+  fetchSingleArtistTopSongs,
+  fetchArtistAlbums
+} from '../store/singleTopArtist'
 
 class SingleTopArtist extends React.Component {
   constructor(props) {
@@ -16,11 +21,18 @@ class SingleTopArtist extends React.Component {
   componentDidMount() {}
 
   async handleClick(event) {
-    if (event.target.innerText === 'Top Songs') {
-      if (!this.props.singleTopArtist.topTracks) {
-        await this.props.fetchSingleArtistTopSongs()
+    if (event.target.type === 'button') {
+      if (event.target.innerHTML === 'Top Songs') {
+        if (!this.props.singleTopArtist.topTracks) {
+          await this.props.fetchSingleArtistTopSongs()
+        }
+        history.push(`${this.props.match.url}/top-songs`)
+      } else if (event.target.innerHTML === 'Albums') {
+        if (!this.props.singleTopArtist.albums) {
+          await this.props.fetchArtistAlbums()
+        }
+        history.push(`${this.props.match.url}/artist-albums`)
       }
-      history.push(`${this.props.match.url}/top-songs`)
     }
   }
 
@@ -29,14 +41,20 @@ class SingleTopArtist extends React.Component {
     return (
       <div>
         <h2>{artist.name}</h2>
-        <button type="button" onClick={this.handleClick}>
-          Top Songs
-        </button>
+        <div onClick={this.handleClick}>
+          <button type="button">Top Songs</button>
+          <button type="button">Albums</button>
+        </div>
         <Switch>
           <Route
             exact
             path={`${this.props.match.url}/top-songs`}
             component={artistTopSongsPopularity}
+          />
+          <Route
+            exact
+            path={`${this.props.match.url}/artist-albums`}
+            component={artistAlbums}
           />
         </Switch>
       </div>
@@ -57,7 +75,8 @@ const mapDispatch = dispatch => {
   return {
     fetchTopArtist: () => dispatch(fetchTopArtist()),
     fetchAudioFeatures: () => dispatch(fetchAudioFeatures()),
-    fetchSingleArtistTopSongs: () => dispatch(fetchSingleArtistTopSongs())
+    fetchSingleArtistTopSongs: () => dispatch(fetchSingleArtistTopSongs()),
+    fetchArtistAlbums: () => dispatch(fetchArtistAlbums())
   }
 }
 

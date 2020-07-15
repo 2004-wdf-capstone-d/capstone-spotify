@@ -80,3 +80,8 @@ form div {
 .card {
   margin-bottom: 1%;
 }
+
+.svg-sunburst {
+  display: flex;
+  padding: 40px;
+}
