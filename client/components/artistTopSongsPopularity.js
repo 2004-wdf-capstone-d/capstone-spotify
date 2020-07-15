@@ -45,6 +45,7 @@ const artistTopSongs = props => {
             >
               <div xmlns="http://www.w3.org/1999/xhtml">
                 <p>Test</p>
+                <p>help</p>
               </div>
             </foreignObject>
             {/* <text x={4} y={13}>
