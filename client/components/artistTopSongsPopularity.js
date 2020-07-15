@@ -2,7 +2,7 @@ import React from 'react'
 import * as d3 from 'd3'
 import {connect} from 'react-redux'
 
-const width = 900
+const width = 1200
 const height = 1600
 
 const partition1 = data => {
@@ -26,7 +26,7 @@ const artistTopSongs = props => {
     <svg
       viewBox={`0,0,${width},${height}`}
       preserveAspectRatio="none"
-      width="100%"
+      width="60vw" //Change the view scaling here!
       height="100%"
     >
       {svgDataArr.map((d, index, arr) => (
@@ -48,7 +48,7 @@ const artistTopSongs = props => {
             y="0"
           >
             <div xmlns="http://www.w3.org/1999/xhtml">
-              <p>Test help</p>
+              <p>{d.data.name}</p>
             </div>
           </foreignObject>
           {/* <text x={4} y={13}>
