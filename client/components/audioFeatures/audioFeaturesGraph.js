@@ -2,12 +2,11 @@ import React, {useState} from 'react'
 import * as d3 from 'd3'
 import {connect} from 'react-redux'
 
-import {default as SelectedTrack} from './selectedTrack'
 import {default as SettingsBar} from './settingsBar'
 import {selectTrack} from '../../store/selectedTrack'
 
 const AudioFeaturesGraph = props => {
-  const {dataSet, currentSet, selectedTrack} = props
+  const {dataSet, currentSet} = props
   const [page, setPage] = useState(0)
 
   const handleSelectedTrack = event => {
@@ -23,7 +22,7 @@ const AudioFeaturesGraph = props => {
   const y = d3
     .scaleBand()
     .domain(currentSet.map(dataPoint => dataPoint.trackName))
-    .range([0, 45 * currentSet.length])
+    .range([0, 35 * currentSet.length])
 
   return (
     <section>
@@ -53,10 +52,10 @@ const AudioFeaturesGraph = props => {
         </div>
       </div>
       <svg
-        width={width}
-        height={y.range()[1]}
+        viewBox={`0, 0, ${width}, ${y.range()[1]}`}
+        width="90vw"
+        height="100%"
         className="audio-feature-graph"
-        padding="0.5em"
       >
         {currentSet.map((dataPoint, index) => (
           <g

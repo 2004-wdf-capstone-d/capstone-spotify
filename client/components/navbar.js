@@ -62,7 +62,7 @@ const Navbar = ({handleClick, isLoggedIn, selectedTrack}) => (
         ) : null}
         {selectedTrack.features ? (
           <div>
-            <SelectedTrack width={240} />
+            <SelectedTrack width="240" />
           </div>
         ) : null}
       </div>

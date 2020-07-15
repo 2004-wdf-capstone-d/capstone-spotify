@@ -18,10 +18,9 @@ const SelectedTrack = props => {
     <div className="selected-track-features">
       <h5 className="my-2">Audio Features:</h5>
       <svg
-        width={width}
+        viewBox={`0, 0, ${width}, ${y.range()[1]}`}
+        width="100%"
         height={y.range()[1]}
-        fontFamily="sans-serif"
-        fontSize="18"
       >
         {selectedTrack.features.map((dataPoint, i) => (
           <g key={i} transform={`translate(0,${y(dataPoint.name)})`}>
