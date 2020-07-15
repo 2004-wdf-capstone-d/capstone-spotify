@@ -1,34 +1,8 @@
 import React from 'react'
 import * as d3 from 'd3'
 import {connect} from 'react-redux'
-import artistTopSongs from './artistTopSongs'
 
 const artistAlbums = props => {
-  // let data = {
-  //   name: 'TOPICS',
-  //   children: [
-  //     {
-  //       name: 'Topic A',
-  //       children: [{name: 'Sub A1', size: 4}, {name: 'Sub A2', size: 4}]
-  //     },
-  //     {
-  //       name: 'Topic B',
-  //       children: [
-  //         {name: 'Sub B1', size: 3},
-  //         {name: 'Sub B2', size: 3},
-  //         {
-  //           name: 'Sub B3',
-  //           size: 3
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       name: 'Topic C',
-  //       children: [{name: 'Sub A1', size: 4}, {name: 'Sub A2', size: 4}]
-  //     }
-  //   ]
-  // }
-
   const artist = props.singleTopArtist
 
   const data = {
@@ -65,18 +39,26 @@ const artistAlbums = props => {
 
   return (
     <div>
-      <svg width={width} height={height}>
+      <svg
+        className="svg-sunburst"
+        viewBox={`0, 0, ${width}, ${height}`}
+        width="45vw"
+        height="100%"
+      >
         {array.map((child, index) => {
-          console.log('CHILD', child)
           return (
-            <g key={index} transform={`translate(${width / 2}, ${width / 2})`}>
+            <g
+              data-tip={`${child.data.name}`}
+              data-for="svgToolTip"
+              key={index}
+              transform={`translate(${width / 2}, ${width / 2})`}
+            >
               <path
                 d={arc(child)}
                 display={child.depth ? null : 'none'}
                 stroke="#fff"
                 fill={color((child.children ? child : child.parent).data.name)}
               />
-              {/* <text>{`${child.data.name}`}</text> */}
             </g>
           )
         })}

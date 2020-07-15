@@ -55,8 +55,6 @@ router.get(
     }
   }
 )
-//get one of the user's top artists' top tracks
-//takes a single top artist from the list and displays them on click with their information including top tracks.
 
 router.get(
   '/topArtist/top-tracks',

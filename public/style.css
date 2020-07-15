@@ -116,3 +116,8 @@ form div {
 .selected-track-info div h3 {
   margin: 0;
 }
+
+.svg-sunburst {
+  display: flex;
+  padding: 40px;
+}
