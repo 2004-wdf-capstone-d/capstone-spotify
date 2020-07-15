@@ -45,16 +45,15 @@ const SettingsBar = props => {
     <section>
       <h3 className="is-size-4 mb-2">Audio Feature: {feature}</h3>
       <div className="level my-4">
-        <div className="level-left">
+        <div className="level-left control">
           <div className="level-item select is-small">
+            <label className="label mr-2">Change Feature</label>
             <select
               name="Feature"
-              className="change-audio-feature"
               onChange={event => {
                 setFeature(event.target.value)
               }}
             >
-              <option>Change Feature</option>
               <option value="danceability">Danceability</option>
               <option value="energy">Energy</option>
               <option value="speechiness">Speechiness</option>
@@ -64,28 +63,26 @@ const SettingsBar = props => {
             </select>
           </div>
           <div className="level-item select is-small">
+            <label className="label ml-4 mr-2">Sort By</label>
             <select
               name="Sort"
-              className="af-value-sorter"
               onChange={event => {
                 setSort(event.target.value)
               }}
             >
-              <option>Sort By</option>
               <option value="position">Chart Ranking</option>
               <option value="descending">High to Low</option>
               <option value="ascending">Low to High</option>
             </select>
           </div>
           <div className="level-item select is-small">
+            <label className="label ml-4 mr-2">Page By</label>
             <select
               name="Page"
-              className="af-pager"
               onChange={event => {
                 setPage(parseInt(event.target.value))
               }}
             >
-              <option>Page By</option>
               {data
                 .filter((track, index) => {
                   return index % 10 === 0

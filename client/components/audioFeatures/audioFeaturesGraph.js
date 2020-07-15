@@ -26,8 +26,7 @@ const AudioFeaturesGraph = props => {
     .range([0, 40 * currentSet.length])
 
   return (
-    // <div>
-    <section className="section">
+    <section>
       <SettingsBar data={dataSet} page={page} setPage={setPage} />
       <svg
         width={width}

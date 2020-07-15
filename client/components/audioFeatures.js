@@ -8,7 +8,7 @@ export const DefaultAudioFeatures = props => {
 
   return currentAudioFeature.length ? (
     <section className="section">
-      <div className="hero is-primary is-bold">
+      <div className="hero is-bold">
         <div className="hero-body">
           <h1 className="title">
             Audio Features of the Top Streaming Tracks on Spotify
@@ -16,12 +16,12 @@ export const DefaultAudioFeatures = props => {
           <h5 className="subtitle">
             based on global weekly charts from July 9, 2020
           </h5>
+          <AudioFeaturesGraph
+            dataSet={audioFeatureData}
+            currentSet={currentAudioFeature}
+          />
         </div>
       </div>
-      <AudioFeaturesGraph
-        dataSet={audioFeatureData}
-        currentSet={currentAudioFeature}
-      />
     </section>
   ) : (
     <h5>Loading...</h5>
