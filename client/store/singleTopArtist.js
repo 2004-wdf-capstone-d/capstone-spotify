@@ -24,10 +24,14 @@ export const fetchSingleArtistTopSongs = () => {
   return async (dispatch, getState) => {
     try {
       const artist = getState().singleTopArtist
-      const {data} = await Axios.get('/api/spotify/topArtist/top-tracks', {
+      let {data} = await Axios.get('/api/spotify/topArtist/top-tracks', {
         params: {
           artistId: artist.id
         }
+      })
+      data = data.map(el => {
+        el.pop = 95
+        return el
       })
       dispatch(addTrackToArtist(data))
     } catch (error) {

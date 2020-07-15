@@ -8,7 +8,7 @@ const height = 500
 const partition1 = data => {
   const root = d3
     .hierarchy(data, d => d.topTracks)
-    .sum(d => d.popularity)
+    .sum(d => d.pop)
     .sort((a, b) => b.duration_ms - a.duration_ms || b.value - a.value)
   return d3.partition().size([height, (root.height + 1) * width / 3])(root)
 }
@@ -19,14 +19,13 @@ const artistTopSongs = props => {
   const color = d3.scaleOrdinal(
     d3.quantize(d3.interpolateRainbow, artist.topTracks.length + 1) //use css to chnage the color
   )
-
   const root = partition1(artist)
   const svgDataArr = root.descendants()
   console.log({svgDataArr})
   return (
     <div>
-      <svg viewBox={`0,0,${width},${height}`}>
-        {svgDataArr.map(d => (
+      <svg viewBox={`0,0,${width},${height}`} preserveAspectRatio="none">
+        {svgDataArr.map((d, index, arr) => (
           <g key={d.data.name} transform={`translate(${d.y0},${d.x0})`}>
             <rect
               className={d.data.name
@@ -34,16 +33,27 @@ const artistTopSongs = props => {
                 .split(' ')
                 .join('-')}
               width={d.y1 - d.y0}
-              height={d.x1 - d.x0}
+              height={index === 0 ? d.x1 - d.x0 : arr[1].x1 - arr[1].x0}
               fillOpacity={0.6}
-              fill={!d.depth ? 'ccc' : color(d.data.name)}
+              fill={!d.depth ? '#ccc' : color(d.data.name)}
             />
-            <text x={4} y={13}>
+            <foreignObject
+              width={`${d.y1 - d.y0}px`}
+              height={`${d.x1 - d.x0}px`}
+              x="0"
+              y="0"
+            >
+              <div xmlns="http://www.w3.org/1999/xhtml">
+                <p>Test</p>
+              </div>
+            </foreignObject>
+            {/* <text x={4} y={13}>
+              <title>{`${d.data.name}\n ${d.data.popularity}`} </title>
               <p>{console.log(d.data)}</p>
-              <tspan />
+              <tspan>They try to kill us</tspan>
               <tspan fillOpacity={0.7} />
-              <title>{`${d.data.name}\n ${d.value}`} </title>
-            </text>
+
+            </text> */}
           </g>
         ))}
       </svg>
