@@ -30,7 +30,6 @@ const artistAlbums = props => {
   // }
 
   const artist = props.singleTopArtist
-  console.log('ARTIST', artist)
 
   const data = {
     name: artist.name,
@@ -54,11 +53,8 @@ const artistAlbums = props => {
   }
 
   const root = partition(data)
+
   const array = root.descendants()
-
-  // console.log('ROOT', root)
-
-  // console.log('PARTITION(ROOT)', partition(root))
 
   const arc = d3
     .arc()
@@ -71,16 +67,16 @@ const artistAlbums = props => {
     <div>
       <svg width={width} height={height}>
         {array.map((child, index) => {
-          // console.log('CHILD', child)
+          console.log('CHILD', child)
           return (
             <g key={index} transform={`translate(${width / 2}, ${width / 2})`}>
               <path
-                data={partition(child)}
                 d={arc(child)}
-                display={d => (d.depth ? null : 'none')}
+                display={child.depth ? null : 'none'}
                 stroke="#fff"
-                fill={d => color(d.children ? d : d.parent).data.name}
+                fill={color((child.children ? child : child.parent).data.name)}
               />
+              {/* <text>{`${child.data.name}`}</text> */}
             </g>
           )
         })}
