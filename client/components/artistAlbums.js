@@ -35,9 +35,16 @@ const artistAlbums = props => {
   let radius = Math.min(width, height) / 2 // < -- 2
   let color = d3.scaleOrdinal(d3.schemeCategory10)
 
-  const partition = d3.partition().size([2 * Math.PI, radius])
+  const partition = data => {
+    const root = d3.hierarchy(data).sum(d => d.size)
+    return d3.partition().size([2 * Math.PI, radius])(root)
+  }
 
-  const root = d3.hierarchy(data).sum(d => d.size)
+  // d3.partition().size([2 * Math.PI, radius])
+
+  const root = partition(data)
+  const array = root.descendants()
+
   console.log('ROOT', root)
 
   console.log('PARTITION(ROOT)', partition(root))
@@ -83,18 +90,20 @@ const artistAlbums = props => {
   return (
     <div>
       <svg width={width} height={height}>
-        <g transform={`translate(${width / 2}, ${width / 2})`}>
-          {root.children.map((child, index) => (
-            <path
-              key={index}
-              data={partition(child)}
-              display={child.depth ? null : 'none'}
-              d={arc}
-              stroke="#fff"
-              fill={d => color(d.children ? d : d.parent).data.name}
-            />
-          ))}
-        </g>
+        {array.map((child, index) => {
+          console.log('CHILD', child)
+          return (
+            <g key={index} transform={`translate(${width / 2}, ${width / 2})`}>
+              <path
+                data={partition(child)}
+                d={arc(child)}
+                display={d => (d.depth ? null : 'none')}
+                stroke="#fff"
+                fill={d => color(d.children ? d : d.parent).data.name}
+              />
+            </g>
+          )
+        })}
       </svg>
     </div>
     // <div>
