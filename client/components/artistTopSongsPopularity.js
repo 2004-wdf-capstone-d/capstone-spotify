@@ -39,6 +39,7 @@ const artistTopSongs = props => {
               fill={!d.depth ? 'ccc' : color(d.data.name)}
             />
             <text x={4} y={13}>
+              <p>{console.log(d.data)}</p>
               <tspan />
               <tspan fillOpacity={0.7} />
               <title>{`${d.data.name}\n ${d.value}`} </title>
