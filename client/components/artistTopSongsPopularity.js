@@ -1,6 +1,7 @@
 import React from 'react'
 import * as d3 from 'd3'
 import {connect} from 'react-redux'
+import {setSingleTrack} from '../store/selectedTrack'
 
 const width = 1200
 const height = 1600
@@ -67,7 +68,17 @@ const artistTopSongs = props => {
                 <div className="card-content">
                   <div className="media top-song-list">
                     {index > 0 ? (
-                      <div className="media-content">
+                      <div
+                        className="media-content"
+                        onClick={() => {
+                          props.setSingleTrack({
+                            trackName: d.data.name,
+                            artist: d.data.artists[0].name,
+                            trackId: d.data.id,
+                            uri: d.data.uri
+                          })
+                        }}
+                      >
                         <p className="title is-4"> {d.data.name}</p>
                         <p className="subtitle is-6">
                           Popularity: {d.data.popularity}
@@ -104,6 +115,11 @@ const artistTopSongs = props => {
 
 const mapState = state => ({
   singleTopArtist: state.singleTopArtist
+  //selectedTrack: state.selectedTrack
 })
 
-export default connect(mapState, null)(artistTopSongs)
+const mapDispatch = dispatch => ({
+  setSingleTrack: track => dispatch(setSingleTrack(track))
+})
+
+export default connect(mapState, mapDispatch)(artistTopSongs)
