@@ -9,19 +9,19 @@ const partition1 = data => {
   const root = d3
     .hierarchy(data, d => d.topTracks)
     .sum(d => d.pop)
-    .sort((a, b) => b.duration_ms - a.duration_ms || b.value - a.value)
+    .sort((a, b) => b.popularity - a.popularity || b.value - a.value)
   return d3.partition().size([height, (root.height + 1) * width / 2])(root)
 }
 
 const artistTopSongs = props => {
   const artist = props.singleTopArtist
-
+  console.log(artist)
   const color = d3.scaleOrdinal(
     d3.quantize(d3.interpolateRainbow, artist.topTracks.length + 1) //use css to chnage the color
   )
   const root = partition1(artist)
   const svgDataArr = root.descendants()
-
+  console.log({svgDataArr})
   return (
     <svg
       viewBox={`0,0,${width},${height}`}
@@ -43,21 +43,59 @@ const artistTopSongs = props => {
           />
           <foreignObject
             width={`${d.y1 - d.y0}px`}
-            height={`${d.x1 - d.x0}px`}
+            height={`${d.x1 - d.x0 - 26}px`}
             x="0"
-            y="0"
+            y="12"
           >
-            <div xmlns="http://www.w3.org/1999/xhtml">
-              <p>{d.data.name}</p>
+            <div
+              xmlns="http://www.w3.org/1999/xhtml"
+              className="foreignDiv"
+              height={index === 0 ? '1600px' : null}
+            >
+              {/* <p>{d.data.name}</p> */}
+              <div className="card topSongs">
+                {index === 0 ? (
+                  <div className="card-image">
+                    <figure className="image is-4by3">
+                      <img
+                        src={d.data.images[0].url}
+                        alt={d.data.name + ' Image'}
+                      />
+                    </figure>
+                  </div>
+                ) : null}
+                <div className="card-content">
+                  <div className="media top-song-list">
+                    {index > 0 ? (
+                      <div className="media-content">
+                        <p className="title is-4"> {d.data.name}</p>
+                        <p className="subtitle is-6">
+                          Popularity: {d.data.popularity}
+                        </p>
+                      </div>
+                    ) : null}
+                  </div>
+                  <div className="content">
+                    {index > 0 ? (
+                      <iframe
+                        src={`https://open.spotify.com/embed/track/${
+                          d.data.id
+                        }`}
+                        width="100%"
+                        frameBorder="0"
+                        allowTransparency="true"
+                        allow="encrypted-media"
+                      />
+                    ) : (
+                      <div />
+                    )}
+
+                    <br />
+                  </div>
+                </div>
+              </div>
             </div>
           </foreignObject>
-          {/* <text x={4} y={13}>
-              <title>{`${d.data.name}\n ${d.data.popularity}`} </title>
-              <p>{console.log(d.data)}</p>
-              <tspan>They try to kill us</tspan>
-              <tspan fillOpacity={0.7} />
-
-            </text> */}
         </g>
       ))}
     </svg>

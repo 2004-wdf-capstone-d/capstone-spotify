@@ -85,3 +85,16 @@ form div {
   display: flex;
   padding: 40px;
 }
+
+.topSongs {
+  margin: 3% 3% 0% 3%;
+  background-color: #ffffff24;
+}
+
+.foreignDiv {
+  margin-top: -6%;
+}
+
+.top-song-list {
+  margin-bottom: 0px !important;
+}
