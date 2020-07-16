@@ -1,10 +1,27 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
 
 import {default as AudioFeaturesGraph} from './audioFeatures/audioFeaturesGraph'
+import {setAudioFeature, setBlankFeature} from '../store/currentAudioFeature'
 
 export const DefaultAudioFeatures = props => {
-  const {audioFeatureData, currentAudioFeature} = props
+  const {audioFeatureData, currentAudioFeature, setAudioFeature} = props
+
+  useEffect(
+    () => {
+      async function setFeat() {
+        await setAudioFeature(audioFeatureData, {
+          feature: 'danceability',
+          sort: 'position',
+          page: 0
+        })
+      }
+      if (audioFeatureData.length) {
+        setFeat()
+      }
+    },
+    [audioFeatureData]
+  )
 
   return currentAudioFeature.length ? (
     <section className="section">
@@ -35,4 +52,12 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(DefaultAudioFeatures)
+const mapDispatch = dispatch => {
+  return {
+    setAudioFeature: (data, settings) =>
+      dispatch(setAudioFeature(data, settings)),
+    setBlankFeature: () => dispatch(setBlankFeature())
+  }
+}
+
+export default connect(mapState, mapDispatch)(DefaultAudioFeatures)

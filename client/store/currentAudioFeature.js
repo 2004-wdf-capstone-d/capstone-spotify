@@ -1,8 +1,13 @@
 const SET_AUDIO_FEATURE = 'SET_AUDIO_FEATURE'
+const SET_BLANK = 'SET_BLANK'
 
 const setFeature = audioFeature => ({
   type: SET_AUDIO_FEATURE,
   audioFeature
+})
+
+const setBlank = () => ({
+  type: SET_BLANK
 })
 
 export const setAudioFeature = (data, settings) => dispatch => {
@@ -48,12 +53,18 @@ export const setAudioFeature = (data, settings) => dispatch => {
   dispatch(setFeature(dataGroup))
 }
 
+export const setBlankFeature = () => dispatch => {
+  dispatch(setBlank())
+}
+
 const initialState = []
 
 const currentAudioFeatureReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_AUDIO_FEATURE:
       return action.audioFeature
+    case SET_BLANK:
+      return initialState
     default:
       return state
   }

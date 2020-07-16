@@ -4,7 +4,6 @@ import {setAudioFeature} from '../../store/currentAudioFeature'
 
 const SettingsBar = props => {
   const {data, page, setPage} = props
-
   const [feature, setFeature] = useState('danceability')
   const [sort, setSort] = useState('position')
   const [settings, setSettings] = useState({
@@ -36,7 +35,9 @@ const SettingsBar = props => {
 
   useEffect(
     () => {
-      props.setAudioFeature(data, settings)
+      if (data.length) {
+        props.setAudioFeature(data, settings)
+      }
     },
     [settings]
   )
