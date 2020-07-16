@@ -9,13 +9,13 @@ const partition1 = data => {
   const root = d3
     .hierarchy(data, d => d.topTracks)
     .sum(d => d.pop)
-    .sort((a, b) => b.duration_ms - a.duration_ms || b.value - a.value)
+    .sort((a, b) => b.popularity - a.popularity || b.value - a.value)
   return d3.partition().size([height, (root.height + 1) * width / 2])(root)
 }
 
 const artistTopSongs = props => {
   const artist = props.singleTopArtist
-
+  console.log(artist)
   const color = d3.scaleOrdinal(
     d3.quantize(d3.interpolateRainbow, artist.topTracks.length + 1) //use css to chnage the color
   )
@@ -47,7 +47,11 @@ const artistTopSongs = props => {
             x="0"
             y="12"
           >
-            <div xmlns="http://www.w3.org/1999/xhtml" className="foreignDiv">
+            <div
+              xmlns="http://www.w3.org/1999/xhtml"
+              className="foreignDiv"
+              height={index === 0 ? '1600px' : null}
+            >
               {/* <p>{d.data.name}</p> */}
               <div className="card topSongs">
                 {index === 0 ? (
@@ -61,18 +65,31 @@ const artistTopSongs = props => {
                   </div>
                 ) : null}
                 <div className="card-content">
-                  <div className="media">
+                  <div className="media top-song-list">
                     {index > 0 ? (
                       <div className="media-content">
                         <p className="title is-4"> {d.data.name}</p>
-                        <p className="subtitle is-6">subtitle</p>
+                        <p className="subtitle is-6">
+                          Popularity: {d.data.popularity}
+                        </p>
                       </div>
                     ) : null}
                   </div>
                   <div className="content">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                    <a href="#">#css</a> <a href="#">#responsive</a>
+                    {index > 0 ? (
+                      <iframe
+                        src={`https://open.spotify.com/embed/track/${
+                          d.data.id
+                        }`}
+                        width="100%"
+                        frameBorder="0"
+                        allowTransparency="true"
+                        allow="encrypted-media"
+                      />
+                    ) : (
+                      <div />
+                    )}
+
                     <br />
                   </div>
                 </div>

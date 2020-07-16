@@ -39,10 +39,12 @@ export const fetchSingleArtistTopSongs = () => {
           artistId: artist.id
         }
       })
-      data = data.map(el => {
-        el.pop = 95
-        return el
-      })
+      data = data
+        .map(el => {
+          el.pop = 95
+          return el
+        })
+        .sort((a, b) => b.popularity - a.popularity)
       dispatch(addTrackToArtist(data))
     } catch (error) {
       console.error(error)
