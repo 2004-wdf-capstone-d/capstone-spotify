@@ -1,6 +1,7 @@
 import React from 'react'
 import * as d3 from 'd3'
 import {connect} from 'react-redux'
+import ReactTooltip from 'react-tooltip'
 
 const artistAlbums = props => {
   const artist = props.singleTopArtist
@@ -9,9 +10,10 @@ const artistAlbums = props => {
     name: artist.name,
     children: artist.albums.map(album => ({
       name: album.name,
+      image: album.images.url,
       children: album.tracks.items.map(track => ({
         name: track.name,
-        size: 4
+        size: album.popularity
       }))
     }))
   }
@@ -48,8 +50,11 @@ const artistAlbums = props => {
         {array.map((child, index) => {
           return (
             <g
-              data-tip={`${child.data.name}`}
-              data-for="svgToolTip"
+              data-tip={
+                child.children
+                  ? `Album: ${child.data.name}`
+                  : `Track: ${child.data.name}`
+              }
               key={index}
               transform={`translate(${width / 2}, ${width / 2})`}
             >
@@ -63,6 +68,7 @@ const artistAlbums = props => {
           )
         })}
       </svg>
+      <ReactTooltip />
     </div>
   )
 }

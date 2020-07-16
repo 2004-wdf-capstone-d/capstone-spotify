@@ -3,30 +3,12 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import {default as SelectedTrack} from './audioFeatures/selectedTrack'
 
-const Navbar = ({handleClick, isLoggedIn, selectedTrack}) => (
+const Navbar = ({isLoggedIn, selectedTrack}) => (
   <div id="side-bar">
     <div>
       <h1>ekoPique</h1>
-      <nav>
-        {isLoggedIn ? (
-          <div>
-            <div>
-              <Link to="/home">Your Profile</Link>
-            </div>
-            <div>
-              <a href="#" onClick={handleClick}>
-                Logout
-              </a>
-            </div>
-          </div>
-        ) : (
-          <div>
-            <a href="/auth/spotify">Log in with Spotify</a>
-          </div>
-        )}
-      </nav>
+
       <nav>
         {isLoggedIn ? (
           <div>
@@ -54,15 +36,10 @@ const Navbar = ({handleClick, isLoggedIn, selectedTrack}) => (
               src={`https://open.spotify.com/embed/track/${selectedTrack.uri.substring(
                 14
               )}`}
-              width="240"
+              width="80"
               height="80"
               allow="encrypted-media"
             />
-          </div>
-        ) : null}
-        {selectedTrack.features ? (
-          <div>
-            <SelectedTrack width="240" />
           </div>
         ) : null}
       </div>
