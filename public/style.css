@@ -85,3 +85,11 @@ form div {
   display: flex;
   padding: 40px;
 }
+
+.topSongs {
+  margin: 3% 3% 0% 3%;
+}
+
+.foreignDiv {
+  margin-top: -6%;
+}

@@ -21,7 +21,7 @@ const artistTopSongs = props => {
   )
   const root = partition1(artist)
   const svgDataArr = root.descendants()
-
+  console.log({svgDataArr})
   return (
     <svg
       viewBox={`0,0,${width},${height}`}
@@ -43,21 +43,42 @@ const artistTopSongs = props => {
           />
           <foreignObject
             width={`${d.y1 - d.y0}px`}
-            height={`${d.x1 - d.x0}px`}
+            height={`${d.x1 - d.x0 - 26}px`}
             x="0"
-            y="0"
+            y="12"
           >
-            <div xmlns="http://www.w3.org/1999/xhtml">
-              <p>{d.data.name}</p>
+            <div xmlns="http://www.w3.org/1999/xhtml" className="foreignDiv">
+              {/* <p>{d.data.name}</p> */}
+              <div className="card topSongs">
+                {index === 0 ? (
+                  <div className="card-image">
+                    <figure className="image is-4by3">
+                      <img
+                        src={d.data.images[0].url}
+                        alt={d.data.name + ' Image'}
+                      />
+                    </figure>
+                  </div>
+                ) : null}
+                <div className="card-content">
+                  <div className="media">
+                    {index > 0 ? (
+                      <div className="media-content">
+                        <p className="title is-4"> {d.data.name}</p>
+                        <p className="subtitle is-6">subtitle</p>
+                      </div>
+                    ) : null}
+                  </div>
+                  <div className="content">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+                    <a href="#">#css</a> <a href="#">#responsive</a>
+                    <br />
+                  </div>
+                </div>
+              </div>
             </div>
           </foreignObject>
-          {/* <text x={4} y={13}>
-              <title>{`${d.data.name}\n ${d.data.popularity}`} </title>
-              <p>{console.log(d.data)}</p>
-              <tspan>They try to kill us</tspan>
-              <tspan fillOpacity={0.7} />
-
-            </text> */}
         </g>
       ))}
     </svg>
