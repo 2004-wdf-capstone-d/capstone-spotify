@@ -54,7 +54,6 @@ class SingleTopArtist extends React.Component {
               </div>
               <div className="media-content">
                 <p className="title is-4"> {artist.name}</p>
-                <p className="subtitle is-6">subtitle</p>
               </div>
             </div>
           </div>
