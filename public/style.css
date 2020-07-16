@@ -20,10 +20,10 @@ form div {
   display: inline-block;
 }
 
-#top-level-page {
+/* #top-level-page {
   display: flex;
   flex-direction: row;
-}
+} */
 
 #side-bar {
   display: flex;
@@ -95,6 +95,7 @@ form div {
   margin-top: -6%;
 }
 
-.top-song-list {
-  margin-bottom: 0px !important;
+.image.is-square.test img {
+  width: 10%;
+  height: 10%;
 }

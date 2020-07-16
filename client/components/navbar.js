@@ -6,69 +6,32 @@ import {logout} from '../store'
 import {default as SelectedTrack} from './audioFeatures/selectedTrack'
 
 const Navbar = ({handleClick, isLoggedIn, selectedTrack}) => (
-  <div id="side-bar">
-    <div>
-      <h1>ekoPique</h1>
-      <nav>
+  <nav className="navbar" role="navigation">
+    <div className="navbar-brand">
+      <h1 className="navbar-item">ekoPique</h1>
+    </div>
+    <div className="navbar-menu">
+      <div className="navbar-end">
         {isLoggedIn ? (
-          <div>
-            <div>
+          <div className="navbar-item">
+            <div className="navbar-item">
               <Link to="/home">Your Profile</Link>
             </div>
-            <div>
+            <div className="navbar-item">
               <a href="#" onClick={handleClick}>
                 Logout
               </a>
             </div>
           </div>
         ) : (
-          <div>
+          <div className="navbar-item">
             <a href="/auth/spotify">Log in with Spotify</a>
           </div>
         )}
-      </nav>
-      <nav>
-        {isLoggedIn ? (
-          <div>
-            <hr />
-            <Link to="/top-global">Global Top Tracks' Audio Features</Link>
-            <Link to="/my-audio-features">Your Top Tracks' Audio Features</Link>
-            <Link to="/">Your Top Artists</Link>
-          </div>
-        ) : null}
-      </nav>
-      <div id="now-playing">
-        {selectedTrack.trackId ? (
-          <div>
-            <hr />
-            <h3>Now playing:</h3>
-            <div id="now-playing-text">
-              <h5>
-                {selectedTrack.artist} - "{selectedTrack.trackName}"
-              </h5>
-              {selectedTrack.streams ? (
-                <h5>Streams: {selectedTrack.streams}</h5>
-              ) : null}
-            </div>
-            <iframe
-              src={`https://open.spotify.com/embed/track/${selectedTrack.uri.substring(
-                14
-              )}`}
-              width="240"
-              height="80"
-              allow="encrypted-media"
-            />
-          </div>
-        ) : null}
-        {selectedTrack.features ? (
-          <div>
-            <SelectedTrack width="240" />
-          </div>
-        ) : null}
       </div>
     </div>
     <hr />
-  </div>
+  </nav>
 )
 
 /**
