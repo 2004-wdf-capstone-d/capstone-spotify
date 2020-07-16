@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
 
 import {default as AudioFeaturesGraph} from './audioFeatures/audioFeaturesGraph'
+import {default as SettingsBar} from './audioFeatures/settingsBar'
 import {setAudioFeature, setBlankFeature} from '../store/currentAudioFeature'
 
 export const DefaultAudioFeatures = props => {
@@ -33,15 +34,19 @@ export const DefaultAudioFeatures = props => {
           <h5 className="subtitle">
             based on global weekly charts from July 9, 2020
           </h5>
-          <AudioFeaturesGraph
-            dataSet={audioFeatureData}
-            currentSet={currentAudioFeature}
-          />
+          <SettingsBar dataSet={audioFeatureData} />
+          <AudioFeaturesGraph dataSet={audioFeatureData} />
         </div>
       </div>
     </section>
   ) : (
-    <h5>Loading...</h5>
+    <section className="section">
+      <div className="hero is-dark is-bold">
+        <div className="hero-body">
+          <h1 className="title">Loading...</h1>
+        </div>
+      </div>
+    </section>
   )
 }
 

@@ -1,11 +1,19 @@
 import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
-import {setAudioFeature} from '../../store/currentAudioFeature'
+import {setAudioFeature, setBlankFeature} from '../../store/currentAudioFeature'
+import {selectTrack} from '../../store/selectedTrack'
 
 const SettingsBar = props => {
-  const {data, page, setPage} = props
+  const {
+    dataSet,
+    currentAudioFeature,
+    setAudioFeature,
+    selectTrack,
+    setBlankFeature
+  } = props
   const [feature, setFeature] = useState('danceability')
   const [sort, setSort] = useState('position')
+  const [page, setPage] = useState(0)
   const [settings, setSettings] = useState({
     feature,
     sort,
@@ -35,12 +43,18 @@ const SettingsBar = props => {
 
   useEffect(
     () => {
-      if (data.length) {
-        props.setAudioFeature(data, settings)
+      if (dataSet.length >= 10) {
+        setAudioFeature(dataSet, settings)
+      } else {
+        setBlankFeature()
       }
     },
     [settings]
   )
+
+  const handleSelectedTrack = event => {
+    selectTrack(dataSet, event.target.value, page)
+  }
 
   return (
     <section>
@@ -89,7 +103,7 @@ const SettingsBar = props => {
                 setPage(parseInt(event.target.value))
               }}
             >
-              {data
+              {dataSet
                 .filter((track, index) => {
                   return index % 10 === 0
                 })
@@ -104,15 +118,48 @@ const SettingsBar = props => {
           </div>
         </div>
       </div>
+      <div className="level mt-4 mb-2">
+        <div className="level-left">
+          <div className="level-item mr-2">
+            <label className="is-size-6 has-text-left mr-2">
+              Select a Track
+            </label>
+            <select
+              name="select-track"
+              className="select"
+              onChange={event => {
+                handleSelectedTrack(event)
+              }}
+            >
+              {currentAudioFeature.map(track => {
+                return (
+                  <option key={track.trackId} value={track.trackId}>
+                    {track.artist} - "{track.trackName}"
+                  </option>
+                )
+              })}
+            </select>
+          </div>
+        </div>
+      </div>
     </section>
   )
+}
+
+const mapState = state => {
+  return {
+    currentAudioFeature: state.currentAudioFeature
+  }
 }
 
 const mapDispatch = dispatch => {
   return {
     setAudioFeature: (data, settings) =>
-      dispatch(setAudioFeature(data, settings))
+      dispatch(setAudioFeature(data, settings)),
+    selectTrack: (data, trackId, page) =>
+      dispatch(selectTrack(data, trackId, page)),
+    setBlankFeature: () => dispatch(setBlankFeature())
   }
 }
 
-export default connect(null, mapDispatch)(SettingsBar)
+export default connect(mapState, mapDispatch)(SettingsBar)

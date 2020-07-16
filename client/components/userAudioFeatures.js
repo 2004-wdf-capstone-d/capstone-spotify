@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
 
 import {default as AudioFeaturesGraph} from './audioFeatures/audioFeaturesGraph'
+import {default as SettingsBar} from './audioFeatures/settingsBar'
 import {setAudioFeature, setBlankFeature} from '../store/currentAudioFeature'
 
 export const UserAudioFeatures = props => {
@@ -14,7 +15,6 @@ export const UserAudioFeatures = props => {
 
   useEffect(
     () => {
-      // console.log('check user audioFeatureData: ', userAudioFeatureData.length)
       async function setFeat() {
         await setAudioFeature(userAudioFeatureData, {
           feature: 'danceability',
@@ -38,26 +38,28 @@ export const UserAudioFeatures = props => {
     <section className="section">
       <div className="hero is-dark is-bold">
         <div className="hero-body">
-          <h1 className="title">Audio Features of your Top 20 tracks</h1>
-          {userAudioFeatureData.length > 10 ? (
-            <div>
-              <AudioFeaturesGraph
-                dataSet={userAudioFeatureData}
-                currentSet={currentAudioFeature}
-              />
-            </div>
-          ) : null}
+          <h1 className="title">
+            Audio Features of your Top {userAudioFeatureData.length} Tracks
+          </h1>
+          <h5 className="subtitle">based on data from Spotify</h5>
+          <SettingsBar dataSet={userAudioFeatureData} />
+          <AudioFeaturesGraph dataSet={userAudioFeatureData} />
         </div>
       </div>
     </section>
   ) : (
-    <h5>Not enough data to display.</h5>
+    <section className="section">
+      <div className="hero is-dark is-bold">
+        <div className="hero-body">
+          <h1 className="title">Not enough data to display.</h1>
+        </div>
+      </div>
+    </section>
   )
 }
 
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user._id,
     userAudioFeatureData: state.userAudioFeatureData,
     currentAudioFeature: state.currentAudioFeature
   }
