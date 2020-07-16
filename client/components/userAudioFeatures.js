@@ -25,7 +25,7 @@ export const UserAudioFeatures = props => {
       function setBlank() {
         setBlankFeature()
       }
-      if (userAudioFeatureData.length >= 10) {
+      if (userAudioFeatureData.length) {
         setFeat()
       } else {
         setBlank()

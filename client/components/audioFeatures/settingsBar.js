@@ -43,7 +43,7 @@ const SettingsBar = props => {
 
   useEffect(
     () => {
-      if (dataSet.length >= 10) {
+      if (dataSet.length) {
         setAudioFeature(dataSet, settings)
       } else {
         setBlankFeature()
@@ -118,7 +118,7 @@ const SettingsBar = props => {
           </div>
         </div>
       </div>
-      <div className="level mt-4 mb-2">
+      <div className="level my-4">
         <div className="level-left">
           <div className="level-item mr-2">
             <label className="is-size-6 has-text-left mr-2">
