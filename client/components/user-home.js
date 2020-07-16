@@ -17,6 +17,7 @@ export const UserHome = props => {
     }
     fetch()
   }, [])
+
   return (
     <div>
       <h3>Welcome, {displayName}</h3>
@@ -33,8 +34,13 @@ export const UserHome = props => {
           <div>
             <h3>Your Top Artists</h3>
             {topArtists.map((artist, index) => {
-              return artist.images ? (
-                <img key={index} src={artist.images[2].url} />
+              return artist.images.length ? (
+                <img
+                  width="10%"
+                  height="10%"
+                  key={index}
+                  src={artist.images[0].url}
+                />
               ) : null
             })}
           </div>
