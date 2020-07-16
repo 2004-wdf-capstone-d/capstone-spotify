@@ -16,15 +16,17 @@ export const UserAudioFeatures = props => {
   }, [])
 
   return currentAudioFeature.length ? (
-    <div id="user-audio-feature-main">
-      <div id="user-audio-feature-header">
-        <h1>Audio Features of your Top 20 tracks</h1>
+    <section className="section">
+      <div className="hero is-dark is-bold">
+        <div className="hero-body">
+          <h1 className="title">Audio Features of your Top 20 tracks</h1>
+          <AudioFeaturesGraph
+            dataSet={userAudioFeatureData}
+            currentSet={currentAudioFeature}
+          />
+        </div>
       </div>
-      <AudioFeaturesGraph
-        dataSet={userAudioFeatureData}
-        currentSet={currentAudioFeature}
-      />
-    </div>
+    </section>
   ) : (
     <h5>Loading...</h5>
   )

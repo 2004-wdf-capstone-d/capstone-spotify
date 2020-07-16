@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const Axios = require('axios')
+const axios = require('axios')
 module.exports = router
 const refreshAccessToken = require('./refreshAccess')
 const guestToken = require('./guestToken')
@@ -10,7 +10,7 @@ router.get('/user/topArtists', refreshAccessToken, async (req, res, next) => {
   try {
     const accessToken = req.user.accessToken
 
-    const {data} = await Axios.get(
+    const {data} = await axios.get(
       'https://api.spotify.com/v1/me/top/artists?time_range=long_term',
       {
         headers: {
@@ -25,8 +25,36 @@ router.get('/user/topArtists', refreshAccessToken, async (req, res, next) => {
   }
 })
 
-//get one of the user's top artists' top tracks
-//takes a single top artist from the list and displays them on click with their information including top tracks.
+//users's album
+router.get(
+  '/topArtist/artist-albums/',
+  refreshAccessToken,
+  async (req, res, next) => {
+    try {
+      const spotifyApi = new SpotifyWebApi({
+        clientId: process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
+        redirectUri: process.env.SPOTIFY_CALLBACK
+      })
+
+      await spotifyApi.setAccessToken(
+        req.user.accessToken || req.body.accessToken
+      )
+
+      const artistId = req.query.artistId
+
+      const artistAlbum = await spotifyApi.getArtistAlbums(artistId)
+
+      const albumwithID = artistAlbum.body.items.map(album => album.id)
+
+      const albumsWithTracks = await spotifyApi.getAlbums(albumwithID)
+
+      res.json(albumsWithTracks.body.albums)
+    } catch (error) {
+      next(error)
+    }
+  }
+)
 
 router.get(
   '/topArtist/top-tracks',
