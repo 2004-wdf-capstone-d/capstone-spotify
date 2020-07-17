@@ -70,7 +70,7 @@ const artistTopSongs = props => {
                   <div className="media top-song-list">
                     {index > 0 ? (
                       <div className="media-left">
-                        <figure className="image is-48x48">
+                        <figure className="image is-64x64">
                           <img
                             src={
                               d.data.album.images.length
@@ -83,8 +83,11 @@ const artistTopSongs = props => {
                     ) : null}
                     {index > 0 ? (
                       <div className="media-content">
-                        <p className="title is-4"> {d.data.name}</p>
-                        <p className="subtitle is-6">
+                        <p className="title is-4 has-text-light">
+                          {' '}
+                          {d.data.name}
+                        </p>
+                        <p className="subtitle is-6 has-text-light">
                           Popularity: {d.data.popularity} Duration:{' '}
                           {`${moment
                             .duration(d.data.duration_ms)
@@ -114,15 +117,15 @@ const artistTopSongs = props => {
                       <div />
                     ) : (
                       <div>
-                        <p className="title is-4">
+                        <p className="title is-4 has-text-light">
                           {' '}
                           {`Popularity: ${d.data.popularity}`}
                         </p>
-                        <p className="title is-4">
+                        <p className="title is-4 has-text-light">
                           {' '}
                           {`Followers: ${d.data.followers.total}`}
                         </p>
-                        <p className="title is-4">
+                        <p className="title is-4 has-text-light">
                           {' '}
                           {`Genre(s): ${d.data.genres.join(', ')}`}
                         </p>

@@ -124,10 +124,10 @@ a {
 }
 
 .no-link-color {
-  color: gray;
+  color: hsl(0, 0%, 69%);
   float: right;
   margin-top: -1.2em;
 }
 .no-link-color:hover {
-  color: whitesmoke;
+  color: hsl(0, 0%, 96%);
 }
