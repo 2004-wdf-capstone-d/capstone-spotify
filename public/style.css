@@ -98,3 +98,15 @@ form div {
 .top-song-list {
   margin-bottom: 0px !important;
 }
+
+.icon-color {
+}
+
+.no-link-color {
+  color: gray;
+  float: right;
+  margin-top: -1.2em;
+}
+.no-link-color:hover {
+  color: whitesmoke;
+}
