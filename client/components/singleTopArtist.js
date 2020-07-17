@@ -20,12 +20,12 @@ class SingleTopArtist extends React.Component {
 
   async handleClick(event) {
     if (event.target.type === 'button') {
-      if (event.target.innerHTML === 'Top Songs') {
+      if (event.target.id === 'topSongs') {
         if (!this.props.singleTopArtist.topTracks) {
           await this.props.fetchSingleArtistTopSongs()
         }
         history.push(`${this.props.match.url}/top-songs`)
-      } else if (event.target.innerHTML === 'Albums') {
+      } else if (event.target.id === 'albums') {
         if (!this.props.singleTopArtist.albums) {
           await this.props.fetchArtistAlbums()
         }
@@ -57,12 +57,14 @@ class SingleTopArtist extends React.Component {
               <div className="level-right">
                 <div className="content level-item" onClick={this.handleClick}>
                   <button
+                    id="topSongs"
                     className="button mr-4 level-item is-rounded is-inverted is-outlined is-black"
                     type="button"
                   >
                     Top Songs
                   </button>
                   <button
+                    id="albums"
                     className="button level-item is-rounded is-inverted is-outlined is-black"
                     type="button"
                   >
