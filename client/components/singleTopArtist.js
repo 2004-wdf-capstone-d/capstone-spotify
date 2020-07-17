@@ -38,29 +38,32 @@ class SingleTopArtist extends React.Component {
     const artist = this.props.singleTopArtist
     return (
       <div className="mt-4">
-        <div className="card has-background-white-ter has-text-grey">
+        <div className="artist-card card has-background-black-ter has-text-light">
           <div className="card-content">
             <div className="level">
               <div className="level-left">
-                <figure className="image is-48x48 level-item">
+                <figure className="image is-64x64 level-item">
                   <img
                     src={
                       artist.images.length ? artist.images[2].url : 'no image'
                     }
                   />
                 </figure>
-                <p className="title is-4 mb-0 level-item"> {artist.name}</p>
+                <p className="title is-4 mb-0 level-item has-text-light">
+                  {' '}
+                  {artist.name}
+                </p>
               </div>
               <div className="level-right">
                 <div className="content level-item" onClick={this.handleClick}>
                   <button
-                    className="button mr-4 level-item is-rounded"
+                    className="button mr-4 level-item is-rounded is-inverted is-outlined is-black"
                     type="button"
                   >
                     Top Songs
                   </button>
                   <button
-                    className="button level-item is-rounded"
+                    className="button level-item is-rounded is-inverted is-outlined is-black"
                     type="button"
                   >
                     Albums

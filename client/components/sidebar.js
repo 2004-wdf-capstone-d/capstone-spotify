@@ -18,20 +18,20 @@ const Sidebar = ({isLoggedIn, selectedTrack, clearSelectedTrack}) => {
           <p className="menu-label has-text-light">Menu</p>
           <ul className="menu-list mb-5">
             <li>
-              <Link to="/top-global" className="button is-dark has-text-left">
+              <Link to="/top-global" className="has-text-light has-text-left">
                 Global Top Tracks' Audio Features
               </Link>
             </li>
             <li>
               <Link
                 to="/my-audio-features"
-                className="button is-dark has-text-left"
+                className="has-text-light has-text-left"
               >
                 Your Top Tracks' Audio Features
               </Link>
             </li>
             <li>
-              <Link to="/" className="button is-dark has-text-left">
+              <Link to="/" className="has-text-light has-text-left">
                 Your Top Artists
               </Link>
             </li>
@@ -60,7 +60,10 @@ const Sidebar = ({isLoggedIn, selectedTrack, clearSelectedTrack}) => {
               height="80"
               allow="encrypted-media"
             />
-            <button className="button is-small my-2" onClick={handleClear}>
+            <button
+              className="button is-small my-2 is-rounded is-inverted is-outlined is-black"
+              onClick={handleClear}
+            >
               Clear Track
             </button>
           </div>

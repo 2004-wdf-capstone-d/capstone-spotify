@@ -15,11 +15,11 @@ const UserTopArtists = props => {
             props.setTopArtist(artist)
           }}
         >
-          <div className="card has-background-white-ter has-text-grey">
+          <div className="artist-card card has-background-black-ter has-text-light">
             <div className="card-content">
               <div className="media">
                 <div className="media-left">
-                  <figure className="image is-48x48">
+                  <figure className="image is-64x64">
                     <img
                       src={
                         artist.images.length ? artist.images[2].url : 'no image'
@@ -28,11 +28,11 @@ const UserTopArtists = props => {
                   </figure>
                 </div>
                 <div className="media-content">
-                  <p className="title is-4"> {artist.name}</p>
-                  <p className="subtitle is-6 mb-1">
+                  <p className="title is-4 has-text-light"> {artist.name}</p>
+                  <p className="subtitle is-6 mb-1 has-text-light">
                     Genre: {artist.genres.slice(0, 3).join(', ')}
                   </p>
-                  <p className="subtitle is-6">
+                  <p className="subtitle is-6 has-text-light">
                     Followers: {artist.followers.total}
                   </p>
                 </div>
