@@ -1,6 +1,9 @@
+/* eslint: disable */
 import React from 'react'
 import * as d3 from 'd3'
 import {connect} from 'react-redux'
+import {setSingleTrack} from '../store/selectedTrack'
+import moment from 'moment'
 
 const width = 1200
 const height = 1600
@@ -21,7 +24,6 @@ const artistTopSongs = props => {
   )
   const root = partition1(artist)
   const svgDataArr = root.descendants()
-  console.log({svgDataArr})
   return (
     <svg
       viewBox={`0,0,${width},${height}`}
@@ -52,7 +54,6 @@ const artistTopSongs = props => {
               className="foreignDiv"
               height={index === 0 ? '1600px' : null}
             >
-              {/* <p>{d.data.name}</p> */}
               <div className="card topSongs">
                 {index === 0 ? (
                   <div className="card-image">
@@ -67,27 +68,67 @@ const artistTopSongs = props => {
                 <div className="card-content">
                   <div className="media top-song-list">
                     {index > 0 ? (
+                      <div className="media-left">
+                        <figure className="image is-64x64">
+                          <img
+                            src={
+                              d.data.album.images.length
+                                ? d.data.album.images[0].url
+                                : 'no image'
+                            }
+                          />
+                        </figure>
+                      </div>
+                    ) : null}
+                    {index > 0 ? (
                       <div className="media-content">
-                        <p className="title is-4"> {d.data.name}</p>
-                        <p className="subtitle is-6">
-                          Popularity: {d.data.popularity}
+                        <p className="title is-4 has-text-light">
+                          {' '}
+                          {d.data.name}
                         </p>
+                        <p className="subtitle is-6 has-text-light">
+                          Popularity: {d.data.popularity} Duration:{' '}
+                          {`${moment
+                            .duration(d.data.duration_ms)
+                            .minutes()}:${moment
+                            .duration(d.data.duration_ms)
+                            .seconds()}`}{' '}
+                          Album: {d.data.album.name}
+                        </p>
+                        <a
+                          className="no-link-color"
+                          onClick={() => {
+                            props.setSingleTrack({
+                              trackName: d.data.name,
+                              artist: d.data.artists[0].name,
+                              trackId: d.data.id,
+                              uri: d.data.uri
+                            })
+                          }}
+                        >
+                          <i className="fas fa-play-circle icon is-medium icon-color" />
+                        </a>
                       </div>
                     ) : null}
                   </div>
                   <div className="content">
                     {index > 0 ? (
-                      <iframe
-                        src={`https://open.spotify.com/embed/track/${
-                          d.data.id
-                        }`}
-                        width="100%"
-                        frameBorder="0"
-                        allowTransparency="true"
-                        allow="encrypted-media"
-                      />
-                    ) : (
                       <div />
+                    ) : (
+                      <div>
+                        <p className="title is-4 has-text-light">
+                          {' '}
+                          {`Popularity: ${d.data.popularity}`}
+                        </p>
+                        <p className="title is-4 has-text-light">
+                          {' '}
+                          {`Followers: ${d.data.followers.total}`}
+                        </p>
+                        <p className="title is-4 has-text-light">
+                          {' '}
+                          {`Genre(s): ${d.data.genres.join(', ')}`}
+                        </p>
+                      </div>
                     )}
 
                     <br />
@@ -106,4 +147,8 @@ const mapState = state => ({
   singleTopArtist: state.singleTopArtist
 })
 
-export default connect(mapState, null)(artistTopSongs)
+const mapDispatch = dispatch => ({
+  setSingleTrack: track => dispatch(setSingleTrack(track))
+})
+
+export default connect(mapState, mapDispatch)(artistTopSongs)

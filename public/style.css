@@ -119,3 +119,12 @@ a {
 .menu-list a:hover {
   background-color: hsl(0, 0%, 29%);
 }
+
+.no-link-color {
+  color: hsl(0, 0%, 69%);
+  float: right;
+  margin-top: -1.2em;
+}
+.no-link-color:hover {
+  color: hsl(0, 0%, 96%);
+}

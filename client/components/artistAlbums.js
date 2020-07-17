@@ -2,10 +2,20 @@ import React from 'react'
 import * as d3 from 'd3'
 import {connect} from 'react-redux'
 import ReactTooltip from 'react-tooltip'
+import {setSingleTrack} from '../store/selectedTrack'
+
+const style = {
+  cursor: 'pointer'
+}
 
 const artistAlbums = props => {
-  const artist = props.singleTopArtist
+  const handleClick = trackObj => {
+    if (trackObj.trackId) {
+      props.setSingleTrack(trackObj)
+    }
+  }
 
+  const artist = props.singleTopArtist
   const data = {
     name: artist.name,
     children: artist.albums.map(album => ({
@@ -13,7 +23,11 @@ const artistAlbums = props => {
       image: album.images.url,
       children: album.tracks.items.map(track => ({
         name: track.name,
-        size: album.popularity
+        size: album.popularity,
+        uri: track.uri,
+        artist: track.artists[0].name,
+        trackId: track.id,
+        trackName: track.name
       }))
     }))
   }
@@ -31,7 +45,6 @@ const artistAlbums = props => {
   const root = partition(data)
 
   const array = root.descendants()
-
   const arc = d3
     .arc()
     .startAngle(d => d.x0)
@@ -50,6 +63,7 @@ const artistAlbums = props => {
         {array.map((child, index) => {
           return (
             <g
+              onClick={() => handleClick(child.data)}
               data-tip={
                 child.children
                   ? `Album: ${child.data.name}`
@@ -57,6 +71,7 @@ const artistAlbums = props => {
               }
               key={index}
               transform={`translate(${width / 2}, ${width / 2})`}
+              style={child.data.trackId ? style : null}
             >
               <path
                 d={arc(child)}
@@ -76,5 +91,8 @@ const artistAlbums = props => {
 const mapState = state => ({
   singleTopArtist: state.singleTopArtist
 })
+const mapDispatch = dispatch => ({
+  setSingleTrack: track => dispatch(setSingleTrack(track))
+})
 
-export default connect(mapState, null)(artistAlbums)
+export default connect(mapState, mapDispatch)(artistAlbums)
