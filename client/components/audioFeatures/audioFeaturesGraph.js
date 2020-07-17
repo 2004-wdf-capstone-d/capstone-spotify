@@ -14,13 +14,13 @@ const AudioFeaturesGraph = props => {
   const y = d3
     .scaleBand()
     .domain(currentAudioFeature.map(dataPoint => dataPoint.trackName))
-    .range([0, 35 * currentAudioFeature.length])
+    .range([0, 37 * currentAudioFeature.length])
 
   return (
-    <section>
+    <div>
       <svg
         viewBox={`0, 0, ${width}, ${y.range()[1]}`}
-        width="90vw"
+        width="80vw"
         height="100%"
         className="audio-feature-graph"
       >
@@ -47,7 +47,7 @@ const AudioFeaturesGraph = props => {
           </g>
         ))}
       </svg>
-    </section>
+    </div>
   )
 }
 
