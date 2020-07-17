@@ -24,7 +24,6 @@ const artistTopSongs = props => {
   )
   const root = partition1(artist)
   const svgDataArr = root.descendants()
-  console.log({svgDataArr})
   return (
     <svg
       viewBox={`0,0,${width},${height}`}
@@ -146,7 +145,6 @@ const artistTopSongs = props => {
 
 const mapState = state => ({
   singleTopArtist: state.singleTopArtist
-  //selectedTrack: state.selectedTrack
 })
 
 const mapDispatch = dispatch => ({
