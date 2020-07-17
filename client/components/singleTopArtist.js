@@ -51,16 +51,20 @@ class SingleTopArtist extends React.Component {
                 </figure>
               </div>
               <div className="media-content">
-                <p className="title is-4"> {artist.name}</p>
+                <p className="title is-4 mb-0"> {artist.name}</p>
+                <div className="content" onClick={this.handleClick}>
+                  <button className="button is-small mr-4" type="button">
+                    Top Songs
+                  </button>
+                  <button className="button is-small" type="button">
+                    Albums
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div onClick={this.handleClick}>
-          <button type="button">Top Songs</button>
-          <button type="button">Albums</button>
-        </div>
         <Switch>
           <Route
             exact

@@ -5,7 +5,7 @@ import Routes from './routes'
 
 const App = () => {
   return (
-    <div id="top-level-page">
+    <div className="top-level-page has-background-dark is-bold has-text-light">
       <Navbar />
       <Routes />
     </div>

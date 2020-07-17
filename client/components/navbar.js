@@ -6,7 +6,7 @@ import {logout} from '../store'
 import {clearSelectedTrack} from '../store/selectedTrack'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
-  <nav className="navbar" role="navigation">
+  <nav className="navbar has-background-black has-text-light" role="navigation">
     <div className="navbar-brand">
       <h1 className="navbar-item">ekoPique</h1>
     </div>
