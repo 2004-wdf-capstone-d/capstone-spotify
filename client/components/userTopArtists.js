@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 
 const UserTopArtists = props => {
   return (
-    <div>
+    <div className="mt-4">
       {props.topArtists.map(artist => (
         <Link
           key={artist.id}
@@ -15,7 +15,7 @@ const UserTopArtists = props => {
             props.setTopArtist(artist)
           }}
         >
-          <div className="card">
+          <div className="card has-background-white-ter has-text-grey">
             <div className="card-content">
               <div className="media">
                 <div className="media-left">
@@ -29,14 +29,13 @@ const UserTopArtists = props => {
                 </div>
                 <div className="media-content">
                   <p className="title is-4"> {artist.name}</p>
-                  <p className="subtitle is-6">subtitle</p>
+                  <p className="subtitle is-6 mb-1">
+                    Genre: {artist.genres.slice(0, 3).join(', ')}
+                  </p>
+                  <p className="subtitle is-6">
+                    Followers: {artist.followers.total}
+                  </p>
                 </div>
-              </div>
-              <div className="content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                <a href="#">#css</a> <a href="#">#responsive</a>
-                <br />
               </div>
             </div>
           </div>

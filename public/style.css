@@ -1,5 +1,7 @@
+html,
 body {
   font-family: sans-serif;
+  background-color: hsl(0, 0%, 21%);
 }
 
 a {
@@ -20,7 +22,15 @@ form div {
   display: inline-block;
 }
 
-p div h1 h2 h3 h4 h5 h6 a {
+p,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a {
   color: hsl(0, 0%, 96%);
 }
 
@@ -83,6 +93,7 @@ p div h1 h2 h3 h4 h5 h6 a {
 
 .card {
   margin-bottom: 1%;
+  max-width: 75%;
 }
 
 .svg-sunburst {

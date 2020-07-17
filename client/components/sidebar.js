@@ -15,18 +15,25 @@ const Sidebar = ({isLoggedIn, selectedTrack, clearSelectedTrack}) => {
     <div className="container ml-5">
       {isLoggedIn ? (
         <div className="menu my-4">
-          <p className="menu-label">Menu</p>
+          <p className="menu-label has-text-light">Menu</p>
           <ul className="menu-list mb-5">
             <li>
-              <Link to="/top-global">Global Top Tracks' Audio Features</Link>
+              <Link to="/top-global" className="button is-dark has-text-left">
+                Global Top Tracks' Audio Features
+              </Link>
             </li>
             <li>
-              <Link to="/my-audio-features">
+              <Link
+                to="/my-audio-features"
+                className="button is-dark has-text-left"
+              >
                 Your Top Tracks' Audio Features
               </Link>
             </li>
             <li>
-              <Link to="/">Your Top Artists</Link>
+              <Link to="/" className="button is-dark has-text-left">
+                Your Top Artists
+              </Link>
             </li>
           </ul>
         </div>

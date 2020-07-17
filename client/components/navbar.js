@@ -15,17 +15,31 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         {isLoggedIn ? (
           <div className="navbar-item">
             <div className="navbar-item">
-              <Link to="/home">Your Profile</Link>
+              <Link
+                to="/home"
+                className="button is-black is-inverted is-rounded is-outlined"
+              >
+                Your Profile
+              </Link>
             </div>
             <div className="navbar-item">
-              <a href="#" onClick={handleClick}>
+              <a
+                href="#"
+                onClick={handleClick}
+                className="button is-black is-inverted is-rounded is-outlined"
+              >
                 Logout
               </a>
             </div>
           </div>
         ) : (
           <div className="navbar-item">
-            <a href="/auth/spotify">Log in with Spotify</a>
+            <a
+              href="/auth/spotify"
+              className="button is-black is-inverted is-rounded is-outlined"
+            >
+              Log in with Spotify
+            </a>
           </div>
         )}
       </div>
