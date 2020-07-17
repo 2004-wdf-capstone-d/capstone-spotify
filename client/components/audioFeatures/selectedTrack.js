@@ -30,7 +30,7 @@ const SelectedTrack = props => {
               height={y.bandwidth() - 1}
             />
             <text
-              fill="darkslategray"
+              fill="white"
               x={x(0.04)}
               y={y.bandwidth() / 2}
               dy="0.35em"

@@ -14,7 +14,7 @@ const Sidebar = ({isLoggedIn, selectedTrack, clearSelectedTrack}) => {
   return (
     <div className="container ml-5">
       {isLoggedIn ? (
-        <div className="menu mb-2">
+        <div className="menu my-4">
           <p className="menu-label">Menu</p>
           <ul className="menu-list mb-5">
             <li>
@@ -31,7 +31,7 @@ const Sidebar = ({isLoggedIn, selectedTrack, clearSelectedTrack}) => {
           </ul>
         </div>
       ) : null}
-      <div className="container mb-5">
+      <div className="container is-dark mt-4 mb-5">
         {selectedTrack.trackId ? (
           <div>
             <div className="container">
@@ -53,13 +53,15 @@ const Sidebar = ({isLoggedIn, selectedTrack, clearSelectedTrack}) => {
               height="80"
               allow="encrypted-media"
             />
-            <button className="my-2" onClick={handleClear}>
+            <button className="button is-small my-2" onClick={handleClear}>
               Clear Track
             </button>
           </div>
         ) : null}
       </div>
-      {selectedTrack.features ? <SelectedTrack width="100%" /> : null}
+      {selectedTrack.features ? (
+        <SelectedTrack width={window.innerWidth * 0.2} />
+      ) : null}
     </div>
   )
 }
