@@ -32,7 +32,7 @@ export const DefaultAudioFeatures = props => {
             Audio Features of the Top Streaming Tracks on Spotify
           </h1>
           <h5 className="subtitle">
-            based on global weekly charts from July 9, 2020
+            based on global weekly charts from July 16, 2020
           </h5>
           <SettingsBar dataSet={audioFeatureData} />
           <AudioFeaturesGraph dataSet={audioFeatureData} />
