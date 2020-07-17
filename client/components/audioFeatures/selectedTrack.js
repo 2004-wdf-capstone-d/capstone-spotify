@@ -16,7 +16,7 @@ const SelectedTrack = props => {
 
   return (
     <div className="container">
-      <h5 className="is-size-6 my-2">Audio Features:</h5>
+      <h5 className="is-size-6 mb-2">Audio Features:</h5>
       <svg
         viewBox={`0, 0, ${width}, ${y.range()[1]}`}
         width="100%"

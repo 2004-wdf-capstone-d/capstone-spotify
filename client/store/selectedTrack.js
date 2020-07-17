@@ -1,8 +1,13 @@
 const SET_TRACK = 'SET_TRACK'
+const CLEAR_TRACK = 'CLEAR_TRACK'
 
 const setTrack = track => ({
   type: SET_TRACK,
   track
+})
+
+const clearTrack = () => ({
+  type: CLEAR_TRACK
 })
 
 export const selectTrack = (data, trackId, page) => dispatch => {
@@ -61,12 +66,18 @@ export const setSingleTrack = track => dispatch => {
   dispatch(setTrack(selectedTrack))
 }
 
+export const clearSelectedTrack = () => dispatch => {
+  dispatch(clearTrack())
+}
+
 const initialState = {}
 
 const selectedTrackReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_TRACK:
       return action.track
+    case CLEAR_TRACK:
+      return initialState
     default:
       return state
   }

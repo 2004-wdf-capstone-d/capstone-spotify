@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import {default as SelectedTrack} from './audioFeatures/selectedTrack'
+import {clearSelectedTrack} from '../store/selectedTrack'
 
-const Navbar = ({handleClick, isLoggedIn, selectedTrack}) => (
+const Navbar = ({handleClick, isLoggedIn}) => (
   <nav className="navbar" role="navigation">
     <div className="navbar-brand">
       <h1 className="navbar-item">ekoPique</h1>
@@ -48,6 +48,7 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout())
+      dispatch(clearSelectedTrack())
     }
   }
 }
