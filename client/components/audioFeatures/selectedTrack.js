@@ -15,8 +15,8 @@ const SelectedTrack = props => {
     .range([0, 40 * selectedTrack.features.length])
 
   return (
-    <div className="selected-track-features">
-      <h5 className="my-2">Audio Features:</h5>
+    <div className="container">
+      <h5 className="is-size-6 my-2">Audio Features:</h5>
       <svg
         viewBox={`0, 0, ${width}, ${y.range()[1]}`}
         width="100%"
@@ -31,9 +31,10 @@ const SelectedTrack = props => {
             />
             <text
               fill="darkslategray"
-              x={x(0.01)}
+              x={x(0.04)}
               y={y.bandwidth() / 2}
               dy="0.35em"
+              className="is-size-6"
             >
               {dataPoint.name}: {dataPoint.value}
             </text>

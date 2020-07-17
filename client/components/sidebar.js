@@ -5,56 +5,50 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {default as SelectedTrack} from './audioFeatures/selectedTrack'
 
-const Sidebar = ({handleClick, isLoggedIn, selectedTrack}) => (
-  <div>
-    <div>
-      {isLoggedIn ? (
-        <div className="menu">
-          <p className="menu-label">Menu</p>
-          <ul className="menu-list">
-            <li>
-              <Link to="/top-global">Global Top Tracks' Audio Features</Link>
-            </li>
-            <li>
-              <Link to="/my-audio-features">
-                Your Top Tracks' Audio Features
-              </Link>
-            </li>
-            <li>
-              <Link to="/">Your Top Artists</Link>
-            </li>
-          </ul>
+const Sidebar = ({isLoggedIn, selectedTrack}) => (
+  <div className="container ml-5">
+    {isLoggedIn ? (
+      <div className="menu mb-2">
+        <p className="menu-label">Menu</p>
+        <ul className="menu-list mb-5">
+          <li>
+            <Link to="/top-global">Global Top Tracks' Audio Features</Link>
+          </li>
+          <li>
+            <Link to="/my-audio-features">Your Top Tracks' Audio Features</Link>
+          </li>
+          <li>
+            <Link to="/">Your Top Artists</Link>
+          </li>
+        </ul>
+      </div>
+    ) : null}
+    <div className="container mb-5">
+      {selectedTrack.trackId ? (
+        <div>
+          <div className="container">
+            <h5 className="is-size-6">Now playing:</h5>
+            <h5 className="is-size-7 mt-2 mb-4">
+              {selectedTrack.artist} - "{selectedTrack.trackName}"
+            </h5>
+            {selectedTrack.streams ? (
+              <h5 className="is-size-7 my-2">
+                Streams: {selectedTrack.streams}
+              </h5>
+            ) : null}
+          </div>
+          <iframe
+            src={`https://open.spotify.com/embed/track/${selectedTrack.uri.substring(
+              14
+            )}`}
+            width="100%"
+            height="80"
+            allow="encrypted-media"
+          />
         </div>
       ) : null}
-      <div className="container ml-5 my-4 mr-2">
-        {selectedTrack.trackId ? (
-          <div>
-            <div className="container mx-4 my-4">
-              <h3>Now playing:</h3>
-              <h5>
-                {selectedTrack.artist} - "{selectedTrack.trackName}"
-              </h5>
-              {selectedTrack.streams ? (
-                <h5>Streams: {selectedTrack.streams}</h5>
-              ) : null}
-            </div>
-            <iframe
-              src={`https://open.spotify.com/embed/track/${selectedTrack.uri.substring(
-                14
-              )}`}
-              width="240"
-              height="80"
-              allow="encrypted-media"
-            />
-          </div>
-        ) : null}
-        {selectedTrack.features ? (
-          <div>
-            <SelectedTrack width="240" />
-          </div>
-        ) : null}
-      </div>
     </div>
+    {selectedTrack.features ? <SelectedTrack width="100%" /> : null}
   </div>
 )
 
