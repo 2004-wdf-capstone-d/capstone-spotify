@@ -4,6 +4,10 @@ import {connect} from 'react-redux'
 import ReactTooltip from 'react-tooltip'
 import {setSingleTrack} from '../store/selectedTrack'
 
+const style = {
+  cursor: 'pointer'
+}
+
 const artistAlbums = props => {
   const handleClick = trackObj => {
     if (trackObj.trackId) {
@@ -67,6 +71,7 @@ const artistAlbums = props => {
               }
               key={index}
               transform={`translate(${width / 2}, ${width / 2})`}
+              style={child.data.trackId ? style : null}
             >
               <path
                 d={arc(child)}
