@@ -25,7 +25,7 @@ export const DefaultAudioFeatures = props => {
   )
 
   return currentAudioFeature.length ? (
-    <section className="section">
+    <div className="container">
       <div className="hero is-dark is-bold">
         <div className="hero-body">
           <h1 className="title">
@@ -38,15 +38,15 @@ export const DefaultAudioFeatures = props => {
           <AudioFeaturesGraph dataSet={audioFeatureData} />
         </div>
       </div>
-    </section>
+    </div>
   ) : (
-    <section className="section">
+    <div>
       <div className="hero is-dark is-bold">
         <div className="hero-body">
           <h1 className="title">Loading...</h1>
         </div>
       </div>
-    </section>
+    </div>
   )
 }
 

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import {UserHome} from './components'
 import {me} from './store'
 import DisplayPage from './components/displayPage'
+import Sidebar from './components/sidebar'
 
 /**
  * COMPONENT
@@ -18,19 +19,24 @@ class Routes extends Component {
     const {isLoggedIn} = this.props
 
     return (
-      <div id="routes">
-        <Switch>
-          {/* Routes placed here are available to all visitors */}
-          {isLoggedIn && (
-            <Switch>
-              {/* Routes placed here are only available after logging in */}
-              <Route path="/home" component={UserHome} />
-              <Route path="/" component={DisplayPage} />
-            </Switch>
-          )}
-          {/* Displays our Login component as a fallback */}
-          <Route component={DisplayPage} />
-        </Switch>
+      <div className="columns">
+        <div className="column is-one-fifth">
+          <Sidebar />
+        </div>
+        <div className="column is-four-fifths">
+          <Switch>
+            {/* Routes placed here are available to all visitors */}
+            {isLoggedIn && (
+              <Switch>
+                {/* Routes placed here are only available after logging in */}
+                <Route path="/home" component={UserHome} />
+                <Route path="/" component={DisplayPage} />
+              </Switch>
+            )}
+            {/* Displays our Login component as a fallback */}
+            <Route component={DisplayPage} />
+          </Switch>
+        </div>
       </div>
     )
   }

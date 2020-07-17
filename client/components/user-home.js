@@ -23,28 +23,29 @@ export const UserHome = props => {
       <h3>Welcome, {displayName}</h3>
       <h3>{email}</h3>
       <div>
-        {images ? (
-          <div>
-            {images.map((image, index) => {
-              return <img key={index} src={image.url} />
-            })}
-          </div>
-        ) : null}
-        {topArtists ? (
+        {images.length ? (
+          <img src={images[0].url} />
+        ) : (
+          <i className="fas fa-user" />
+        )}
+        {/* {topArtists ? (
           <div>
             <h3>Your Top Artists</h3>
             {topArtists.map((artist, index) => {
               return artist.images.length ? (
-                <img
-                  width="10%"
-                  height="10%"
-                  key={index}
-                  src={artist.images[0].url}
-                />
+                <figure key={index} className="image is-square test">
+                  <img
+                    // width="10%"
+                    // height="10%"
+                    className="is-rounded"
+                    src={artist.images[0].url}
+                  />
+
+                </figure>
               ) : null
             })}
           </div>
-        ) : null}
+        ) : null} */}
       </div>
       <h3 />
     </div>
