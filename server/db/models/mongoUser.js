@@ -35,6 +35,18 @@ const User = mongoose.model(
     expiresIn: {
       type: Number,
       required: true
+    },
+    country: {
+      type: String
+    },
+    profileUrl: {
+      type: String
+    },
+    followers: {
+      type: Number
+    },
+    product: {
+      type: String
     }
   })
 )

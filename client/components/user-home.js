@@ -3,13 +3,22 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {fetchTopArtist} from '../store/user-topArtist'
 import {setAudioFeature} from '../store/currentAudioFeature'
+import products from '../../../../grace-shopper/client/store/products'
 
 /**
  * COMPONENT
  */
 export const UserHome = props => {
   const {user, topArtists, fetchTopArtist} = props
-  const {displayName, email, images} = user
+  const {
+    displayName,
+    email,
+    followers,
+    country,
+    images,
+    product,
+    profileUrl
+  } = user
 
   useEffect(() => {
     async function fetch() {
@@ -19,35 +28,35 @@ export const UserHome = props => {
   }, [])
 
   return (
-    <div>
-      <h3>Welcome, {displayName}</h3>
-      <h3>{email}</h3>
+    <div className="mt-4">
       <div>
-        {images.length ? (
-          <img src={images[0].url} />
-        ) : (
-          <i className="fas fa-user" />
-        )}
-        {/* {topArtists ? (
-          <div>
-            <h3>Your Top Artists</h3>
-            {topArtists.map((artist, index) => {
-              return artist.images.length ? (
-                <figure key={index} className="image is-square test">
-                  <img
-                    // width="10%"
-                    // height="10%"
-                    className="is-rounded"
-                    src={artist.images[0].url}
-                  />
-
-                </figure>
-              ) : null
-            })}
-          </div>
-        ) : null} */}
+        <h1 className="title is-size-2 has-text-light">
+          Welcome, {displayName}
+        </h1>
       </div>
-      <h3 />
+
+      <div className="columns mt-3">
+        <div className="level-left column is-one-fifth">
+          {images.length ? (
+            <img className="is-128x128" src={images[0].url} />
+          ) : (
+            <i className="fas fa-user fa-8x" />
+          )}
+        </div>
+        <div className="column">
+          <h3>{displayName}</h3>
+          <h3>{email}</h3>
+          <h3> Country: {country}</h3>
+          <h3>Followers: {followers}</h3>
+          <h3>
+            Profile URL:{' '}
+            <a className="on-hover" href={profileUrl}>
+              {profileUrl}
+            </a>
+          </h3>
+          <h3>Subscription: {product}</h3>
+        </div>
+      </div>
     </div>
   )
 }

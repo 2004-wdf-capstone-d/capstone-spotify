@@ -136,3 +136,7 @@ a {
 .navbar-item .buttons {
   margin-bottom: 0;
 }
+
+.on-hover:hover {
+  color: lightgray;
+}
