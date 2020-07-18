@@ -34,8 +34,10 @@ const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
 const store = createStore(reducer, persistedStore, middleware)
-
-store.subscribe(() => saveToLocalStorage(store.getState()))
+if (localStorage.getItem('isLoggedIn')) {
+  console.log(localStorage.getItem('isLoggedIn'))
+  store.subscribe(() => saveToLocalStorage(store.getState()))
+}
 
 export default store
 export * from './user'

@@ -37,6 +37,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
             <a
               href="/auth/spotify"
               className="button is-black is-inverted is-rounded is-outlined"
+              onClick={() => {
+                localStorage.setItem('isLoggedIn', 'true')
+              }}
             >
               Log in with Spotify
             </a>
