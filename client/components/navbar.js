@@ -14,7 +14,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         className="navbar-burger burger"
         aria-label="menu"
         aria-expanded="false"
-        data-target="navbarBasicExample"
+        data-target="navBarHasMobileView"
         onClick={() => {
           if (event.target.tagName === 'A') {
             const newTarget = document.getElementById(
@@ -37,7 +37,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         <span aria-hidden="true" />
       </a>
     </div>
-    <div id="navbarBasicExample" className="navbar-menu">
+    <div id="navBarHasMobileView" className="navbar-menu">
       <div className="navbar-end">
         {isLoggedIn ? (
           <div className="navbar-item">
