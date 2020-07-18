@@ -35,7 +35,6 @@ const middleware = composeWithDevTools(
 )
 const store = createStore(reducer, persistedStore, middleware)
 if (localStorage.getItem('isLoggedIn')) {
-  console.log(localStorage.getItem('isLoggedIn'))
   store.subscribe(() => saveToLocalStorage(store.getState()))
 }
 

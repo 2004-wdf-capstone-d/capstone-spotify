@@ -26,7 +26,6 @@ if (!process.env.CLIENT_ID || !process.env.CLIENT_SECRET) {
     const displayName = profile.displayName
 
     await User.findOne({spotifyId: profile.id}, async function(err, user) {
-      // console.log('logging error on user db insert', user)
       if (!user) {
         user = await User.create({
           spotifyId,
