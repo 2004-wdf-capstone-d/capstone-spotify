@@ -24,6 +24,10 @@ if (!process.env.CLIENT_ID || !process.env.CLIENT_SECRET) {
     const images = profile.photos
     const href = profile._json.href
     const displayName = profile.displayName
+    const country = profile.country
+    const profileUrl = profile.profileUrl
+    const followers = profile.followers
+    const product = profile.product
 
     await User.findOne({spotifyId: profile.id}, async function(err, user) {
       if (!user) {
@@ -35,7 +39,11 @@ if (!process.env.CLIENT_ID || !process.env.CLIENT_SECRET) {
           displayName,
           accessToken,
           refreshToken,
-          expiresIn: new Date().getTime() / 1000 + expiresIn
+          expiresIn: new Date().getTime() / 1000 + expiresIn,
+          country,
+          profileUrl,
+          followers,
+          product
         })
       }
       return done(err, user)
