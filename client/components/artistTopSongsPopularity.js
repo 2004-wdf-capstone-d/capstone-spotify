@@ -18,7 +18,6 @@ const partition1 = data => {
 
 const artistTopSongs = props => {
   const artist = props.singleTopArtist
-  console.log(artist)
   const color = d3.scaleOrdinal(
     d3.quantize(d3.interpolateRainbow, artist.topTracks.length + 1) //use css to chnage the color
   )
@@ -59,7 +58,7 @@ const artistTopSongs = props => {
                   <div className="card-image">
                     <figure className="image is-4by3">
                       <img
-                        src={d.data.images[0].url}
+                        src={d.data.images.length ? d.data.images[0].url : null}
                         alt={d.data.name + ' Image'}
                       />
                     </figure>

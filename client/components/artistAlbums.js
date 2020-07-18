@@ -18,18 +18,20 @@ const artistAlbums = props => {
   const artist = props.singleTopArtist
   const data = {
     name: artist.name,
-    children: artist.albums.map(album => ({
-      name: album.name,
-      image: album.images.url,
-      children: album.tracks.items.map(track => ({
-        name: track.name,
-        size: album.popularity,
-        uri: track.uri,
-        artist: track.artists[0].name,
-        trackId: track.id,
-        trackName: track.name
-      }))
-    }))
+    children: artist.albums
+      ? artist.albums.map(album => ({
+          name: album.name,
+          image: album.images.url,
+          children: album.tracks.items.map(track => ({
+            name: track.name,
+            size: album.popularity,
+            uri: track.uri,
+            artist: track.artists[0].name,
+            trackId: track.id,
+            trackName: track.name
+          }))
+        }))
+      : []
   }
 
   let width = 800
@@ -52,7 +54,7 @@ const artistAlbums = props => {
     .innerRadius(d => d.y0)
     .outerRadius(d => d.y1)
 
-  return (
+  return array[0].data.children.length ? (
     <div>
       <svg
         className="svg-sunburst"
@@ -85,6 +87,8 @@ const artistAlbums = props => {
       </svg>
       <ReactTooltip />
     </div>
+  ) : (
+    <div>Not enough data to display.</div>
   )
 }
 
