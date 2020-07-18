@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {fetchTopArtist} from '../store/user-topArtist'
 import {setAudioFeature} from '../store/currentAudioFeature'
-import products from '../../../../grace-shopper/client/store/products'
 
 /**
  * COMPONENT
