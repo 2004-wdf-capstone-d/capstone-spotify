@@ -6,27 +6,52 @@ import {logout} from '../store'
 import {clearSelectedTrack} from '../store/selectedTrack'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
-  <nav className="navbar has-background-black has-text-light" role="navigation">
+  <nav className="navbar is-black has-text-light" role="navigation">
     <div className="navbar-brand">
       <h1 className="navbar-item">ekoPique</h1>
+      <a
+        role="button"
+        className="navbar-burger burger"
+        aria-label="menu"
+        aria-expanded="false"
+        data-target="navBarHasMobileView"
+        onClick={() => {
+          if (event.target.tagName === 'A') {
+            const newTarget = document.getElementById(
+              event.target.dataset.target
+            )
+            event.target.classList.toggle('is-active')
+            newTarget.classList.toggle('is-active')
+          }
+          if (event.target.parentNode.tagName === 'A') {
+            const newTarget = document.getElementById(
+              event.target.parentNode.dataset.target
+            )
+            event.target.parentNode.classList.toggle('is-active')
+            newTarget.classList.toggle('is-active')
+          }
+        }}
+      >
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+      </a>
     </div>
-    <div className="navbar-menu">
+    <div id="navBarHasMobileView" className="navbar-menu">
       <div className="navbar-end">
         {isLoggedIn ? (
           <div className="navbar-item">
-            <div className="navbar-item">
+            <div className="buttons">
               <Link
                 to="/home"
-                className="button is-black is-inverted is-rounded is-outlined"
+                className="button is-small is-black is-inverted is-rounded is-outlined"
               >
                 Your Profile
               </Link>
-            </div>
-            <div className="navbar-item">
               <a
                 href="#"
                 onClick={handleClick}
-                className="button is-black is-inverted is-rounded is-outlined"
+                className="button is-small is-black is-inverted is-rounded is-outlined"
               >
                 Logout
               </a>
@@ -37,6 +62,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
             <a
               href="/auth/spotify"
               className="button is-black is-inverted is-rounded is-outlined"
+              onClick={() => {
+                localStorage.setItem('isLoggedIn', 'true')
+              }}
             >
               Log in with Spotify
             </a>
@@ -44,7 +72,6 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         )}
       </div>
     </div>
-    <hr />
   </nav>
 )
 
