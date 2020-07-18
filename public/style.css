@@ -128,3 +128,7 @@ a {
 .no-link-color:hover {
   color: hsl(0, 0%, 96%);
 }
+
+#navbarBasicExample {
+  background-color: #0a0a0a;
+}
