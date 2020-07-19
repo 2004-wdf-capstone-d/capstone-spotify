@@ -10,15 +10,44 @@ import currentAudioFeature from './currentAudioFeature'
 import selectedTrack from './selectedTrack'
 import userAudioFeatureData from './userAudioFeatureData'
 
+const throttle = (func, limit) => {
+  let lastFunc
+  let lastRan
+  return function() {
+    const context = this
+    const args = arguments
+    if (!lastRan) {
+      func.apply(context, args)
+      lastRan = Date.now()
+    } else {
+      clearTimeout(lastFunc)
+      lastFunc = setTimeout(function() {
+        if (Date.now() - lastRan >= limit) {
+          func.apply(context, args)
+          lastRan = Date.now()
+        }
+      }, limit - (Date.now() - lastRan))
+    }
+  }
+}
+
 function saveToLocalStorage(state) {
-  const storedState = JSON.stringify(state)
-  localStorage.setItem('store', storedState)
+  try {
+    const storedState = JSON.stringify(state)
+    localStorage.setItem('store', storedState)
+  } catch {
+    return undefined
+  }
 }
 
 function loadFromLocalStorage() {
-  const storedState = localStorage.getItem('store')
-  if (storedState === null) return undefined
-  return JSON.parse(storedState)
+  try {
+    const storedState = localStorage.getItem('store')
+    if (storedState === null) return undefined
+    return JSON.parse(storedState)
+  } catch (err) {
+    return undefined
+  }
 }
 const persistedStore = loadFromLocalStorage()
 const reducer = combineReducers({
@@ -35,7 +64,7 @@ const middleware = composeWithDevTools(
 )
 const store = createStore(reducer, persistedStore, middleware)
 if (localStorage.getItem('isLoggedIn')) {
-  store.subscribe(() => saveToLocalStorage(store.getState()))
+  store.subscribe(throttle(() => saveToLocalStorage(store.getState()), 1000))
 }
 
 export default store
