@@ -98,18 +98,20 @@ router.get('/user', refreshAccessToken, async (req, res, next) => {
     const audioFeatures = features.body.audio_features
 
     const dataset = topTracks.map((track, index) => {
-      return {
-        artist: track.artists[0].name,
-        position: index + 1,
-        trackName: track.name,
-        trackId: trackIds[index],
-        uri: audioFeatures[index].uri,
-        danceability: audioFeatures[index].danceability,
-        energy: audioFeatures[index].energy,
-        speechiness: audioFeatures[index].speechiness,
-        acousticness: audioFeatures[index].acousticness,
-        liveness: audioFeatures[index].liveness,
-        valence: audioFeatures[index].valence
+      if (audioFeatures[index]) {
+        return {
+          artist: track.artists[0].name,
+          position: index + 1,
+          trackName: track.name,
+          trackId: trackIds[index],
+          uri: audioFeatures[index].uri,
+          danceability: audioFeatures[index].danceability,
+          energy: audioFeatures[index].energy,
+          speechiness: audioFeatures[index].speechiness,
+          acousticness: audioFeatures[index].acousticness,
+          liveness: audioFeatures[index].liveness,
+          valence: audioFeatures[index].valence
+        }
       }
     })
 
