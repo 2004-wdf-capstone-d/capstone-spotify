@@ -1,40 +1,19 @@
-# Boilermaker
+# ekoPique
 
-_Good things come in pairs_
+_A web app for visualizing Spotify data_
 
-Looking to mix up a backend with `express`/`sequelize` and a frontend with
-`react`/`redux`? That's `boilermaker`!
+ekoPique compares the top streaming tracks using the same audio features that Spotify uses to recommend to you. When you log in, you can see how your top tracks compare to the top globally streaming tracks! You can also view your top artists and their top tracks and albums.
 
-Follow along with the boilerplate workshop to make your own! This canonical
-version can serve as a reference, or a starting point. For an in depth
-discussion into the code that makes up this repository, see the
-[Boilermaker Guided Tour][boilermaker-yt]
-
-[boilermaker-yt]: https://www.youtube.com/playlist?list=PLx0iOsdUOUmn7D5XL4mRUftn8hvAJGs8H
+Thank you for viewing our app! Feel free to build upon this code to make your own Spotify data visualizer. This version can serve as a reference, or a starting point.
 
 ## Setup
 
+Credit to [Fullstack Academy's Boilermaker](https://github.com/FullstackAcademy/boilermaker) for the default setup.
+
 To use this as boilerplate, you'll need to take the following steps:
 
-* Don't fork or clone this repo! Instead, create a new, empty
-  directory on your machine and `git init` (or create an empty repo on
-  Github and clone it to your local machine)
-* Run the following commands:
-
-```
-git remote add boilermaker https://github.com/FullstackAcademy/boilermaker.git
-git fetch boilermaker
-git merge boilermaker/master
-```
-
-Why did we do that? Because every once in a while, `boilermaker` may
-be updated with additional features or bug fixes, and you can easily
-get those changes from now on by entering:
-
-```
-git fetch boilermaker
-git merge boilermaker/master
-```
+* You'll need to install MongoDB on your system.
+* Fork and clone this repo to your local repository
 
 ## Customize
 
@@ -43,15 +22,7 @@ Now that you've got the code, follow these steps to get acclimated:
 * Update project name and description in `package.json` and
   `.travis.yml` files
 * `npm install`
-* Create two postgres databases (`MY_APP_NAME` should match the `name`
-  parameter in `package.json`):
-
-```
-export MY_APP_NAME=boilermaker
-createdb $MY_APP_NAME
-createdb $MY_APP_NAME-test
-```
-
+* Create your MongoDB database
 * By default, running `npm test` will use `boilermaker-test`, while
   regular development uses `boilermaker`
 * Create a file called `secrets.js` in the project root
@@ -64,25 +35,25 @@ createdb $MY_APP_NAME-test
   * It might look like this:
 
 ```
-process.env.GOOGLE_CLIENT_ID = 'hush hush'
-process.env.GOOGLE_CLIENT_SECRET = 'pretty secret'
-process.env.GOOGLE_CALLBACK = '/auth/google/callback'
+process.env.CLIENT_ID = 'hush hush'
+process.env.CLIENT_SECRET = 'pretty secret'
+process.env.SPOTIFY_CALLBACK = '/auth/spotify/callback'
 ```
 
 ### OAuth
 
-* To use OAuth with Google, complete the steps above with a real client
-  ID and client secret supplied from Google
-  * You can get them from the [Google APIs dashboard][google-apis].
+* To use OAuth with Spotify, complete the steps above with a real client
+  ID and client secret supplied from Spotify
+  * You can get them from the [Spotify Authorization Guide][spotify-guide].
 
-[google-apis]: https://console.developers.google.com/apis/credentials
+[spotify-guide]: https://developer.spotify.com/documentation/general/guides/authorization-guide/
 
 ## Linting
 
 Linters are fundamental to any project. They ensure that your code
 has a consistent style, which is critical to writing readable code.
 
-Boilermaker comes with a working linter (ESLint, with
+ekoPique comes with a working linter (ESLint, with
 `eslint-config-fullstack`) "out of the box." However, everyone has
 their own style, so we recommend that you and your team work out yours
 and stick to it. Any linter rule that you object to can be "turned
@@ -105,7 +76,7 @@ From there, just follow your bliss.
 ## Deployment
 
 Ready to go world wide? Here's a guide to deployment! There are two
-supported ways to deploy in Boilermaker:
+supported ways to deploy in ekoPique:
 
 * automatically, via continuous deployment with Travis.
 * "manually", from your local machine via the `deploy` script.
@@ -125,8 +96,8 @@ The steps below are also covered in the CI/CD workshop.
 
   1.  `heroku create` or `heroku create your-app-name` if you have a
       name in mind.
-  2.  `heroku addons:create heroku-postgresql:hobby-dev` to add
-      ("provision") a postgres database to your heroku dyno
+  2.  Create a free MongoDB Atlas account
+  3.  Follow the MongoDB guide in connecting this database to your Heroku App
 
 * **If you already have a Heroku app...**
 
@@ -140,7 +111,7 @@ Continuous Integration is not about testing per se – it's about _continuously
 integrating_ your changes into the live application, instead of periodically
 _releasing_ new versions. CI tools can not only test your code, but then
 automatically deploy your app. This is known as Continuous Deployment.
-Boilermaker comes with a `.travis.yml` configuration almost ready for
+ekoPique comes with a `.travis.yml` configuration almost ready for
 continuous deployment; follow these steps to the job.
 
 1.  Run the following commands to create a new branch:
@@ -191,7 +162,7 @@ will automatically push the app to Heroku for you.
 ### Cody's own deploy script
 
 Your local copy of the application can be pushed up to Heroku at will,
-using Boilermaker's handy deployment script:
+using ekoPique's handy deployment script:
 
 1.  Make sure that all your work is fully committed and merged into your
     master branch on Github.
