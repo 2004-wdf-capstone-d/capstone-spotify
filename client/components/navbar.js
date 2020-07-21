@@ -62,6 +62,12 @@ const Navbar = ({handleClick, isLoggedIn}) => (
               >
                 Logout
               </a>
+              <a
+                href="https://github.com/2004-wdf-capstone-d/capstone-spotify"
+                className="button is-small is-black is-inverted is-rounded is-outlined"
+              >
+                GitHub
+              </a>
             </div>
           </div>
         ) : (
@@ -78,6 +84,12 @@ const Navbar = ({handleClick, isLoggedIn}) => (
               }}
             >
               Log in with Spotify
+            </a>
+            <a
+              href="https://github.com/2004-wdf-capstone-d/capstone-spotify"
+              className="button is-black is-inverted is-rounded is-outlined"
+            >
+              GitHub
             </a>
           </div>
         )}
