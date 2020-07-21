@@ -8,7 +8,14 @@ import {clearSelectedTrack} from '../store/selectedTrack'
 const Navbar = ({handleClick, isLoggedIn}) => (
   <nav className="navbar is-black has-text-light" role="navigation">
     <div className="navbar-brand">
-      <h1 className="navbar-item">ekoPique</h1>
+      <div className="navbar-start is-flex-touch">
+        <img
+          src="./ekopiquelogo.png"
+          width="25%"
+          style={{marginLeft: '4%'}}
+          alt="logo"
+        />
+      </div>
       <a
         role="button"
         className="navbar-burger burger"
