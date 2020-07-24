@@ -14,6 +14,9 @@ export const fetchAudioFeatures = () => async dispatch => {
     const response = await axios.post('/api/audio-features')
     dispatch(getAudioFeatures(response.data))
   } else {
+    data.sort((a, b) => {
+      return a.position - b.position
+    })
     dispatch(getAudioFeatures(data))
   }
 }
